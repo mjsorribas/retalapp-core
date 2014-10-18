@@ -1,0 +1,15 @@
+{
+    "name": "retalapp/core",
+    "description": "Core for Retalapp a workflow for developing fun",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Gustavo Salgado",
+            "email": "gsalgadotoledo@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
