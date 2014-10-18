@@ -6,7 +6,7 @@ $appAlias=Yii::getPathOfAlias('app');
 Yii::setPathOfAlias('core',dirname(__FILE__).'/..');
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
-$db=require($appAlias.'/config/db.php');
+$db=require($appAlias.'/config/database.php');
 
 $configDB=$db['localhost'];
 if(isset($db[$_SERVER['HTTP_HOST']]))
