@@ -1,11 +1,12 @@
 <?php
 
 // uncomment the following to define a path alias
-Yii::setPathOfAlias('app',dirname(__FILE__).'/../../app/');
+Yii::setPathOfAlias('app',dirname(__FILE__).'/../../../..');
+$appAlias=Yii::getPathOfAlias('app');
 Yii::setPathOfAlias('core',dirname(__FILE__).'/..');
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
-$db=require(dirname(__FILE__).'/../../app/config/db.php');
+$db=require($appAlias.'/config/db.php');
 
 $configDB=$db['localhost'];
 if(isset($db[$_SERVER['HTTP_HOST']]))
@@ -13,12 +14,12 @@ if(isset($db[$_SERVER['HTTP_HOST']]))
 
 return array(
 
-    'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '/../../app/',
+    'basePath' => $appAlias,
     'theme'=>'classic',
     'defaultController'=>'home',
-    'modules' => require(dirname(__FILE__).'/../../app/config/modules.php'),
+    'modules' => require($appAlias.'/config/modules.php'),
     'extensionPath' => dirname(__FILE__).'/../extensions/',
-    'runtimePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '/../../app/logs/',
+    'runtimePath' => $appAlias . '/logs/',
     'name' => 'My Application',
      // path aliases
     'aliases' => array(
@@ -119,14 +120,14 @@ return array(
                 ),
             // uncomment the following to show log messages on web pages
             // array(
-            // 	'class'=>'CWebLogRoute',
+            //  'class'=>'CWebLogRoute',
             // ),
             // array(
-            // 	'class'=>'core.extensions.components.log.GEmailLogRoute',
-            // 	'enabled'=>!YII_DEBUG,
-            // 	'emails'=>array("developer@email.com"),
-            // 	'subject'=>"[ERRORS] APP ".time(),
-            // 	'levels'=>'error, warning',
+            //  'class'=>'core.extensions.components.log.GEmailLogRoute',
+            //  'enabled'=>!YII_DEBUG,
+            //  'emails'=>array("developer@email.com"),
+            //  'subject'=>"[ERRORS] APP ".time(),
+            //  'levels'=>'error, warning',
             // ),
             ),
         ),
