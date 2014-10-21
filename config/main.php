@@ -1,7 +1,7 @@
 <?php
 
 // uncomment the following to define a path alias
-Yii::setPathOfAlias('app',dirname(__FILE__).'/../../../..');
+Yii::setPathOfAlias('app',dirname(__FILE__).'/../../../../app');
 $appAlias=Yii::getPathOfAlias('app');
 Yii::setPathOfAlias('core',dirname(__FILE__).'/..');
 // This is the main Web application configuration. Any writable
