@@ -122,6 +122,7 @@ class UsersModule extends Module
 			'users.components.*',
 		));
 
+		/*
 		if($this->_config===null)
 			$this->_config=UsersConfig::model()->find();
 	
@@ -138,6 +139,7 @@ class UsersModule extends Module
 			$this->copyForgotEmail=($this->_config->copyForgotEmail!==null)?$this->_config->copyForgotEmail:$this->copyForgotEmail;
 			$this->copySendPassword=($this->_config->copySendPassword!==null)?$this->_config->copySendPassword:$this->copySendPassword;
 		}
+		*/
 		parent::init();
 	}
 
@@ -428,7 +430,7 @@ class UsersModule extends Module
 	public function configItems()
 	{
 		return array(
-	    	array('label'=>Yii::t('app','Users'), 'icon'=>'fa fa-cogs', 'url'=>array('/'.$this->id.'/config'),'visible'=>$this->check('root')),
+	    	// array('label'=>Yii::t('app','Users'), 'icon'=>'fa fa-cogs', 'url'=>array('/'.$this->id.'/config'),'visible'=>$this->check('root')),
 			array('label'=>Yii::t('app','Welcome email copies'), 'icon'=>'fa fa-envelope', 'url'=>array('/'.$this->id.'/email_welcome')),
 			array('label'=>Yii::t('app','Password email copies'), 'icon'=>'fa fa-envelope', 'url'=>array('/'.$this->id.'/email_password')),
     	);
