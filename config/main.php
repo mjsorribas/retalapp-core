@@ -19,7 +19,7 @@ return array(
     'defaultController'=>'home',
     'modules' => require($appAlias.'/config/modules.php'),
     'extensionPath' => dirname(__FILE__).'/../extensions/',
-    'runtimePath' => $appAlias . '/logs/',
+    'runtimePath' => $appAlias . '/storage/',
     'name' => 'My Application',
      // path aliases
     'aliases' => array(
