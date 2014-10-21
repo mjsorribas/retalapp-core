@@ -59,8 +59,8 @@ if(isset($paramsConfig['urlRules'])) {
 
 $componentsConfig['db']=$dbConfig;
 $defaultController='home';
-if(isset($componentsConfig['defaultModule']))
-    $defaultController=$componentsConfig['defaultModule'];
+if(isset($paramsConfig['defaultModule']))
+    $defaultController=$paramsConfig['defaultModule'];
 
 if(isset($componentsConfig['log'])) {
     unset($componentsConfig['log']); 
@@ -69,10 +69,16 @@ if(isset($componentsConfig['log'])) {
         'class' => 'CFileLogRoute',
         'levels' => 'error, warning',
     );
-
-    if(isset()) {
+    
+    if(isset($paramsConfig['debugWeb']) and $paramsConfig['debugWeb']) {
         $componentsConfig['log']['routes'][] = array(
          'class'=>'CWebLogRoute',
+        );
+    }
+
+    if(isset($paramsConfig['profileWeb']) and $paramsConfig['profileWeb']) {
+        $componentsConfig['log']['routes'][] = array(
+         'class'=>'CProfileLogRoute',
         );
     }
 
@@ -89,13 +95,13 @@ if(isset($componentsConfig['log'])) {
 
 if(isset($componentsConfig['urlManager'])) {
     unset($componentsConfig['urlManager']); 
-    $componentsConfig['urlManager']=array(
-        'urlFormat' => 'path',
-        'showScriptName' => false,
-        // 'urlSuffix' => '.html',
-        'rules' => $urlDefault,
-    );
 }
+$componentsConfig['urlManager']=array(
+    'urlFormat' => 'path',
+    'showScriptName' => false,
+    // 'urlSuffix' => '.html',
+    'rules' => $urlDefault,
+);
 
 return array(
     'basePath' => $appAlias,
