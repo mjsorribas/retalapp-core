@@ -43,7 +43,7 @@ if(isset($db[$_SERVER['HTTP_HOST']]))
 
 $componentsConfig=require(dirname(__FILE__).'/components.php');
 if(file_exists($appAlias.'/config/components.php'))
-    $componentsConfig=array_merge($componentsConfig,require($appAlias.'/config/components.php'))
+    $componentsConfig=array_merge($componentsConfig,require($appAlias.'/config/components.php'));
 
 
 $urlDefault=array(
