@@ -48,7 +48,7 @@ class LoginForm extends CFormModel
 	{
 		if(!$this->hasErrors())
 		{
-			$model=Users::model()->find('email=? AND papelera=0',array($this->username));
+			$model=Users::model()->find('email=? AND trash=0',array($this->username));
 			if($model!==null and $model->state_email==0)
 				$this->addError('username',Yii::t('app',"Your email dosen't has been verified yet, please click {here} for resend email.",
 					array('{here}'=>CHtml::link(Yii::t('app','Here'),array('/users/page/resendVerify','email'=>$model->email)))));

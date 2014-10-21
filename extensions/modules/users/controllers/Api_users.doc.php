@@ -43,7 +43,7 @@ return array(
 		    	"state_email" => "integer",
 		    	"img" => "string",
 		    	"registered" => "string",
-		    	"papelera" => "integer",
+		    	"trash" => "integer",
 		    	"phone" => "integer",
 		    	"address" => "string",
 		    	"birthdate" => "date YYYY-MM-DD",
@@ -131,7 +131,7 @@ return array(
 		    "state_email" => "integer",
 		    "img" => "string",
 		    "registered" => "string",
-		    "papelera" => "integer",
+		    "trash" => "integer",
 		    "phone" => "integer",
 		    "address" => "string",
 			)
@@ -194,7 +194,7 @@ return array(
 					"Reason 2 error eg. numer value is required.",
 				)
 			),
-			"papelera"=>array(
+			"trash"=>array(
 				array(
 					"Reason error eg. Nombre no puede ser nulo.",
 					"Reason 2 error eg. numer value is required.",
@@ -297,7 +297,7 @@ return array(
 		    "state_email" => "integer",
 		    "img" => "string",
 		    "registered" => "string",
-		    "papelera" => "integer",
+		    "trash" => "integer",
 		    "phone" => "integer",
 		    "address" => "string",
 		    "birthdate" => "date YYYY-MM-DD",
@@ -372,7 +372,7 @@ return array(
 		    	"state_email" => "integer",
 		    	"img" => "string",
 		    	"registered" => "string",
-		    	"papelera" => "integer",
+		    	"trash" => "integer",
 		    	"phone" => "integer",
 		    	"address" => "string",
 			)
@@ -448,8 +448,8 @@ return array(
 				"required"=>false,
 			),
 			array(
-		    	"name"=>"papelera",
-		    	"description"=>"papelera is integer input type",
+		    	"name"=>"trash",
+		    	"description"=>"trash is integer input type",
 		    	"defaultValue"=>0,
 				"required"=>false,
 			),
@@ -481,7 +481,7 @@ return array(
 		    	"state_email" => "integer",
 		    	"img" => "string",
 		    	"registered" => "string",
-		    	"papelera" => "integer",
+		    	"trash" => "integer",
 		    	"phone" => "integer",
 		    	"address" => "string",
 				),array(
@@ -495,7 +495,7 @@ return array(
 			    "state_email" => "integer",
 			    "img" => "string",
 			    "registered" => "string",
-			    "papelera" => "integer",
+			    "trash" => "integer",
 			    "phone" => "integer",
 			    "address" => "string",
 			),
@@ -526,7 +526,7 @@ return array(
 		    "state_email" => "integer",
 		    "img" => "string",
 		    "registered" => "string",
-		    "papelera" => "integer",
+		    "trash" => "integer",
 		    "phone" => "integer",
 		    "address" => "string",
 		    "birthdate" => "date YYYY-MM-DD",
@@ -598,8 +598,8 @@ return array(
 				"required"=>true,
 			),
 			array(
-		    	"name"=>"papelera",
-		    	"description"=>"papelera is integer input type",
+		    	"name"=>"trash",
+		    	"description"=>"trash is integer input type",
 		    	"defaultValue"=>0,
 				"required"=>false,
 			),
@@ -630,7 +630,7 @@ return array(
 		    "state_email" => "integer",
 		    "img" => "string",
 		    "registered" => "string",
-		    "papelera" => "integer",
+		    "trash" => "integer",
 		    "phone" => "integer",
 		    "address" => "string",
 			)
@@ -693,7 +693,7 @@ return array(
 					"Reason 2 error eg. numer value is required.",
 				)
 			),
-			"papelera"=>array(
+			"trash"=>array(
 				array(
 					"Reason error eg. Nombre no puede ser nulo.",
 					"Reason 2 error eg. numer value is required.",

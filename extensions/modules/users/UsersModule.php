@@ -27,7 +27,6 @@ class UsersModule extends Module
 	public $copySendPassword="<p>Hola {{name}}! <br><br> Bienvenido a {{appname}} tus datos de ingreso son:<br>
 			<b>Usuario:</b><em>{{email}}</em><br>
 			<b>Password:</b><em>{{password}}</em><br></p>";
-	
 
 	public $enableOAuth=false;
 	
@@ -245,8 +244,8 @@ class UsersModule extends Module
 			$contex=array(
 				"body"=>$body,
 			);
-			Yii::app()->email->add($model->email,$model->name);
-			return Yii::app()->email->sendBody(Yii::t('app','Your credentials').' '.strip_tags(Yii::app()->name),$contex);
+			r('smtp')->add($model->email,$model->name);
+			return r('smtp')->sendBody(Yii::t('app','Your credentials').' '.strip_tags(Yii::app()->name),$contex);
 		}
 		else
 		{
@@ -268,8 +267,8 @@ class UsersModule extends Module
 					"key"=>Yii::app()->security->encrypt($model->email
 				))),
 			);
-			Yii::app()->email->add($model->email,$model->name);
-			return Yii::app()->email->sendBody($resendMessage.Yii::t('app','Confirm register on').' '.strip_tags(Yii::app()->name),$contex);
+			r('smtp')->add($model->email,$model->name);
+			return r('smtp')->sendBody($resendMessage.Yii::t('app','Confirm register on').' '.strip_tags(Yii::app()->name),$contex);
 		}	
 	}
 
@@ -293,8 +292,8 @@ class UsersModule extends Module
 			$contex=array(
 				"body"=>$body,
 			);
-			Yii::app()->email->add($model->email,$model->name);
-			return Yii::app()->email->sendBody(Yii::t('app','New password').' '.strip_tags(Yii::app()->name),$contex);
+			r('smtp')->add($model->email,$model->name);
+			return r('smtp')->sendBody(Yii::t('app','New password').' '.strip_tags(Yii::app()->name),$contex);
 		}
 		else
 		{
@@ -312,8 +311,8 @@ class UsersModule extends Module
 				"label"=>Yii::t('app','Go to change password'),
 				"url"=>Yii::app()->createAbsoluteUrl("/users/page/password",array("key"=>Yii::app()->security->encrypt($model->email))),
 			);
-			Yii::app()->email->add($model->email,$model->name);
-			return Yii::app()->email->sendBody(Yii::t('app','Recover password').' '.strip_tags(Yii::app()->name),$contex);
+			r('smtp')->add($model->email,$model->name);
+			return r('smtp')->sendBody(Yii::t('app','Recover password').' '.strip_tags(Yii::app()->name),$contex);
 		}
 		return false;	
 	}

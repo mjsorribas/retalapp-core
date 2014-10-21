@@ -3,55 +3,63 @@
 class Api_usersController extends JsonController
 {
 
-	public function routes($app,$url,$req,$res)
+	public function routes($app,$r)
 	{
+		$module=$this->module;
+		$app->notFound(function () use ($app) {
 
-		$app->get("$url/", function () use ($req, $res) {
+            $req=$app->request;
+            $res=$app->response;
 
-    		$res->filterAuth();
+            $res
+            ->status(404)
+            ->json($req, Yii::t('app','The resourse requested does not exist'));
+            $app->stop();
 
-	    	$model=new Users('search');
-			$model->unsetAttributes();  // clear any default values
-			$model->attributes=$req->params();
-    		$res->success(Users::model()->findAll($model->search()->getCriteria()));
-		});
+        });
 
-		$app->get("$url/view/:id", function ($id) use ($req, $res) {
+        $cb = function () use ($module, $app) {
+            return function() use ($module, $app) {
+                if(!Yii::app()->user->checkToken($module->getAllowPermissoms(false)))
+                {
+                    $app->response
+                    ->status(403)
+                    ->json($app->request, Yii::t('app','You do not have access to take this action'));
+                    $app->stop();
+                }
+            };
+        };
 
-    		$res->filterAuth();
+		$app->get("$r/me", $cb, function () use ($app) {
+			$req=$app->request;
+			$res=$app->response;
 
-			$model=$res->loadUsersModel($id);
-    		if($model===null)
-    			$res->notFound();
-			$res->success($model);
-	    });
+			$model=Users::model()->findByPk($res->user->id);
+			if($model===null) {
+	            $res
+                ->status(404)
+                ->json($id, Yii::t('app','The resourse requested {id} does not exist or was deleted',
+                    array('{id}'=>$id)),
+                    "resource_not_found");
+    		} else {
+				$res
+                ->status(200)
+                ->json($model);
+    		}
+        });
 
-		$app->get("$url/me", function () use ($req, $res) {
-
-    		$res->filterAuth();
-
-			$model=$res->loadUsersModel($res->user->id);
-    		if($model===null)
-    			$res->notFound();
-			$res->success($model);
-	    });
-
-		$app->post("$url/delete/:id", function ($id) use ($req, $res) {
-    		$res->filterAuth();
-	
-	    	$model=$res->loadUsersModel($id);
-			if($model->delete())
-				$res->success($model,"Users has been deleted successful");
-			else
-				$res->error("no_delete","",$model);
-		});
-
-		$app->post("$url/register", function () use ($req, $res) {
+		$app->post("$r/register", function () use ($module,$app) {
+			$req=$app->request;
+			$res=$app->response;
 
     		$appForm=new AppForm;
 			$appForm->attributes=$req->params();
-			if(!$appForm->validate())
-				$res->validateError($appForm->getErrors());
+
+			if(!$appForm->validate()) {
+                $res
+                ->status(422)
+                ->json($appForm->getErrors(),Yii::t('app','Form validation errors'),"unprocessable_entity");
+            }
 			else
 				$app=Apps::model()->find('client_id=? AND client_secret=?',
 					array($req->params('client_id'),$req->params('client_secret')));
@@ -62,10 +70,10 @@ class Api_usersController extends JsonController
 			$model->registered=date('Y-m-d H:i:s');
 			$model->state_email=0;
 			$model->state=1;
-			$model->papelera=0;
+			$model->trash=0;
 			$model->username=Yii::app()->format->trimAndLower($model->name).'.'.Yii::app()->format->trimAndLower($model->lastname);
 	
-			if($res->module->sendPassword)
+			if($module->sendPassword)
 				$model->password=sha1($model->username);
 				
 			if($model->validate())
@@ -73,63 +81,75 @@ class Api_usersController extends JsonController
 				$model->password=sha1($model->password);
 				$model->save();
 				
-				if($res->module->sendRegisterMail($model))
+				if($module->sendRegisterMail($model))
 				{
 					$modelArray=$model->attributes;
 					if(($token=$model->getAccessToken($app))!==null)
 					{
-						if($res->module->loginInRegister)
+						if($module->loginInRegister)
 						{
 							$modelArray['token']=$token;
-							$res->success($modelArray,'Registro exitoso.');
-						}
+						    $res
+		                    ->status(200)
+		                    ->json($modelArray,Yii::t('app','has been created successfully')."");
+               			}
 						else
 						{
-							if($res->module->sendPassword)
-								$res->success($modelArray,'Hemos enviado a tu correo tus datos de ingreso.');
-							else
-								$res->success($modelArray,'Por favor revisa tu correo electrónico para terminar el proceso de registro.');
+							if($module->sendPassword) {
+							    $res
+			                    ->status(200)
+			                    ->json($modelArray,Yii::t('app','Hemos enviado a tu correo tus datos de ingreso.')."");
+     						} else {
+							    $res
+			                    ->status(200)
+			                    ->json($modelArray,'Por favor revisa tu correo electrónico para terminar el proceso de registro.');
+     						}
 						}
 					}
 					else
 					{
-						$model->papelera=1;
-						$model->save(true,array('papelera'));
-						$res->error("error_token","No se pudo iniciar sesión, por favor intente más tarde.");
+						$model->trash=1;
+						$model->save(true,array('trash'));
+
+						$res
+	                    ->status(403)
+	                    ->json($req, Yii::t('app','You do not have access to take this action'));
+	                    $app->stop();
 					}
 				}
 				else
 				{
-					$model->papelera=1;
-					$model->save(true,array('papelera'));
-					$res->error("error_send_email","Error al enviar el correo de confirmación.");
+					$model->trash=1;
+					$model->save(true,array('trash'));
+					
+					$res
+                    ->status(403)
+                    ->json($req, Yii::t('app',"Error al enviar el correo de confirmación."));
+                    $app->stop();
 				}
-			}
-			else
-				$res->validateError($model->getErrors());
+			} else {
+
+			    $res
+                ->status(422)
+                ->json($model->getErrors(),Yii::t('app','Form validation errors'),"unprocessable_entity");
+            }
 		});
 
-		$app->post("$url/update/:id",function ($id) use ($req, $res) {
-
-    		$res->filterAuth();
-
-			$model=$res->loadUsersModel($id);
-			$model->attributes=$req->params();
-			if($model->save())
-				$res->validateSuccess($model);
-			else
-				$res->validateError($model->getErrors());
-		});
-
-		$app->post("$url/login",function () use ($req, $res) {
+		$app->post("$r/login",function () use ($app) {
+			$req=$app->request;
+			$res=$app->response;
 
     		$appForm=new AppForm;
 			$appForm->attributes=$req->params();
-			if(!$appForm->validate())
-				$res->validateError($appForm->getErrors());
-			else
-				$app=Apps::model()->find('client_id=? AND client_secret=?',
+			
+			if(!$appForm->validate()) {
+			    $res
+                ->status(422)
+                ->json($appForm->getErrors(),Yii::t('app','Form validation errors'),"unprocessable_entity");
+            } else {
+            	$app=Apps::model()->find('client_id=? AND client_secret=?',
 					array($req->params('client_id'),$req->params('client_secret')));
+            }
 
 			$model=new LoginForm;
 			$model->attributes=$req->params();
@@ -144,24 +164,28 @@ class Api_usersController extends JsonController
 				 * asumismos que su correo existe, porque siempre
 				 * se envian las contraseñas al correo
 				*/
-				if($res->module->sendPassword)
+				if($module->sendPassword)
 				{
 					$userObject->state_email=1;
 					$userObject->save(true,array('state_email'));
 				}
 				$modelArray=$userObject->attributes;
 				$modelArray['token']=$userObject->getAccessToken($app);
-				$res->success($modelArray);
-			}
-			else
-				$res->validateError($model->getErrors());
+			    $res
+                ->status(200)
+                ->json($modelArray,Yii::t('app','has been successfully')."");
+            } else {
+        	    $res
+                ->status(422)
+                ->json($model->getErrors(),Yii::t('app','Form validation errors'),"unprocessable_entity");
+            }
 		});
 
-		$app->post("$url/update_profile",function () use ($req, $res) {
+		$app->post("$r/update_profile", $cb, function () use ($app) {
+			$req=$app->request;
+			$res=$app->response;
 
-    		$res->filterAuth();
-
-			$model=$res->loadUsersModel($res->user->id);
+			$model=Users::model()->findByPk($res->user->id);
 			$model->attributes=$req->params();
 			
 			if($req->params('newPassword'))
@@ -174,54 +198,52 @@ class Api_usersController extends JsonController
             		$model->password=sha1($model->newPassword);
             		$model->save(true,array('password'));
             	}
-            	$res->validateSuccess($model);
-			}
-			else
-				$res->validateError($model->getErrors());
+
+				$res
+				->status(200)
+				->json($model,Yii::t('app','has been created successfully')."");
+        	} else {
+				$res
+				->status(422)
+				->json($model->getErrors(),Yii::t('app','Form validation errors'),"unprocessable_entity");
+            }
 		});
 
-		$app->post("$url/forgot",function () use ($req, $res) {
-
-    		// $res->filterAuth();
+		$app->post("$r/forgot",function () use ($app) {
+			$req=$app->request;
+			$res=$app->response;
 
     		$model=new ForgotForm;
 			$model->attributes=$req->params();
 			if ($model->validate()) 
 			{
-				$user=Users::model()->find("email=? AND papelera=0",array($model->email));
+				$user=Users::model()->find("email=? AND trash=0",array($model->email));
 				
-				if($res->module->sendForgotMail($user))
+				if($module->sendForgotMail($user))
 				{
-					if($res->module->sendPassword)
-						$res->success($model,'Hemos enviado a tu correo tus datos de ingreso.');
-					else
-						$res->success($model,'Por favor revisa tu correo electrónico para recuperar tu contraseña.');
+					if($module->sendPassword) {
+
+					    $res
+	                    ->status(200)
+	                    ->json($model,Yii::t('app','Hemos enviado a tu correo tus datos de ingreso.')."");
+       				} else {
+   					    $res
+	                    ->status(200)
+	                    ->json($model,Yii::t('app','Por favor revisa tu correo electrónico para recuperar tu contraseña.')."");
+       				}
+				} else {
+
+				    $res
+                    ->status(500)
+                    ->json($model->getErrors(),Yii::t('app','Error al enviar el correo de confirmación, por favor intenta nuevamente.'),"error_send_email");
 				}
-				else
-					$res->error("error_send_email","Error al enviar el correo de confirmación, por favor intenta nuevamente.");
-			}
-			else 
-				$res->validateError($model->getErrors());
+			} else {
+				$res
+				->status(422)
+				->json($model->getErrors(),Yii::t('app','Form validation errors'),"unprocessable_entity");
+        	}
 		});
 
 		$app->run();
-	}
-
-	//////////////////////////
-	// Reutilizable methods //
-	//////////////////////////
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Task the loaded model
-	 * @throws CHttpException
-	 */
-	public function loadUsersModel($id)
-	{
-		$model=Users::model()->findByPk($id);
-		if($model===null)
-			$this->notFound();	
-		return $model;
 	}
 }

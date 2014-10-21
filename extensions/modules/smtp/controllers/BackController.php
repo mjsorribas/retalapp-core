@@ -103,15 +103,15 @@ class BackController extends Controller
             $model->attributes=$_POST['SmtpTest'];
             if($model->validate())
             {
-                Yii::app()->email->add($model->email_test,$model->email_test);
-				$result=Yii::app()->email->sendBody('Testing send email from '.strip_tags(Yii::app()->name),array(
+                $this->module->add($model->email_test,$model->email_test);
+				$result=$this->module->sendBody('Testing send email from '.strip_tags(Yii::app()->name),array(
 					"body"=>"<h1>Hola ".substr($model->email_test, 0,7)."..!</h1><p>{$model->area_test}</p>",
 					"label"=>"Label of test",
 					"url"=>$this->createAbsoluteUrl('/')
 				));
 
 				$model->result=(int)$result;
-				$model->message=Yii::app()->email->ErrorInfo;
+				$model->message=$this->module->ErrorInfo;
 	            echo CJSON::encode($model);
                 Yii::app()->end();
             }
@@ -152,6 +152,6 @@ class BackController extends Controller
     	versions of Lorem Ipsum.
     	</p>
     	";
-		Yii::app()->email->previewBody('Testing send email from '.strip_tags(Yii::app()->name),array('body'=>$lorem,'label'=>'Label of test','url'=>$this->createAbsoluteUrl('/')));
+		$this->module->previewBody('Testing send email from '.strip_tags(Yii::app()->name),array('body'=>$lorem,'label'=>'Label of test','url'=>$this->createAbsoluteUrl('/')));
     }
 }

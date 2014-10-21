@@ -26,7 +26,7 @@ class PageController extends FrontController
 
 	public function actionResendVerify()
 	{
-		$model=Users::model()->find("email=? AND papelera=0 AND state=1",array($_GET['email']));
+		$model=Users::model()->find("email=? AND trash=0 AND state=1",array($_GET['email']));
 		if($this->module->sendRegisterMail($model,true))
 		{
 			$message="<h4>{$model->name}!</h4>
@@ -99,7 +99,7 @@ class PageController extends FrontController
 			// validate user input and redirect to the previous page if valid
 			if($model->validate())
 			{
-				$user=Users::model()->find("email=? AND papelera=0",array($email));
+				$user=Users::model()->find("email=? AND trash=0",array($email));
 				$user->password=sha1($model->password);
 				$user->save(true,array("password"));
 				Yii::app()->user->setFlash("success","Contraseña actualizada correctamente.<br>".$user->email);
@@ -207,7 +207,7 @@ class PageController extends FrontController
 			$model->attributes=$_POST['ForgotForm'];
 			if ($model->validate()) 
 			{
-				$user=Users::model()->find("email=? AND papelera=0",array($model->email));
+				$user=Users::model()->find("email=? AND trash=0",array($model->email));
 				if($this->module->sendForgotMail($user))
 				{
 					if($this->module->sendPassword)
@@ -302,7 +302,7 @@ class PageController extends FrontController
 			$model->registered=date('Y-m-d H:i:s');
 			$model->state_email=0;
 			$model->state=1;
-			$model->papelera=0;
+			$model->trash=0;
 			$model->conditions=isset($_POST['Users']['conditions'])?$_POST['Users']['conditions']:1;
 			$model->username=Yii::app()->format->trimAndLower($model->name).'.'.Yii::app()->format->trimAndLower($model->lastname);
 			// print_r($model);
@@ -330,8 +330,8 @@ class PageController extends FrontController
 				}
 				else
 				{
-					$model->papelera=1;
-					$model->save(true,array('papelera'));
+					$model->trash=1;
+					$model->save(true,array('trash'));
 					Yii::app()->user->setFlash("danger","Error al enviar el correo de confirmación, por favor intenta mas tarde.");
 				}
 				$this->redirect($this->module->redirectLogin);

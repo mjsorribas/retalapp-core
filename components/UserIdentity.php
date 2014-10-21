@@ -18,8 +18,7 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{
-		#$user=Users::model()->find("LOWER(email)=?",array(strtolower($this->username)));
-		$user=Users::model()->find("(LOWER(email)=? OR LOWER(username)=?) AND papelera=0 AND state=1",array(strtolower($this->username),strtolower($this->username)));
+		$user=Users::model()->find("(LOWER(email)=? OR LOWER(username)=?) AND trash=0 AND state=1",array(strtolower($this->username),strtolower($this->username)));
 		if($user===null)
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
 		elseif(sha1($this->password)!==$user->password)
@@ -45,7 +44,7 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function authenticateToken()
 	{
-		$user=Users::model()->find("(LOWER(email)=? OR LOWER(username)=?) AND papelera=0",array(strtolower($this->username),strtolower($this->username)));
+		$user=Users::model()->find("(LOWER(email)=? OR LOWER(username)=?) AND trash=0",array(strtolower($this->username),strtolower($this->username)));
 		if($user===null)
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
 		elseif(!in_array(sha1($this->password), array($user->password)))

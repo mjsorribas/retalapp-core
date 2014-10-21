@@ -305,7 +305,7 @@ CREATE TABLE IF NOT EXISTS `users_users` (
   `state_email` tinyint(1) NOT NULL DEFAULT '0',
   `img` varchar(255) DEFAULT NULL,
   `registered` datetime NOT NULL,
-  `papelera` tinyint(1) NOT NULL DEFAULT '0',
+  `trash` tinyint(1) NOT NULL DEFAULT '0',
   `phone` int(10) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `birthdate` date DEFAULT NULL,
@@ -316,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `users_users` (
 -- Volcado de datos para la tabla `users_users`
 --
 
-INSERT INTO `users_users` (`id`, `password`, `email`, `name`, `lastname`, `username`, `state`, `state_email`, `img`, `registered`, `papelera`, `phone`, `address`, `birthdate`) VALUES
+INSERT INTO `users_users` (`id`, `password`, `email`, `name`, `lastname`, `username`, `state`, `state_email`, `img`, `registered`, `trash`, `phone`, `address`, `birthdate`) VALUES
 (1, 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@email.com', 'Admin', 'Admin', 'admin', 1, 1, NULL, '2013-10-30 02:39:34', 0, NULL, NULL, NULL),
 (2, '12dea96fec20593566ab75692c9949596833adc9', 'user@email.com', 'User', 'Site', 'user', 1, 1, NULL, '2014-05-30 15:04:47', 0, NULL, NULL, NULL),
 (3, 'dc76e9f0c0006e8f919e0c515c66dbba3982f785', 'root@email.com', 'Root', 'Root', 'root', 1, 1, NULL, '2014-05-30 15:04:47', 0, NULL, NULL, NULL);

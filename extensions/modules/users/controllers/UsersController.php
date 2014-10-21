@@ -272,8 +272,8 @@ class UsersController extends Controller
 	public function actionDelete($id)
 	{
 		$model=$this->loadModel($id);
-		$model->papelera=1;
-		if(Yii::app()->request->isAjaxRequest and $model->save(true,array('papelera')))
+		$model->trash=1;
+		if(Yii::app()->request->isAjaxRequest and $model->save(true,array('trash')))
 		{
 			echo CJSON::encode(array("result"=>1));
 			Yii::app()->end();
@@ -379,8 +379,8 @@ class UsersController extends Controller
 				);
 				$subject='Recuperar contraseña '.strip_tags(Yii::app()->name);
 				
-				Yii::app()->email->add($user->email,$user->name);
-				Yii::app()->email->sendBody($subject,$contex);
+				r('smtp')->add($user->email,$user->name);
+				r('smtp')->sendBody($subject,$contex);
 				
 				Yii::app()->user->setFlash("success",'Por favor revise su correo electrónico para recuperar su contraseña.<br>'.$model->email);
 				$this->refresh();

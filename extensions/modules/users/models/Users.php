@@ -42,10 +42,10 @@ class Users extends CActiveRecord
 			array('password, newPassword', 'length', 'min'=>4),
 			array('name, lastname, username, img', 'length', 'max'=>255),
 			array('email', 'email'),
-			array('papelera, phone, address', 'safe'),
+			array('trash, phone, address', 'safe'),
 			array('birthdate', 'date', 'format'=>'yyyy-M-d'),
-			array('email', 'unique', 'attributeName'=>'email', 'className'=>'Users', 'criteria'=>array('condition'=>'papelera=0')),
-			// array('email', 'unique', 'attributeName'=>'email', 'className'=>'Users', 'criteria'=>array('condition'=>'papelera=0 AND state_email=1 AND state=1')),
+			array('email', 'unique', 'attributeName'=>'email', 'className'=>'Users', 'criteria'=>array('condition'=>'trash=0')),
+			// array('email', 'unique', 'attributeName'=>'email', 'className'=>'Users', 'criteria'=>array('condition'=>'trash=0 AND state_email=1 AND state=1')),
 			// array('phone, address', 'required', 'on'=>'signup'),
 			array('conditions', 'boolean'),
 
@@ -129,7 +129,7 @@ class Users extends CActiveRecord
 		$criteria->compare('state_email',$this->state_email);
 		$criteria->compare('img',$this->img,true);
 		$criteria->compare('registered',$this->registered,true);
-		$criteria->compare('papelera',0);
+		$criteria->compare('trash',0);
 		$criteria->addCondition("username<>'root'");
 		$criteria->order="id DESC";
 
@@ -274,6 +274,6 @@ class Users extends CActiveRecord
 
 	public static function listData()
 	{
-		return CHtml::listData(self::model()->findAll('papelera=?',array(0)),'id','fullname');
+		return CHtml::listData(self::model()->findAll('trash=?',array(0)),'id','fullname');
 	}
 }

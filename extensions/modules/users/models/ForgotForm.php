@@ -26,7 +26,7 @@ class ForgotForm extends CFormModel
 				'attributeName'=>'email',
 				'className'=>'Users',
 				'message'=>Yii::t('app','Your email <strong>{value}</ strong> is not registered in our database'),
-				'criteria'=>array("condition"=>"papelera=0")
+				'criteria'=>array("condition"=>"trash=0")
 			),
 		);
 	}
@@ -35,7 +35,7 @@ class ForgotForm extends CFormModel
 	{
 		if(!$this->hasErrors()) 
 		{
-			$model=Users::model()->find('email=? AND papelera=0',array($this->email));
+			$model=Users::model()->find('email=? AND trash=0',array($this->email));
 			if($model!==null and $model->state_email==0)
 				$this->addError('email',Yii::t('app',"Your email dosen't has been verified yet, please click {here} for resend email.",
 					array('{here}'=>CHtml::link(Yii::t('app','Here'),array('/users/page/resendVerify','email'=>$model->email)))));

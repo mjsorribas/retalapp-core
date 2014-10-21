@@ -11,8 +11,8 @@ class Controller extends CController
 	 */
 
 	public $layout='//layouts/column1';
-	public $themeBack='base';
-	public $themeFront;
+	public $themeBack='adminlte';
+	public $themeFront='flat';
 	public $title;
 	public $subTitle;
 
@@ -51,7 +51,11 @@ class Controller extends CController
 		/**
 		 * Theme front is the apptheme
 		*/
-		$this->themeFront=Yii::app()->theme;
+		if(isset(Yii::app()->params['themeFront']))
+			$this->themeFront=Yii::app()->params['themeFront'];
+		
+		if(isset(Yii::app()->params['themeBack']))
+			$this->themeBack=Yii::app()->params['themeBack'];
 		
 
 		/**

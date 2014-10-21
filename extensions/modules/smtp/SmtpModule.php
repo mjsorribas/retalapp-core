@@ -1,9 +1,32 @@
 <?php
-
+require dirname(__FILE__).'/PHPMailer-master/class.phpmailer.php';
+require dirname(__FILE__).'/PHPMailer-master/class.pop3.php';
+require dirname(__FILE__).'/PHPMailer-master/class.smtp.php';
 class SmtpModule extends Module
 {
     public $showMenuFromAdmin=false;
 	private $_model;
+
+
+	public $colorTemplate='#53B6CF';
+	public $colorFontTemplate='#7f8c8d';
+
+	public $SMTPAuth=false;
+	// if is auth need full this inputs
+	public $Host; // sets the SMTP server
+	public $Port=26;                    // set the SMTP port for the GMAIL server
+	public $Username; // SMTP account username
+	public $Password; 
+	
+	public $fromEmail;
+	public $fromName;
+	public $CharSet = 'UTF-8';
+	public $AltBody = 'To view the message, please use an HTML compatible email viewer!';
+
+	public $ErrorInfo='';
+	private $_dest=array();
+	private $_a=array();
+
 
 	public function init()
 	{
@@ -54,25 +77,25 @@ class SmtpModule extends Module
 	{
 		if(($model=$this->getModel())!==null)
 		{
-			if(Yii::app()->email!==null and $model->enabled)
+			if($model->enabled)
 			{
-				Yii::app()->email->SMTPAuth=true;
-				Yii::app()->email->Host=$model->host_email_server;
-				Yii::app()->email->Port=$model->port_email_server;
-				Yii::app()->email->fromEmail=$model->username_email_server;
-				Yii::app()->email->fromName=Yii::app()->name;
-				Yii::app()->email->Username=$model->username_email_server;
-				Yii::app()->email->Password=$model->password_email_server;
+				$this->SMTPAuth=true;
+				$this->Host=$model->host_email_server;
+				$this->Port=$model->port_email_server;
+				$this->fromEmail=$model->username_email_server;
+				$this->fromName=Yii::app()->name;
+				$this->Username=$model->username_email_server;
+				$this->Password=$model->password_email_server;
 			}
 			if(!$model->enabled)
-				Yii::app()->email->SMTPAuth=false;
+				$this->SMTPAuth=false;
 		}
 	}
 
 	public function getTemplatesAvailables()
 	{
 		$templates=array();
-		$pathDir=Yii::getPathOfAlias('application.templates');
+		$pathDir=Yii::getPathOfAlias('application.config.templates');
 
 		if(is_dir($pathDir) and ($handle = opendir($pathDir))) 
 		{
@@ -88,38 +111,113 @@ class SmtpModule extends Module
 		}
 		return $templates;
 	}
-
-	///////////////////////////////////////////////
-	// The follow methos are in order to         //
-	// Enabled menues on the left side bar admin //
-	///////////////////////////////////////////////
-
-	/*
-	 * Examples in order to show reports in dashboard
-	public function dashboardCounters()
+	public function add($mail,$name="")
 	{
-		return array(
-            array('label'=>'New Orders', 'type'=>'info', 'icon'=>'fa fa-cog', 'count'=>'150', 'url'=>array('/'.$this->id.'/back')),
-            array('label'=>'Bounce Rate', 'type'=>'success', 'icon'=>'fa fa-shopping-cart', 'count'=>'40', 'url'=>array('/'.$this->id.'/back')),
-            array('label'=>'User Registrations', 'type'=>'warning', 'icon'=>'fa fa-user', 'count'=>'44', 'url'=>array('/'.$this->id.'/back')),
-            array('label'=>' Unique Visitors ', 'type'=>'danger', 'icon'=>'fa fa-eye', 'count'=>'60', 'url'=>array('/'.$this->id.'/back')),
-		);
+		$this->_dest[$mail]=$name;
 	}
-
-	public function dashboardReports()
-	{
-		return array(
-            array('label'=>'New Orders', 'type'=>'danger', 'icon'=>'fa fa-cog', 'content'=>$this->loadOrders(), 'url'=>array('/'.$this->id)),
-        );
-	}
-
-	public function loadOrders()
-	{
-		// Load here your html 
-		// You can call all the models of this module
-		// and create your own html for report
-		return '<em>Hola orders</em>';
-	}
-	*/
 	
+	public function addAttachment($file)
+	{
+		$this->_a[]=$file;
+	}
+	
+	public function viewAdd()
+	{
+		return $this->_dest;
+	}
+
+	public function sendBody($subject=null,$context=null,$template='email',$priority=null,$send=true)
+	{
+		if($context===null)
+			$context='Message without body...';
+		
+		if(is_string($context))
+		{
+			$str=$context;
+			$context=array();	
+			$context['body']=$str;
+		}
+
+		if(strpos($template, ".")!==false)
+			$view=$template;
+		else
+			$view="application.config.templates.{$template}";
+
+		$context['colorTemplate']=$this->colorTemplate;
+		$context['colorFontTemplate']=$this->colorFontTemplate;
+		
+		$subject=$subject===null?
+			Yii::t('app','Notification from').' '.strip_tags(Yii::app()->name):
+			$subject;
+		$body=Yii::app()->controller->renderPartial($view,$context,true);
+		if($send)
+			return $this->send($subject,$body,$priority);
+		else
+			return $body;
+	}
+
+	public function previewBody($subject=null,$context=null,$template='email',$priority=null)
+	{
+		echo $this->sendBody($subject,$context,$template,$priority,false);
+	}
+
+	public function addFrom($email,$name)
+	{
+		$this->fromEmail=$email;
+		$this->fromName=$name;
+	}
+
+	/**
+	 * enviarCorreos
+	 * Envía los correos de cada componente
+	*/
+	public function send($subject=null,$body='',$priority=null)
+	{
+		$subject=$subject===null?Yii::t('app','Notification from').' '.strip_tags(Yii::app()->name):$subject;
+		$charset=$this->CharSet;
+		$fromEmail=$this->fromEmail!==null?$this->fromEmail:Yii::app()->params['adminEmail'];
+		$fromName=$this->fromName!==null?$this->fromName:strip_tags(Yii::app()->name);
+		$altbody=$this->AltBody!==null?$this->AltBody:strip_tags($body);
+		
+		$this->ErrorInfo='';
+		
+		$mail = new PHPMailer;
+		if($this->SMTPAuth)
+		{
+			$mail->IsSMTP(); // telling the class to use SMTP
+			// $mail->SMTPDebug  = 2;                     // enables SMTP debug information (for testing)
+			// 1 = errors and messages
+			// 2 = messages only
+			$mail->SMTPAuth   = true;                  // enable SMTP authentication
+			$mail->Host       = $this->Host; // sets the SMTP server
+			$mail->Port       = $this->Port;                    // set the SMTP port for the GMAIL server
+			$mail->Username   = $this->Username; // SMTP account username
+			$mail->Password   = $this->Password;        // SMTP account password
+			$mail->Mailer = "smtp";
+		}
+		
+		$mail->CharSet = $charset;
+		$mail->From       = $fromEmail;
+		$mail->FromName   = $fromName;
+		$mail->Subject    =$subject;
+		$mail->AltBody    = $altbody;
+
+		$mail->MsgHTML($body);
+		foreach($this->_a as $file)
+			$mail->AddAttachment($file);
+		
+		foreach($this->_dest as $email=>$name)
+			$mail->AddAddress($email,$name);
+		if(!$mail->send()) {
+			$this->ErrorInfo=$mail->ErrorInfo;
+			Yii::log('Message could not be sent. Mailer Error: ' . $mail->ErrorInfo,'error','email');
+			$this->_dest=array();
+			$this->_a=array();
+			return false;
+		} else {
+			$this->ErrorInfo='Message has been sent';
+			$this->_a=array();
+		    return true;
+		}
+	}	
 }
