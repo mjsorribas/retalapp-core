@@ -14,7 +14,7 @@ $this->pageTitle=Yii::app()->name . ' - Profile';
         'clientOptions'=>array('validateOnSubmit'=>true),
     )); ?>
     <?php #echo $form->errorSummary($user,"","",array("class"=>"alert alert-danger")); ?>
-
+    <br>
     <div class="form-group">
         <?php #echo $form->labelEx($user,'img',array('class'=>'control-label')); ?>
         <?php echo $this->widget('ext.inputs.uploader.GUpload', array(
@@ -26,9 +26,6 @@ $this->pageTitle=Yii::app()->name . ' - Profile';
                 ),true)?>
         <?php echo $form->error($user,'img',array('class'=>'help-block')); ?>
     </div>
-   
-    <?php echo CHtml::image($user->getImageUrl(),"",array("style"=>"width: 70px;margin: 20px auto;","class"=>"img-responsive img-circle")) ?>
-
    
     <div class="form-group">
         <?php echo $form->labelEx($user,'email',array('class'=>'control-label')); ?>
