@@ -3,6 +3,10 @@
 // CWebApplication properties can be configured here.
 
 
+/**
+ * We are creating the aliases for retalapp structure
+*/ 
+Yii::setPathOfAlias('app',dirname(__FILE__).'/../../../../app');
 Yii::setPathOfAlias('core',dirname(__FILE__).'/..');
 
 
