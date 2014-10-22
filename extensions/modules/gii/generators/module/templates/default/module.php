@@ -40,14 +40,6 @@ class <?php echo $this->moduleClass; ?> extends Module
        );
 	}
 
-	/**
-	 * Url for acces to module root
-	*/
-	public function getUrl()
-	{
-		return r()->createUrl('/'.$this->id);
-	}
-
 	/*
 	 * HOeee!! Do you want a multi-level menu?
 	 * Here is
