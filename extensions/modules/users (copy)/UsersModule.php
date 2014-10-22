@@ -69,37 +69,6 @@ class UsersModule extends Module
 	
 	public $urlAdminProfile=array("/users/users/profile");
 	
-	// Redirects
-	public $redirectLogin=array("/");
-	
-	public $redirectLoginAdmin=array("/admin");
-	
-	public $redirectLogout=array("/");
-	
-	public $redirectLogoutAdmin=array("/users/users/login");
-	
-	// Enabled create news roles
-	public $canCreateRoles=false;
-
-	// deprecated
-	public $subMenu=false;
-	
-	private $_config;
-	
-	public function init()
-	{
-		// this method is called when the module is being created
-		// you may place code here to customize the module or the application
-
-		// import the module-level models and components
-		$this->setImport(array(
-			'users.models.base.*',
-			'users.models.*',
-			'users.components.*',
-		));
-		parent::init();
-	}
-
 	public function getToLogin()
 	{
 		return CHtml::normalizeUrl($this->urlLogin);
@@ -125,6 +94,55 @@ class UsersModule extends Module
 		return CHtml::normalizeUrl($this->urlLogout);
 	}
 	
+	// Redirects
+	public $redirectLogin=array("/");
+	
+	public $redirectLoginAdmin=array("/admin");
+	
+	public $redirectLogout=array("/");
+	
+	public $redirectLogoutAdmin=array("/users/users/login");
+	
+	// Enabled create news roles
+	public $canCreateRoles=false;
+
+	// deprecated
+	public $subMenu=false;
+	
+	private $_config;
+	public function init()
+	{
+		// this method is called when the module is being created
+		// you may place code here to customize the module or the application
+
+		// import the module-level models and components
+		$this->setImport(array(
+			'users.models.base.*',
+			'users.models.*',
+			'users.components.*',
+		));
+
+		/*
+		if($this->_config===null)
+			$this->_config=UsersConfig::model()->find();
+	
+		if($this->_config!==null)
+		{
+			$this->enableOAuth=($this->_config->enableOAuth!==null)?$this->_config->enableOAuth:$this->enableOAuth;
+			$this->loginInRegister=($this->_config->loginInRegister!==null)?$this->_config->loginInRegister:$this->loginInRegister;
+			$this->labelMenu=($this->_config->labelMenu!==null)?$this->_config->labelMenu:$this->labelMenu;
+			$this->sendPassword=($this->_config->sendPassword!==null)?$this->_config->sendPassword:$this->sendPassword;
+			$this->showMenuFromAdmin=($this->_config->showMenuFromAdmin!==null)?$this->_config->showMenuFromAdmin:$this->showMenuFromAdmin;
+			$this->allowBasicOAuth=($this->_config->allowBasicOAuth!==null)?$this->_config->allowBasicOAuth:$this->allowBasicOAuth;
+			$this->copyWelcomeEmail=($this->_config->copyWelcomeEmail!==null)?$this->_config->copyWelcomeEmail:$this->copyWelcomeEmail;
+			$this->copySendPasswordForgot=($this->_config->copySendPasswordForgot!==null)?$this->_config->copySendPasswordForgot:$this->copySendPasswordForgot;
+			$this->copyForgotEmail=($this->_config->copyForgotEmail!==null)?$this->_config->copyForgotEmail:$this->copyForgotEmail;
+			$this->copySendPassword=($this->_config->copySendPassword!==null)?$this->_config->copySendPassword:$this->copySendPassword;
+		}
+		*/
+		parent::init();
+	}
+
 	public function beforeControllerAction($controller, $action)
 	{
 		if(parent::beforeControllerAction($controller, $action))
@@ -137,14 +155,67 @@ class UsersModule extends Module
 			return false;
 	}
 
+	public function builtEndBody($ctr)
+	{
+		if($this->enableModals)
+		{
+			Yii::app()->clientScript->registerScript('usersModales',"
+				$(document).on('click','.module-users-login',function(e){
+					e.preventDefault();
+					$('#profileModal').modal('hide');
+					$('#registerModal').modal('hide');
+					$('#forgotModal').modal('hide');
+					$('#loginModal').modal('show');
+				});	
+
+				$(document).on('click','.module-users-register',function(e){
+					e.preventDefault();
+					$('#profileModal').modal('hide');
+					$('#loginModal').modal('hide');
+					$('#forgotModal').modal('hide');
+					$('#registerModal').modal('show');
+				});	
+
+				$(document).on('click','.module-users-forgot',function(e){
+					e.preventDefault();
+					$('#profileModal').modal('hide');
+					$('#registerModal').modal('hide');
+					$('#loginModal').modal('hide');
+					$('#forgotModal').modal('show');
+				});	
+
+				$(document).on('click','.module-users-profile',function(e){
+					e.preventDefault();
+					$('#registerModal').modal('hide');
+					$('#loginModal').modal('hide');
+					$('#forgotModal').modal('hide');
+					$('#profileModal').modal('show');
+				});	
+			");
+			
+			$currentUser=new Users;
+			if(!Yii::app()->user->isGuest)
+				$currentUser=Users::model()->findByPk(Yii::app()->user->id);
+			
+			Yii::app()->controller->renderPartial($this->usersModalsPath,array(
+				'user'=>$currentUser,
+				'ctr'=>$ctr,
+				'module'=>$this,
+				'register'=>new Users("signup"),
+				'login'=>new LoginForm,
+				'forgot'=>new ForgotForm,
+			));
+		}
+	}
+
 	public function listRoles($currentUser=false)
 	{
 		$result=array();
-		foreach(r()->authManager->getAuthItems() as $data)
+		foreach(Yii::app()->authManager->getAuthItems() as $data)
 		{
  			if($currentUser)
  			{
- 				if(r()->user->checkAccess($data->name))
+ 				if(Yii::app()->user->checkAccess($data->name))
  					$result[$data->name]=$data->name;
  			}
  			else
@@ -160,14 +231,14 @@ class UsersModule extends Module
 			return false;
 		if($this->sendPassword)
 		{
-			$model->password=sha1($pass=r()->security->randomWord(4));
+			$model->password=sha1($pass=Yii::app()->security->randomWord(4));
 			$model->save(true,array('password'));
 
 			$body=$this->copySendPassword;
 			$body=strtr($body,array(
 				'{{name}}'=>$model->name,
 				'{{lastname}}'=>$model->lastname,
-				'{{appname}}'=>strip_tags(r()->name),
+				'{{appname}}'=>strip_tags(Yii::app()->name),
 				'{{fullname}}'=>$model->name." ".$model->lastname,
 				'{{email}}'=>$model->email,
 				'{{password}}'=>$pass,
@@ -176,7 +247,7 @@ class UsersModule extends Module
 				"body"=>$body,
 			);
 			r('smtp')->add($model->email,$model->name);
-			return r('smtp')->sendBody(Yii::t('app','Your credentials').' '.strip_tags(r()->name),$contex);
+			return r('smtp')->sendBody(Yii::t('app','Your credentials').' '.strip_tags(Yii::app()->name),$contex);
 		}
 		else
 		{
@@ -187,19 +258,19 @@ class UsersModule extends Module
 			$body=strtr($body,array(
 				'{{name}}'=>$model->name,
 				'{{lastname}}'=>$model->lastname,
-				'{{appname}}'=>strip_tags(r()->name),
+				'{{appname}}'=>strip_tags(Yii::app()->name),
 				'{{fullname}}'=>$model->name." ".$model->lastname,
 				'{{email}}'=>$model->email,
 			));
 			$contex=array(
 				"body"=>$body,
 				"label"=>Yii::t('app','Confirm email'),
-				"url"=>r()->createAbsoluteUrl("/users/page/confirm",array(
-					"key"=>r()->security->encrypt($model->email
+				"url"=>Yii::app()->createAbsoluteUrl("/users/page/confirm",array(
+					"key"=>Yii::app()->security->encrypt($model->email
 				))),
 			);
 			r('smtp')->add($model->email,$model->name);
-			return r('smtp')->sendBody($resendMessage.Yii::t('app','Confirm register on').' '.strip_tags(r()->name),$contex);
+			return r('smtp')->sendBody($resendMessage.Yii::t('app','Confirm register on').' '.strip_tags(Yii::app()->name),$contex);
 		}	
 	}
 
@@ -207,14 +278,14 @@ class UsersModule extends Module
 	{
 		if($this->sendPassword)
 		{
-			$model->password=sha1($pass=r()->security->randomWord(4));
+			$model->password=sha1($pass=Yii::app()->security->randomWord(4));
 			$model->save(true,array('password'));
 			
 			$body=$this->copySendPasswordForgot;
 			$body=strtr($body,array(
 				'{{name}}'=>$model->name,
 				'{{lastname}}'=>$model->lastname,
-				'{{appname}}'=>strip_tags(r()->name),
+				'{{appname}}'=>strip_tags(Yii::app()->name),
 				'{{fullname}}'=>$model->name." ".$model->lastname,
 				'{{email}}'=>$model->email,
 				'{{password}}'=>$pass,
@@ -224,7 +295,7 @@ class UsersModule extends Module
 				"body"=>$body,
 			);
 			r('smtp')->add($model->email,$model->name);
-			return r('smtp')->sendBody(Yii::t('app','New password').' '.strip_tags(r()->name),$contex);
+			return r('smtp')->sendBody(Yii::t('app','New password').' '.strip_tags(Yii::app()->name),$contex);
 		}
 		else
 		{
@@ -232,7 +303,7 @@ class UsersModule extends Module
 			$body=strtr($body,array(
 				'{{name}}'=>$model->name,
 				'{{lastname}}'=>$model->lastname,
-				'{{appname}}'=>strip_tags(r()->name),
+				'{{appname}}'=>strip_tags(Yii::app()->name),
 				'{{fullname}}'=>$model->name." ".$model->lastname,
 				'{{email}}'=>$model->email,
 			));
@@ -240,22 +311,22 @@ class UsersModule extends Module
 			$contex=array(
 				"body"=>$body,
 				"label"=>Yii::t('app','Go to change password'),
-				"url"=>r()->createAbsoluteUrl("/users/page/password",array("key"=>r()->security->encrypt($model->email))),
+				"url"=>Yii::app()->createAbsoluteUrl("/users/page/password",array("key"=>Yii::app()->security->encrypt($model->email))),
 			);
 			r('smtp')->add($model->email,$model->name);
-			return r('smtp')->sendBody(Yii::t('app','Recover password').' '.strip_tags(r()->name),$contex);
+			return r('smtp')->sendBody(Yii::t('app','Recover password').' '.strip_tags(Yii::app()->name),$contex);
 		}
 		return false;	
 	}
 
 	public function encryptEmail($decriptEmail)
 	{
-		return r()->security->encrypt($decriptEmail);
+		return Yii::app()->security->encrypt($decriptEmail);
 	}
 
 	public function decryptEmail($encriptEmail)
 	{
-		return r()->security->decrypt($encriptEmail);
+		return Yii::app()->security->decrypt($encriptEmail);
 	}
 
 	/*
@@ -270,9 +341,9 @@ class UsersModule extends Module
 			return array(
 	            array('label'=>$this->labelMenu!==null?$this->labelMenu:Yii::t('app','Users'), 'icon'=>'fa fa-user', 'url'=>'#','items'=>array(
 	        		array('label'=>Yii::t('app','Users system'), 'icon'=>'fa fa-users', 'url'=>array('/'.$this->id.'/users')),
-    		        array('label'=>Yii::t('app','Profiles system'), 'icon'=>'fa fa-sitemap', 'url'=>array('/'.$this->id.'/profiles/admin'),'visible'=>r()->user->check('root')),
-	        		array('label'=>Yii::t('app','Applications'), 'icon'=>'fa fa-mobile', 'url'=>array('/'.$this->id.'/apps'),'visible'=>r()->user->check('root')),
-    		        array('label'=>Yii::t('app','API'), 'icon'=>'fa fa-code', 'url'=>array('/'.$this->id.'/api'),'visible'=>r()->user->check('root')),
+    		        array('label'=>Yii::t('app','Profiles system'), 'icon'=>'fa fa-sitemap', 'url'=>array('/'.$this->id.'/profiles/admin'),'visible'=>Yii::app()->user->check('root')),
+	        		array('label'=>Yii::t('app','Applications'), 'icon'=>'fa fa-mobile', 'url'=>array('/'.$this->id.'/apps'),'visible'=>Yii::app()->user->check('root')),
+    		        array('label'=>Yii::t('app','API'), 'icon'=>'fa fa-code', 'url'=>array('/'.$this->id.'/api'),'visible'=>Yii::app()->user->check('root')),
       
 	        	)),
 	        );
@@ -293,7 +364,7 @@ class UsersModule extends Module
 				foreach($model->getErrors() as $attribute=>$errors)
 					$result[CHtml::activeId($model,$attribute)]=$errors;	
 				echo CJSON::encode($result);
-				r()->end();
+				Yii::app()->end();
 			}
 		}
 	}
@@ -309,7 +380,7 @@ class UsersModule extends Module
 				foreach($model->getErrors() as $attribute=>$errors)
 					$result[CHtml::activeId($model,$attribute)]=$errors;	
 				echo CJSON::encode($result);
-				r()->end();
+				Yii::app()->end();
 			}
 		}
 	}
@@ -328,8 +399,8 @@ class UsersModule extends Module
 
 	public function loadModel()
 	{
-		if(!r()->user->isGuest)
-			return Users::model()->findByPk(r()->user->id);
+		if(!Yii::app()->user->isGuest)
+			return Users::model()->findByPk(Yii::app()->user->id);
 		return null;
 	}
 
@@ -343,17 +414,17 @@ class UsersModule extends Module
 		$args=func_get_args();
 		if($args!==array() and count($args)>1)
 			$roles=$args;
-		return r()->user->check($roles);
+		return Yii::app()->user->check($roles);
 	}
 	
 	public function getName()
 	{
-		return r()->user->name;
+		return Yii::app()->user->name;
 	}
 
 	public function getEmail()
 	{
-		return r()->user->email;
+		return Yii::app()->user->email;
 	}
 
 	public function configItems()
@@ -365,18 +436,23 @@ class UsersModule extends Module
     	);
 	}
 
-
 	public function builtApp($ctr)
 	{
-		if($this->_config===null)
-			$this->_config=UsersConfig::model()->find();
+		// if($this->_config===null)
+		// 	$this->_config=UsersConfig::model()->find();
 	
-		if($this->_config!==null)
-		{
-			$this->copyWelcomeEmail=($this->_config->copyWelcomeEmail!==null)?$this->_config->copyWelcomeEmail:$this->copyWelcomeEmail;
-			$this->copySendPasswordForgot=($this->_config->copySendPasswordForgot!==null)?$this->_config->copySendPasswordForgot:$this->copySendPasswordForgot;
-			$this->copyForgotEmail=($this->_config->copyForgotEmail!==null)?$this->_config->copyForgotEmail:$this->copyForgotEmail;
-			$this->copySendPassword=($this->_config->copySendPassword!==null)?$this->_config->copySendPassword:$this->copySendPassword;
-		}
+		// if($this->_config!==null)
+		// {
+		// 	$this->enableOAuth=($this->_config->enableOAuth!==null)?$this->_config->enableOAuth:$this->enableOAuth;
+		// 	$this->loginInRegister=($this->_config->loginInRegister!==null)?$this->_config->loginInRegister:$this->loginInRegister;
+		// 	$this->labelMenu=($this->_config->labelMenu!==null)?$this->_config->labelMenu:$this->labelMenu;
+		// 	$this->sendPassword=($this->_config->sendPassword!==null)?$this->_config->sendPassword:$this->sendPassword;
+		// 	$this->showMenuFromAdmin=($this->_config->showMenuFromAdmin!==null)?$this->_config->showMenuFromAdmin:$this->showMenuFromAdmin;
+		// 	$this->allowBasicOAuth=($this->_config->allowBasicOAuth!==null)?$this->_config->allowBasicOAuth:$this->allowBasicOAuth;
+		// 	$this->copyWelcomeEmail=($this->_config->copyWelcomeEmail!==null)?$this->_config->copyWelcomeEmail:$this->copyWelcomeEmail;
+		// 	$this->copySendPasswordForgot=($this->_config->copySendPasswordForgot!==null)?$this->_config->copySendPasswordForgot:$this->copySendPasswordForgot;
+		// 	$this->copyForgotEmail=($this->_config->copyForgotEmail!==null)?$this->_config->copyForgotEmail:$this->copyForgotEmail;
+		// 	$this->copySendPassword=($this->_config->copySendPassword!==null)?$this->_config->copySendPassword:$this->copySendPassword;
+		// }
 	}
 }

@@ -42,18 +42,21 @@ class Users extends CActiveRecord
 			array('password, newPassword', 'length', 'min'=>4),
 			array('name, lastname, username, img', 'length', 'max'=>255),
 			array('email', 'email'),
-			array('trash', 'safe'),
+			array('trash, phone, address', 'safe'),
+			array('birthdate', 'date', 'format'=>'yyyy-M-d'),
 			array('email', 'unique', 'attributeName'=>'email', 'className'=>'Users', 'criteria'=>array('condition'=>'trash=0')),
+			// array('email', 'unique', 'attributeName'=>'email', 'className'=>'Users', 'criteria'=>array('condition'=>'trash=0 AND state_email=1 AND state=1')),
+			// array('phone, address', 'required', 'on'=>'signup'),
 			array('conditions', 'boolean'),
 
-			array('newPassword', 'safe'),
+			array('newPassword, mobile, users_address_country_id, users_address_state_id, users_address_city_id, gender, card_identity', 'safe'),
 			array('confirmPassword', 'required', 'on'=>'signup'),
 			array('confirmPassword', 'validateConfirm', 'on'=>'signup'),
 			array('conditions', 'in','range'=>array('1'),'allowEmpty'=>false,'message'=>'Para registrarse debe aceptar los terminos y condiciones','on'=>'signup'),
 			
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, password, email, name, lastname, username, state, state_email, img, registered', 'safe', 'on'=>'search'),
+			array('id, password, email, birthdate, name, lastname, username, state, state_email, img, registered, mobile, users_address_country_id, users_address_state_id, users_address_city_id, gender, card_identity', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -85,6 +88,7 @@ class Users extends CActiveRecord
 			'password' => Yii::t('app','Password'),
 			'email' => Yii::t('app','Email'),
 			'name' => Yii::t('app','Name'),
+			'phone' => Yii::t('app','Phone'),
 			'lastname' => Yii::t('app','Lastname'),
 			'username' => Yii::t('app','Username'),
 			'state' => Yii::t('app','State'),
@@ -197,6 +201,7 @@ class Users extends CActiveRecord
 	{
 		$identity=new UserIdentity($this->email,$this->password);
 		$identity->authenticateFree();
+		// @todo si es mobile ponerlo siempre logueado
 		$duration=3600*24*30; // 30 days
 		Yii::app()->user->login($identity,$duration);
 	}

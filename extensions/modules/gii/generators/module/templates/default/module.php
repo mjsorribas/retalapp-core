@@ -55,6 +55,23 @@ class <?php echo $this->moduleClass; ?> extends Module
 	*/
 
 	/*
+	 * HOeee!! Do you want show someting on the end body
+	 * Here is
+	public function builtEndBody($ctr)
+	{
+	}
+	*/
+
+	/*
+	 * HOeee!! Do you want to do something 
+	 * Before all app is init
+	 * Here is
+	public function builtApp($ctr)
+	{
+	}
+	*/
+
+	/*
 	 * Eyyyy shiffff!! Do you want a submenu on the config crud?
 	 * Here is
 	public function configItems()
