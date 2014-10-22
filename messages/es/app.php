@@ -1,6 +1,15 @@
 <?php
 return array(
 
+	'Error sending email!!'=>'Error al enviar el correo!!',
+	'We have sent a new password to your email'=>'Hemos enviado una nueva contraseña a su correo electrónico',
+	'We have sent the instructions to your email'=>'Hemos enviado las instrucciones a su correo electrónico',
+	'Profile updated successfully'=>'Perfil actualizado correctamente',
+	'Login is required'=>'Inicio de sesión es necesario.',
+	'Invalid request'=>'Petición inválida',
+	'Correctly updated password.'=>'Contraseña actualizada correctamente.',
+	'There has been an inconvenience and could not verify your email.'=>'Se ha presentado un inconveniente y no se pudo verificar su correo.',
+	'Hi {name}!! Welcome a to {appName}'=>'Hola {name}!! Bienvenido a {appName}',
 	'Phone'=>'Teléfono',
 	'Please confirm your password'=>'Por favor confirme su contraseña',
 	'Confirm Password'=>'Confirmar Contraseña',
