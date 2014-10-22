@@ -3,30 +3,13 @@
 class UsersModule extends Module
 {
 
-	public $enableModals=true;
-    public $usersModalsPath='users.views.page._users_modals';
-
-    /**
-	 * Para saber si se muestran y habilitan
-     * la creacion de aplicaciones en el menu
-     * de usurios
-    */
-    // public $enableModals=true;
-    // public $usersModalsPath='users.views.page._users_modals';
-
-	public $copyWelcomeEmail="<p>Hola {{name}}! <br><br> Ya casi terminamos 
-			el proceso de registro solo falta confirmar tu correo.</p>";
+	public $copyWelcomeEmail;
 	
-	public $copySendPasswordForgot="<p>Hola {{name}}! <br><br> Esta es tu nueva contraseña:<br>
-			 <b>Usuario:</b><em>{{email}}</em><br>
-			 <b>Password:</b><em>{{password}}</em><br></p>";
+	public $copySendPasswordForgot;
 	
-	public $copyForgotEmail="<p>Hola {{name}}! <br><br> Ya casi recuperas tu contraseña, 
-				por favor sigue este enlace:<br></p>";
+	public $copyForgotEmail;
 
-	public $copySendPassword="<p>Hola {{name}}! <br><br> Bienvenido a {{appname}} tus datos de ingreso son:<br>
-			<b>Usuario:</b><em>{{email}}</em><br>
-			<b>Password:</b><em>{{password}}</em><br></p>";
+	public $copySendPassword;
 
 	public $enableOAuth=false;
 	
@@ -123,6 +106,31 @@ class UsersModule extends Module
 	public function getToLogout()
 	{
 		return CHtml::normalizeUrl($this->urlLogout);
+	}
+	
+	public function getLoginUrl()
+	{
+		return $this->getToLogin();
+	}
+	
+	public function getRegisterUrl()
+	{
+		return $this->getToRegister();
+	}
+
+	public function getForgotUrl()
+	{
+		return $this->getToForgot();
+	}
+	
+	public function getProfileUrl()
+	{
+		return $this->getToProfile();
+	}
+	
+	public function getLogoutUrl()
+	{
+		return $this->getToLogout();
 	}
 	
 	public function beforeControllerAction($controller, $action)
