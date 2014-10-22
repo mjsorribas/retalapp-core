@@ -9,6 +9,6 @@ class JsonController extends Controller
 {
 	public function missingAction($actionID)
 	{
-		$this->routes(new \Slim\Slim(),"/".$this->id);
+		$this->routes(new \Slim\Slim(),"/".$this->module->id."/".$this->id);
 	}
 }
