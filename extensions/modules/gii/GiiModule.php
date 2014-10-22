@@ -480,8 +480,10 @@ class GiiModule extends Module
 			if($name!=='')
 				$className.=ucfirst($name);
 		}
+		/*
 		if($className==='UsersUsers')
 			$className='Users';
+		*/
 		return $className;
 	}
 
