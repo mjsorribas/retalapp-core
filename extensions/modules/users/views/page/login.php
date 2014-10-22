@@ -8,7 +8,7 @@ $this->pageTitle=Yii::app()->name . ' - Login';
 <h1><?php echo Yii::t('app','Sign In')?></h1>
 <em><small><?php echo Yii::t('app',"You do not have an account yet?")?> <?php echo CHtml::link(Yii::t('app',"Sign Up"),$this->module->urlRegister)?></small></em>
 <em><small>, If fotgot your password please <?php echo CHtml::link(Yii::t('app',"click here"),$this->module->urlForgot)?></small></em>
-<div class="row" style=" margin-top: 100px; ">
+<div class="row" style="">
     <div class="col-lg-6 large-6 columns">
     <?php $form=$this->beginWidget('CActiveForm', array(
       'id'=>'login-form',

@@ -15,7 +15,18 @@ $this->pageTitle=Yii::app()->name . ' - Profile';
     )); ?>
     <?php #echo $form->errorSummary($user,"","",array("class"=>"alert alert-danger")); ?>
 
-
+    <div class="form-group">
+        <?php #echo $form->labelEx($user,'img',array('class'=>'control-label')); ?>
+        <?php echo $this->widget('ext.inputs.uploader.GUpload', array(
+                    'model' => $user,
+                    'attribute' => 'img',
+                    //'sizeValidate' => array('width'=>'300','height'=>'300'),
+                    'allowedExtensions'=>array('png','jpg','jpeg','gif'),
+                    'actionUrl' => $this->createUrl('upload'),
+                ),true)?>
+        <?php echo $form->error($user,'img',array('class'=>'help-block')); ?>
+    </div>
+   
     <?php echo CHtml::image($user->getImageUrl(),"",array("style"=>"width: 70px;margin: 20px auto;","class"=>"img-responsive img-circle")) ?>
 
    
@@ -37,35 +48,6 @@ $this->pageTitle=Yii::app()->name . ' - Profile';
         <?php echo $form->error($user,'lastname',array('class'=>'help-block')); ?>
     </div>
 
-    <div class="form-group">
-        <?php echo $form->labelEx($user,'address',array('class'=>'control-label')); ?>
-        <?php echo $form->textField($user,'address',array('size'=>60,'maxlength'=>255,'class'=>'form-control')); ?>
-        <?php echo $form->error($user,'address',array('class'=>'help-block')); ?>
-    </div>
-
-    <div class="form-group">
-        <?php echo $form->labelEx($user,'phone',array('class'=>'control-label')); ?>
-        <?php echo $form->textField($user,'phone',array('size'=>60,'maxlength'=>255,'class'=>'form-control')); ?>
-        <?php echo $form->error($user,'phone',array('class'=>'help-block')); ?>
-    </div>
-
-    <div class="form-group">
-        <?php echo $form->labelEx($user,'birthdate',array('class'=>'control-label')); ?>
-        <?php
-            $this->widget('zii.widgets.jui.CJuiDatePicker', array(
-                'model' => $user,
-                'attribute' => 'birthdate',
-                'language' =>  Yii::app()->language,
-                'htmlOptions' => array('class'=>'form-control'),
-                'options' => array(
-                    'showButtonPanel' => true,
-                    'changeYear' => true,
-                    'dateFormat' => 'yy-mm-dd',
-                ),
-            ));
-        ?>
-        <?php echo $form->error($user,'birthdate',array('class'=>'help-block')); ?>
-    </div>
     
     <div class="form-group">
         <?php echo $form->labelEx($user,'newPassword',array('class'=>'control-label')); ?>
