@@ -5,6 +5,7 @@
 
 $this->pageTitle=Yii::app()->name . ' - Register';
 ?>
+<div class="container container-register">
 <h1><?php echo Yii::t('app','Sign Up')?></h1>
 <em><small><?php echo Yii::t('app',"You have an account?")?> <?php echo CHtml::link(Yii::t('app',"Sign In"),$this->module->urlLogin)?></small></em>
 <div class="row">
@@ -59,4 +60,5 @@ $this->pageTitle=Yii::app()->name . ' - Register';
   <div class="col-lg-6">
   	<!-- Espacio para poner aqui las redes sociales -->
   </div>
+</div>
 </div>

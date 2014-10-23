@@ -5,6 +5,7 @@
 
 $this->pageTitle=Yii::app()->name . ' - Profile';
 ?>
+<div class="container container-profile">
 <div class="row">
     <div class="col-lg-6">
     <?php $form=$this->beginWidget('CActiveForm', array(
@@ -59,4 +60,5 @@ $this->pageTitle=Yii::app()->name . ' - Profile';
   <div class="col-lg-6">
     <!-- Espacio para poner aqui las redes sociales -->
   </div>
+</div>
 </div>

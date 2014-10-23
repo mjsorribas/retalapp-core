@@ -19,7 +19,7 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		throw new CHttpException(404,"You need to have and module for default, please configure this on protected/config/main/ 'defaulController' parameter");
+		throw new CHttpException(404,"You need to have and module for default, please configure this on app/config/app.php 'defaultModule' parameter");
 	}
 
 	/**

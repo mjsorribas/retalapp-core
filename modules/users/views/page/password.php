@@ -5,9 +5,13 @@
 
 $this->pageTitle=Yii::app()->name . ' - Change password';
 ?>
+<div class="container container-change-password">
 <h1><?php echo Yii::t('app','Change password')?></h1>
 <em><small><?php echo Yii::t('app',"Please, enter your new password")?></small></em>
 <div class="row">
+    <div class="col-lg-4">
+      <!-- Espacio para poner aqui las redes sociales -->
+    </div>
     <div class="col-lg-6">
     <?php $form=$this->beginWidget('CActiveForm', array(
       'id'=>'login-form',
@@ -35,7 +39,8 @@ $this->pageTitle=Yii::app()->name . ' - Change password';
     <?php $this->endWidget(); ?>
 
   </div>
-  <div class="col-lg-6">
+  <div class="col-lg-4">
     <!-- Espacio para poner aqui las redes sociales -->
   </div>
+</div>
 </div>

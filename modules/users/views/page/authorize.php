@@ -8,6 +8,7 @@ $this->breadcrumbs=array(
 );
 
 ?>
+<div class="container container-autorize">
 <div class="row">
 	<div class="col-lg-12">
 
@@ -89,3 +90,5 @@ $this->breadcrumbs=array(
 		
 	</div>
 </div>
+
+</div><!-- content -->
