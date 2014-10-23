@@ -187,53 +187,6 @@ class PageController extends FrontController
         ));
     }
 
-	 /**
-     * Updates a particular model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id the ID of the model to be updated
-     */
-    public function actionProfile()
-    {
-    	if(r()->user->isGuest and r()->request->isAjaxRequest)
-    	{
-    		echo r()->user->loginRequiredAjaxResponse;
-			r()->end();
-    	}
-    	if(r()->user->isGuest)
-    		throw new CHttpException(403,Yii::t('app','Login is required'));
-    		
-        $user=Users::model()->findByPk(r()->user->id);
-        
-        // Uncomment the following line if AJAX validation is needed
-        $this->performAjaxValidation($user);
-
-        if(isset($_POST['Users']))
-        {
-            $user->attributes=$_POST['Users'];
-            if(isset($_POST['Users']['newPassword']))
-            	$user->newPassword=$_POST['Users']['newPassword'];
-            
-            if($user->birthdate=="")
-        		$user->birthdate=null;
-
-            if($user->save())
-            {
-            	if(!empty($user->newPassword))
-            	{
-            		$user->password=sha1($user->newPassword);
-            		$user->save(true,array('password'));
-            	}
-            
-            	r()->user->setFlash("success",Yii::t('app','Profile updated successfully'));
-                $this->refresh(r()->request->urlReferrer);
-            }
-        }
-
-        $this->render('profile',array(
-            'user'=>$user,
-        ));
-    }
-
 	public function actionView($id=null)
 	{
 		if($id!==null)
