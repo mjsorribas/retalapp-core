@@ -14,7 +14,7 @@ class PageController extends FrontController
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('resendVerify','confirm','password','forgot','logout','login','register','registerAjax','loginAjax','changePasswordAjax','forgotAjax'),
+				'actions'=>array('resendVerify','view','confirm','password','forgot','logout','login','register','registerAjax','loginAjax','changePasswordAjax','forgotAjax'),
 				// 'roles'=>array('admin'),
 				'users'=>array('*'),
 			),
@@ -187,42 +187,61 @@ class PageController extends FrontController
         ));
     }
 
-	public function actionForgot()
-	{
-		$model=new ForgotForm;
-
-		// if it is ajax validation request
-		if(isset($_POST['ajax']) && $_POST['ajax']==='recover-form')
-		{
-			echo CActiveForm::validate($model);
+	 /**
+     * Updates a particular model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id the ID of the model to be updated
+     */
+    public function actionProfile()
+    {
+    	if(r()->user->isGuest and r()->request->isAjaxRequest)
+    	{
+    		echo r()->user->loginRequiredAjaxResponse;
 			r()->end();
-		}
+    	}
+    	if(r()->user->isGuest)
+    		throw new CHttpException(403,Yii::t('app','Login is required'));
+    		
+        $user=Users::model()->findByPk(r()->user->id);
+        
+        // Uncomment the following line if AJAX validation is needed
+        $this->performAjaxValidation($user);
 
-		if (isset($_POST['ForgotForm'])) {
-			$model->attributes=$_POST['ForgotForm'];
-			if ($model->validate()) 
-			{
-				$user=Users::model()->find("email=? AND trash=0",array($model->email));
-				if($this->module->sendForgotMail($user))
-				{
-					if($this->module->sendPassword)
-						$mensaje=Yii::t('app','We have sent a new password to your email');
-					else
-						$mensaje=Yii::t('app','We have sent the instructions to your email');
-					$mensaje.='<br>'.$model->email.'';
-        			r()->user->setFlash("success",$mensaje);
-				}
-				else
-				{
-					$mensaje=Yii::t('app','Error sending email!!');
-					$mensaje.='<br>'.$model->email.'';
-        			r()->user->setFlash("danger",$mensaje);
-				}
-				$this->redirect($this->module->redirectLogin);
-			}
-		}
+        if(isset($_POST['Users']))
+        {
+            $user->attributes=$_POST['Users'];
+            if(isset($_POST['Users']['newPassword']))
+            	$user->newPassword=$_POST['Users']['newPassword'];
+            
+            if($user->birthdate=="")
+        		$user->birthdate=null;
 
-		$this->render('forgot',array(
+            if($user->save())
+            {
+            	if(!empty($user->newPassword))
+            	{
+            		$user->password=sha1($user->newPassword);
+            		$user->save(true,array('password'));
+            	}
+            
+            	r()->user->setFlash("success",Yii::t('app','Profile updated successfully'));
+                $this->refresh(r()->request->urlReferrer);
+            }
+        }
+
+        $this->render('profile',array(
+            'user'=>$user,
+        ));
+    }
+
+	public function actionView($id=null)
+	{
+		if($id!==null)
+			$model=Users::model()->findByPk($id);
+		else
+			$model=Users::model()->findByPk(r()->user->id);
+
+		$this->render('view',array(
 			"model"=>$model,
 		));
 	}
