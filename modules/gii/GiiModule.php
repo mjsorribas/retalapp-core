@@ -103,7 +103,7 @@ class GiiModule extends Module
 		'date'=>'date format (yyyy-MM-dd)',
 	);
 
-	public $noModules=array('users','admin','gii','smtp','settings');
+	public $noModules=array('users','admin','gii','email','settings');
 	// public $noModules=array();
 		
 	public $defaultController='crud';
