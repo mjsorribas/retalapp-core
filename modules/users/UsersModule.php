@@ -199,8 +199,8 @@ class UsersModule extends Module
 			$contex=array(
 				"body"=>$body,
 			);
-			r('smtp')->add($model->email,$model->name);
-			return r('smtp')->sendBody(Yii::t('app','Your credentials').' '.strip_tags(r()->name),$contex);
+			r('email')->add($model->email,$model->name);
+			return r('email')->sendBody(Yii::t('app','Your credentials').' '.strip_tags(r()->name),$contex);
 		}
 		else
 		{
@@ -222,8 +222,8 @@ class UsersModule extends Module
 					"key"=>r()->security->encrypt($model->email
 				))),
 			);
-			r('smtp')->add($model->email,$model->name);
-			return r('smtp')->sendBody($resendMessage.Yii::t('app','Confirm register on').' '.strip_tags(r()->name),$contex);
+			r('email')->add($model->email,$model->name);
+			return r('email')->sendBody($resendMessage.Yii::t('app','Confirm register on').' '.strip_tags(r()->name),$contex);
 		}	
 	}
 
@@ -247,8 +247,8 @@ class UsersModule extends Module
 			$contex=array(
 				"body"=>$body,
 			);
-			r('smtp')->add($model->email,$model->name);
-			return r('smtp')->sendBody(Yii::t('app','New password').' '.strip_tags(r()->name),$contex);
+			r('email')->add($model->email,$model->name);
+			return r('email')->sendBody(Yii::t('app','New password').' '.strip_tags(r()->name),$contex);
 		}
 		else
 		{
@@ -266,8 +266,8 @@ class UsersModule extends Module
 				"label"=>Yii::t('app','Go to change password'),
 				"url"=>r()->createAbsoluteUrl("/users/page/password",array("key"=>r()->security->encrypt($model->email))),
 			);
-			r('smtp')->add($model->email,$model->name);
-			return r('smtp')->sendBody(Yii::t('app','Recover password').' '.strip_tags(r()->name),$contex);
+			r('email')->add($model->email,$model->name);
+			return r('email')->sendBody(Yii::t('app','Recover password').' '.strip_tags(r()->name),$contex);
 		}
 		return false;	
 	}

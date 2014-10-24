@@ -44,6 +44,21 @@ return array(
         "itemChildTable" => 'users_authitemchild',
         "assignmentTable" => 'users_authassignment',
     ),
+    'coreMessages' => array(
+        'language'=>'en_us',
+        'class'=>'CDbMessageSource',
+        "connectionID" => "db",
+        "sourceMessageTable" => 'translation_source_message',
+        "translatedMessageTable" => 'translation_message',
+        "cachingDuration" => 0,
+    ),
+    'messages' => array(
+        'class'=>'CDbMessageSource',
+        "connectionID" => "db",
+        "sourceMessageTable" => 'translation_source_message',
+        "translatedMessageTable" => 'translation_message',
+        "cachingDuration" => 0,
+    ),
     'errorHandler' => array(
         // use 'site/error' action to display errors
         'errorAction' => '/site/error',
