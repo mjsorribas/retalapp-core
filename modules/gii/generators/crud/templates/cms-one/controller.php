@@ -11,11 +11,11 @@ class <?php echo $this->controllerClass; ?> extends CmsController
 {
 	public $defaultAction='index';
 <?php if($this->fontIcon!==null):?>
-	public $title='<i class="fa <?php echo $this->fontIcon?>"></i> <?php echo $this->labelName; ?>';
+	public $title='<i class="fa <?php echo $this->fontIcon?>"></i>'.Yii::t('app','<?php echo $this->labelName; ?>');
 <?php else:?>
 	public $title='<?php echo $this->labelName; ?>';
 <?php endif;?>
-	public $subTitle='Admin <?php echo $this->labelName; ?>';
+	public $subTitle='Admin '.Yii::t('app','<?php echo $this->labelName; ?>');
 
 	/**
 	 * @return array action filters
