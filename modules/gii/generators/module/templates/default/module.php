@@ -58,6 +58,23 @@ class <?php echo $this->moduleClass; ?> extends Module
 	*/
 
 	/*
+	 * HOeee!! Do you want publish elements on the landing module
+	 * Here is
+	public function getTypesBlocks()
+    {
+    	return array(
+			'<?php echo ($this->moduleID); ?>-1'=>'landing<?php echo ucfirst($this->moduleID); ?>',
+		);
+    }
+
+
+	public function landing<?php echo ucfirst($this->moduleID); ?>($item=null)
+	{
+		return r()->controller->renderPartial(<?php echo strtoupper($this->moduleID); ?>_ID.'.views.page._<?php echo ($this->moduleID); ?>',array(),true);
+	}
+	*/
+
+	/*
 	 * HOeee!! Do you want show someting on the end body
 	 * Here is
 	public function builtEndBody($ctr)
