@@ -70,7 +70,7 @@ class <?php echo $this->moduleClass; ?> extends Module
 
 	public function landing<?php echo ucfirst($this->moduleID); ?>($item=null)
 	{
-		return r()->controller->renderPartial(<?php echo strtoupper($this->moduleID); ?>_ID.'.views.page._<?php echo ($this->moduleID); ?>',array(),true);
+		return r()->controller->renderPartial(<?php echo strtoupper($this->moduleID); ?>_ID.'.views.page._block',array(),true);
 	}
 	*/
 
