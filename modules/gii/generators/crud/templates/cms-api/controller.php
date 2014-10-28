@@ -7,8 +7,6 @@
 $module=Yii::app()->getModule('gii');
 ?>
 <?php echo "<?php\n"; ?>
-require Yii::getPathOfAlias('ext.components.api').'/slim/Slim/Slim.php';
-\Slim\Slim::registerAutoloader();
 /**
  * <?php echo $this->controllerClass; ?> class file.
  *
