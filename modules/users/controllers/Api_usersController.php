@@ -138,7 +138,7 @@ class Api_usersController extends JsonController
             }
 		});
 
-		$app->post("$r/login",function () use ($app) {
+		$app->post("$r/login",function () use ($module,$app) {
 			$req=$app->request;
 			$res=$app->response;
 
