@@ -189,7 +189,7 @@ class UsersUsers extends BaseUsersUsers
 	public function getAccessToken($model)
 	{
 		$code=new CodeAuth;
-		$code->users_id=Yii::app()->user->id;
+		$code->users_id=$this->id;
 		$code->code=Yii::app()->security->randomWord(40);
 		$code->created_at=date('Y-m-d H:i:s');
 		$code->save();
