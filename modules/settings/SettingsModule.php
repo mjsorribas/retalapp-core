@@ -79,4 +79,16 @@ class SettingsModule extends Module
 			return $this->getModel()->admin_email;
 		return Yii::app()->params['adminEmail'];
 	}
+
+	public function dashboardCounters()
+	{
+		$model=$this->getModel();
+		if($model!==null and $model->admin_email=='admin@email.com') {
+			return array(
+	            array('label'=>'Config admin email', 'type'=>'warning', 'icon'=>'fa fa-cog', 'count'=>'&nbsp;', 'url'=>array('/'.$this->id.'/settings/back')),
+	        );
+		} else {
+			return array();
+		}
+	}
 }
