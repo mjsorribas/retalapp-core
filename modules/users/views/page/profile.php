@@ -5,7 +5,7 @@
 
 $this->pageTitle=Yii::app()->name . ' - Profile';
 ?>
-<section class="success" id="about">
+<section>
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -14,8 +14,8 @@ $this->pageTitle=Yii::app()->name . ' - Profile';
             </div>
         </div>
         <div class="row">
-        
-    <div class="col-lg-6">
+
+    <div class="col-lg-12 text-center">
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'users-form',
         'htmlOptions'=>array("class"=>"form-horizontal","role"=>"form"),
@@ -65,9 +65,7 @@ $this->pageTitle=Yii::app()->name . ' - Profile';
     <?php $this->endWidget(); ?>
 
   </div>
-  <div class="col-lg-6">
-    <!-- Espacio para poner aqui las redes sociales -->
-  </div>
+  
 </div>
     </div>
 </section>
