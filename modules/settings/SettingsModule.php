@@ -85,7 +85,7 @@ class SettingsModule extends Module
 		$model=$this->getModel();
 		if($model!==null and $model->admin_email=='admin@email.com') {
 			return array(
-	            array('label'=>'Config admin email', 'type'=>'warning', 'icon'=>'fa fa-cog', 'count'=>'&nbsp;', 'url'=>array('/'.$this->id.'/settings/back')),
+	            array('label'=>'Config admin email', 'type'=>'warning', 'icon'=>'fa fa-cog', 'count'=>'&nbsp;', 'url'=>array('/'.$this->id.'/back')),
 	        );
 		} else {
 			return array();

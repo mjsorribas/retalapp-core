@@ -226,7 +226,7 @@ class EmailModule extends Module
 		$model=$this->getModel();
 		if($model!==null and !$model->enabled) {
 			return array(
-	            array('label'=>'SMTP Disabled', 'type'=>'danger', 'icon'=>'fa fa-envelope', 'count'=>'&nbsp;', 'url'=>array('/'.$this->id.'/email/back')),
+	            array('label'=>'SMTP Disabled', 'type'=>'danger', 'icon'=>'fa fa-envelope', 'count'=>'&nbsp;', 'url'=>array('/'.$this->id.'/back')),
 	        );
 		} else {
 			return array();
