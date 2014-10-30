@@ -3,13 +3,13 @@
 /* @var $user LoginForm */
 /* @var $form CActiveForm  */
 
-$this->pageTitle=Yii::app()->name . ' - Profile';
+$this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
 ?>
 <header>
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
-                <h2>Profile</h2>
+                <h2><?=Yii::t('app','Profile')?></h2>
                 <hr class="star-light">
             </div>
         </div>
