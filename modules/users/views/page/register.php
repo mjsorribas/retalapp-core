@@ -5,22 +5,13 @@
 
 $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Sign Up');
 ?>
-<header>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2><?php echo Yii::t('app','Sign Up')?></h2>
-                <hr class="star-light">
-            </div>
-        </div>
-    </div>
-</header>
+
 <section>
     <div class="container">
         <div class="row">
 
-    <div class="col-lg-3"></div>
     <div class="col-lg-6">
+    <h1><?=Yii::t('app','Sign Up')?></h1>
 <em><small><?php echo Yii::t('app',"You have an account?")?> <?php echo CHtml::link(Yii::t('app',"Sign In"),$this->module->urlLogin)?></small></em>
 
 	<?php $form=$this->beginWidget('CActiveForm', array(
@@ -70,7 +61,7 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Sign Up');
 	<?php $this->endWidget(); ?>
 
   </div>
-    <div class="col-lg-3"></div>
+    <div class="col-lg-6"></div>
   
 </div>
     </div>

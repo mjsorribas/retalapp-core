@@ -8,13 +8,14 @@ $this->breadcrumbs=array(
 );
 
 ?>
-<div class="container container-token">
+<section>
+<div class="container">
 <div class="row">
-	<div class="col-lg-12">
+    <div class="col-lg-12">
         <section class="panel">
             <div class="panel-body minimal">
                 <div class="table-inbox-wrap">
-        				
+                        
                 <p> You've created an Access Token for making API calls on behalf of : </p>
                 <div class="bs-example">
                     <pre class="alert-info"><h3><?php echo $token->acces_token?></h3><h3></h3></pre>
@@ -27,6 +28,7 @@ $this->breadcrumbs=array(
                 </div>
             </div>
         </section>
-	</div>
+    </div>
 </div>
 </div>
+</section>

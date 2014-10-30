@@ -3,16 +3,16 @@
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
 
-$this->pageTitle=Yii::app()->name . ' - Forgot';
+$this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Forgot');
 ?>
-<div class="container container-forgot">
+<section>
+  
+<div class="container">
 <h1><?php echo Yii::t('app','Forgot')?></h1>
 <em><small><?php echo CHtml::link(Yii::t('app',"Sign Up"),$this->module->urlRegister)?>, <?php echo CHtml::link(Yii::t('app',"Sign In"),$this->module->urlLogin)?></small></em>
 <div class="row">
-    <div class="col-lg-4">
-      <!-- Espacio para poner aqui las redes sociales -->
-    </div>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
+
     <?php $form=$this->beginWidget('CActiveForm', array(
       'id'=>'recover-form',
       'htmlOptions'=>array("class"=>"form-signin"),
@@ -33,8 +33,9 @@ $this->pageTitle=Yii::app()->name . ' - Forgot';
     <?php $this->endWidget(); ?>
 
   </div>
-  <div class="col-lg-4">
+  <div class="col-lg-6">
     <!-- Espacio para poner aqui las redes sociales -->
   </div>
 </div>
 </div>
+</section>

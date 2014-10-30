@@ -5,22 +5,13 @@
 
 $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Sign In');
 ?>
-<header>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2><?php echo Yii::t('app','Sign In')?></h2>
-                <hr class="star-light">
-            </div>
-        </div>
-    </div>
-</header>
+
 <section>
     <div class="container">
         <div class="row">
 
-    <div class="col-lg-3"></div>
     <div class="col-lg-6">
+    <h1><?=Yii::t('app','Sign In')?></h1>
     <em><small><?php echo Yii::t('app',"You do not have an account yet?")?> <?php echo CHtml::link(Yii::t('app',"Sign Up"),$this->module->urlRegister)?></small></em>
 <em><small>, If fotgot your password please <?php echo CHtml::link(Yii::t('app',"click here"),$this->module->urlForgot)?></small></em>
 
@@ -53,7 +44,7 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Sign In');
     <?php $this->endWidget(); ?>
 
   </div>
-    <div class="col-lg-3"></div>
+    <div class="col-lg-6"></div>
   
 </div>
     </div>

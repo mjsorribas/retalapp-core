@@ -3,16 +3,16 @@
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
 
-$this->pageTitle=Yii::app()->name . ' - Change password';
+$this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Change password');
 ?>
-<div class="container container-change-password">
-<h1><?php echo Yii::t('app','Change password')?></h1>
-<em><small><?php echo Yii::t('app',"Please, enter your new password")?></small></em>
+<section>
+  
+<div class="container">
 <div class="row">
-    <div class="col-lg-4">
-      <!-- Espacio para poner aqui las redes sociales -->
-    </div>
+    
     <div class="col-lg-6">
+    <h1><?php echo Yii::t('app','Change password')?></h1>
+    <em><small><?php echo Yii::t('app',"Please, enter your new password")?></small></em>
     <?php $form=$this->beginWidget('CActiveForm', array(
       'id'=>'login-form',
       'htmlOptions'=>array("class"=>"form-signin"),
@@ -39,8 +39,10 @@ $this->pageTitle=Yii::app()->name . ' - Change password';
     <?php $this->endWidget(); ?>
 
   </div>
-  <div class="col-lg-4">
+    
+  <div class="col-lg-6">
     <!-- Espacio para poner aqui las redes sociales -->
   </div>
 </div>
 </div>
+</section>
