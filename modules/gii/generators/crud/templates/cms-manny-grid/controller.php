@@ -16,7 +16,7 @@ class <?php echo $this->controllerClass; ?> extends CmsController
 	
 	public $defaultAction='admin';
 <?php if($this->fontIcon!==null):?>
-	public $title='<i class="fa <?php echo $this->fontIcon?>"></i>'.Yii::t('app','<?php echo $this->labelName; ?>');
+	public $title='<i class="fa <?php echo $this->fontIcon?>"></i>';
 <?php else:?>
 	public $title='<?php echo $this->labelName; ?>';
 <?php endif;?>
