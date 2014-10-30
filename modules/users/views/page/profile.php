@@ -5,7 +5,7 @@
 
 $this->pageTitle=Yii::app()->name . ' - Profile';
 ?>
-<section>
+<header>
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -13,9 +13,14 @@ $this->pageTitle=Yii::app()->name . ' - Profile';
                 <hr class="star-light">
             </div>
         </div>
+    </div>
+</header>
+<section>
+    <div class="container">
         <div class="row">
 
-    <div class="col-lg-12 text-center">
+    <div class="col-lg-3"></div>
+    <div class="col-lg-6">
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'users-form',
         'htmlOptions'=>array("class"=>"form-horizontal","role"=>"form"),
@@ -65,6 +70,7 @@ $this->pageTitle=Yii::app()->name . ' - Profile';
     <?php $this->endWidget(); ?>
 
   </div>
+    <div class="col-lg-3"></div>
   
 </div>
     </div>
