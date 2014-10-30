@@ -219,5 +219,17 @@ class EmailModule extends Module
 			$this->_a=array();
 		    return true;
 		}
+	}
+
+	public function dashboardCounters()
+	{
+		$model=$this->getModel();
+		if($model!==null and !$model->enabled) {
+			return array(
+	            array('label'=>'SMTP Disabled', 'type'=>'danger', 'icon'=>'fa fa-envelope', 'count'=>'', 'url'=>array('/'.$this->id.'/email')),
+	        );
+		} else {
+			return array();
+		}
 	}	
 }
