@@ -1,4 +1,5 @@
 retalapp-core
 =============
 
-Core for retalapp app
+Core for retalapp app :+:
+
