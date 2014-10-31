@@ -56,7 +56,14 @@ class <?php echo $this->moduleClass; ?> extends Module
        );
 	}
 	*/
-
+	
+	public function renderPartialView($view,$params=array())
+    {
+    	if(r()->controller->getViewFile('//'.<?php echo strtoupper($this->moduleID); ?>_ID.'/page/'.$view)!==false)
+			return r()->controller->renderPartial('//'.<?php echo strtoupper($this->moduleID); ?>_ID.'/page/'.$view,$params,true);
+		return r()->controller->renderPartial(<?php echo strtoupper($this->moduleID); ?>_ID.'.views.page.'.$view,$params,true);
+	}
+	
 	/*
 	 * HOeee!! Do you want publish elements on the landing module
 	 * Here is
@@ -67,10 +74,9 @@ class <?php echo $this->moduleClass; ?> extends Module
 		);
     }
 
-
 	public function landing<?php echo ucfirst($this->moduleID); ?>($item=null)
 	{
-		return r()->controller->renderPartial(<?php echo strtoupper($this->moduleID); ?>_ID.'.views.page._block',array(),true);
+		return $this->renderPartialView('_block');
 	}
 	*/
 
