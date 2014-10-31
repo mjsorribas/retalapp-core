@@ -6,10 +6,6 @@
 /**
  * We are creating the aliases for retalapp structure
 */ 
-Yii::setPathOfAlias('app',dirname(__FILE__).'/../../../../app');
-Yii::setPathOfAlias('vendor',dirname(__FILE__).'/../../../../vendor');
-Yii::setPathOfAlias('core',dirname(__FILE__).'/..');
-
 
 /**
  * Now we can set the oters path configuraions
