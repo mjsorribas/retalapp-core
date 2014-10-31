@@ -403,4 +403,11 @@ class UsersModule extends Module
 			$this->copySendPassword=($this->_config->copySendPassword!==null)?$this->_config->copySendPassword:$this->copySendPassword;
 		}
 	}
+
+	public function dashboardCounters()
+	{
+		return array(
+            array('label'=>'User Registrations', 'type'=>'success', 'icon'=>'fa fa-user', 'count'=>(Users::model()->count('trash=0')-1), 'url'=>array('/'.$this->id.'/users')),
+        );
+	}
 }

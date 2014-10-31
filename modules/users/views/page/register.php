@@ -1,15 +1,19 @@
 <?php
 /* @var $this SiteController */
-/* @var $model LoginForm */
+/* @var $user LoginForm */
 /* @var $form CActiveForm  */
 
-$this->pageTitle=Yii::app()->name . ' - Register';
+$this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Sign Up');
 ?>
-<div class="container container-register">
-<h1><?php echo Yii::t('app','Sign Up')?></h1>
-<em><small><?php echo Yii::t('app',"You have an account?")?> <?php echo CHtml::link(Yii::t('app',"Sign In"),$this->module->urlLogin)?></small></em>
-<div class="row">
+
+<section>
+    <div class="container">
+        <div class="row">
+
     <div class="col-lg-6">
+    <h1><?=Yii::t('app','Sign Up')?></h1>
+<em><small><?php echo Yii::t('app',"You have an account?")?> <?php echo CHtml::link(Yii::t('app',"Sign In"),$this->module->urlLogin)?></small></em>
+
 	<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'registration-form',
 		'htmlOptions'=>array("class"=>"form-signin"),
@@ -57,8 +61,8 @@ $this->pageTitle=Yii::app()->name . ' - Register';
 	<?php $this->endWidget(); ?>
 
   </div>
-  <div class="col-lg-6">
-  	<!-- Espacio para poner aqui las redes sociales -->
-  </div>
+    <div class="col-lg-6"></div>
+  
 </div>
-</div>
+    </div>
+</section>

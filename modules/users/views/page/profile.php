@@ -3,11 +3,15 @@
 /* @var $user LoginForm */
 /* @var $form CActiveForm  */
 
-$this->pageTitle=Yii::app()->name . ' - Profile';
+$this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
 ?>
-<div class="container container-profile">
-<div class="row">
+
+<section>
+    <div class="container">
+        <div class="row">
+
     <div class="col-lg-6">
+    <h1><?=Yii::t('app','Profile')?></h1>
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'users-form',
         'htmlOptions'=>array("class"=>"form-horizontal","role"=>"form"),
@@ -57,8 +61,8 @@ $this->pageTitle=Yii::app()->name . ' - Profile';
     <?php $this->endWidget(); ?>
 
   </div>
-  <div class="col-lg-6">
-    <!-- Espacio para poner aqui las redes sociales -->
-  </div>
+    <div class="col-lg-6"></div>
+  
 </div>
-</div>
+    </div>
+</section>

@@ -119,6 +119,7 @@ EOD;
 		elseif($this->template==='cms-manny-grid' or $this->template==='cms-one')
 		{
 $orderString='';
+$admin=($this->template==='cms-one')?'':'admin';
 if($this->fontIcon!==null)
 	$linkWithIcon=", 'icon'=>'fa ".$this->fontIcon."'";
 		$code="
@@ -134,7 +135,7 @@ if($this->fontIcon!==null)
 	{
 		return array(
             array('label'=>Yii::t('app','".ucfirst($this->moduleName)."'), 'icon'=>'fa fa-puzzle-piece', 'url'=>array('#'), 'items'=>array(
-			    array('label'=>Yii::t('app','".$this->labelName."'){$linkWithIcon}, 'url'=>array('/'.\$this->id.'/".$this->getControllerID()."/admin')),
+			    array('label'=>Yii::t('app','".$this->labelName."'){$linkWithIcon}, 'url'=>array('/'.\$this->id.'/".$this->getControllerID()."/".$admin."')),
             	// ... Put here more sub-menues like this 
             )),
        );

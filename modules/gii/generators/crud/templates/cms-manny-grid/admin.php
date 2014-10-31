@@ -212,7 +212,10 @@ $(function() {
 	                url: href,
 	                success:function (data) {
 	                    $.fn.yiiGridView.update('<?php echo $this->class2id($this->modelClass); ?>-grid');
-	                }
+	                },
+	                error: function (xhr, ajaxOptions, thrownError) {
+						bootbox.alert("Ocurrió un error <strong>BORRANDO</strong> el Registro, Verifique nuevamente");
+					}
 	            });
 	        }
 	    });

@@ -34,7 +34,7 @@ class GFrontUpload extends CInputWidget
 	public $iconButtom='fa-camera';
 	public $imgContainerOptions=array();
 	public $messageCallback="function(message){ 
-          $.fn.modal(message);
+          alert(message);
       }";
 	public $selector;
 	public $selectorImg;

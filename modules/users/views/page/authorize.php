@@ -3,19 +3,20 @@
 /* @var $model Apps */
 
 $this->breadcrumbs=array(
-	'Apps'=>array('admin'),
-	'API',
+	'Get token',
 );
 
 ?>
+<section>
+    
 <div class="container container-autorize">
 <div class="row">
-	<div class="col-lg-12">
+    <div class="col-lg-12">
 
 <section class="panel">
     <div class="panel-body minimal">
         <div class="table-inbox-wrap">
-				
+                
         <?php if(Yii::app()->user->isGuest):?>
             <div class="row">
     <div class="col-lg-4"></div>
@@ -87,8 +88,9 @@ $this->breadcrumbs=array(
 </section>
 
 
-		
-	</div>
+        
+    </div>
 </div>
 
 </div><!-- content -->
+</section>

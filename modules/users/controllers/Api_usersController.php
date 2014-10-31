@@ -61,12 +61,13 @@ class Api_usersController extends JsonController
                 ->json($appForm->getErrors(),Yii::t('app','Form validation errors'),"unprocessable_entity");
             }
 			else
-				$app=Apps::model()->find('client_id=? AND client_secret=?',
+				$appApi=Apps::model()->find('client_id=? AND client_secret=?',
 					array($req->params('client_id'),$req->params('client_secret')));
 
 
 			$model=new Users("signup");
 			$model->attributes=$req->params();
+			$model->confirmPassword=$req->params('confirmPassword');
 			$model->registered=date('Y-m-d H:i:s');
 			$model->state_email=0;
 			$model->state=1;
@@ -79,12 +80,14 @@ class Api_usersController extends JsonController
 			if($model->validate())
 			{
 				$model->password=sha1($model->password);
+				$model->confirmPassword=sha1($model->confirmPassword);
 				$model->save();
+				
 				
 				if($module->sendRegisterMail($model))
 				{
 					$modelArray=$model->attributes;
-					if(($token=$model->getAccessToken($app))!==null)
+					if(($token=$model->getAccessToken($appApi))!==null)
 					{
 						if($module->loginInRegister)
 						{
@@ -114,7 +117,7 @@ class Api_usersController extends JsonController
 						$res
 	                    ->status(403)
 	                    ->json($req, Yii::t('app','You do not have access to take this action'));
-	                    $app->stop();
+	                   
 					}
 				}
 				else
@@ -125,7 +128,7 @@ class Api_usersController extends JsonController
 					$res
                     ->status(403)
                     ->json($req, Yii::t('app',"Error al enviar el correo de confirmación."));
-                    $app->stop();
+                   
 				}
 			} else {
 
@@ -135,7 +138,7 @@ class Api_usersController extends JsonController
             }
 		});
 
-		$app->post("$r/login",function () use ($app) {
+		$app->post("$r/login",function () use ($module,$app) {
 			$req=$app->request;
 			$res=$app->response;
 
