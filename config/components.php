@@ -44,6 +44,8 @@ return array(
         "itemChildTable" => 'users_authitemchild',
         "assignmentTable" => 'users_authassignment',
     ),
+
+    // TODO for PHP
     'coreMessages' => array(
         'language'=>'en_us',
         'class'=>'CDbMessageSource',
