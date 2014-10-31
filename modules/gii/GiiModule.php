@@ -585,7 +585,9 @@ class GiiModule extends Module
 			    'model' => \$model,
 			    'attribute' => '{$column->name}',
 			    {$shape}
-			    'actionUrl' => \$this->createUrl('upload'),
+			    // 'allowedExtensions' => array('png','jpg','jpeg','pdf','zip'),
+			    // 'iconButtom' => 'fa-cloud-upload',
+			 	'actionUrl' => \$this->createUrl('upload'),
 			),true)";
 		}
 		if($inputField=='hour')
@@ -610,7 +612,8 @@ class GiiModule extends Module
 			    'model' => \$model,
 			    'attribute' => '{$column->name}',
 			    // Put this same array extensions allowed in your upload action
-			    'allowedExtensions' => array('".implode("','", $extensions)."'),
+		        'iconButtom' => 'fa-cloud-upload',
+		        'allowedExtensions' => array('".implode("','", $extensions)."'),
 			    'actionUrl' => \$this->createUrl('upload'),
 			),true)";
 		}
