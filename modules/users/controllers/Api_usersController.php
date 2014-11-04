@@ -60,7 +60,7 @@ class Api_usersController extends JsonController
                 ->status(422)
                 ->json($appForm->getErrors(),Yii::t('app','Form validation errors'),"unprocessable_entity");
             }
-			else
+			
 				$appApi=Apps::model()->find('client_id=? AND client_secret=?',
 					array($req->params('client_id'),$req->params('client_secret')));
 
@@ -87,7 +87,7 @@ class Api_usersController extends JsonController
 				if($module->sendRegisterMail($model))
 				{
 					$modelArray=$model->attributes;
-					if(($token=$model->getAccessToken($appApi))!==null)
+					if(($token=$model->getAccessToken($model))!==null)
 					{
 						if($module->loginInRegister)
 						{
