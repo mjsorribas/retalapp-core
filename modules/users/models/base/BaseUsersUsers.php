@@ -48,7 +48,7 @@ class BaseUsersUsers extends Model
 		// will receive user inputs.
 		return array(
 			array('password', 'ext.validators.PasswordStrength','strength'=>'weak'/*weak or strong*/),
-			array('password, email, name, lastname, username, state, registered', 'required'),
+			array('password, email, state, registered', 'required'),
 			array('state, state_email, trash', 'boolean'),
 			array('registered', 'type', 'type'=>'datetime', 'datetimeFormat'=>'yyyy-MM-dd hh:mm:ss', 'message'=>'{attribute} have wrong format should be yyyy-MM-dd hh:mm:ss'),
 			array('password, email', 'length', 'max'=>128),

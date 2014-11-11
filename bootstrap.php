@@ -12,21 +12,19 @@ defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 
 require_once($yii);
 
-if(file_exists(dirname(__FILE__).'/../retalapp-dev/app/config/app.php')) {
-	Yii::setPathOfAlias('app',dirname(__FILE__).'/../retalapp-dev/app');
-	Yii::setPathOfAlias('vendor',dirname(__FILE__).'/../retalapp-modules');
-	Yii::setPathOfAlias('core',dirname(__FILE__).'/../retalapp-core');
-} else {
-	Yii::setPathOfAlias('app',dirname(__FILE__).'/../../../app');
-	Yii::setPathOfAlias('vendor',dirname(__FILE__).'/../../../vendor');
-	Yii::setPathOfAlias('core',dirname(__FILE__));
-}
+Yii::setPathOfAlias('app',dirname(__FILE__).'/../../../app');
+Yii::setPathOfAlias('vendor',dirname(__FILE__).'/../../../vendor');
+Yii::setPathOfAlias('core',dirname(__FILE__));
 
-function r($module=null) {
+
+function r($module=null,$message=null,$params=array()) {
 	
 	if($module===null)
 		return Yii::app();
 	
+	if($module!==null and $message!==null)
+		return Yii::t($module,$message,$params);
+
 	if(stripos($module, '#')!==false)
 		return Yii::app()->getComponent(substr($module, 1));
 

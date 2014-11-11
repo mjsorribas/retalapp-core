@@ -30,12 +30,6 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Sign Up');
 	   	<?php echo $form->textField($model,'name',array('class'=>'form-control',"placeholder"=>$model->getAttributeLabel('name'))); ?>
         <?php echo $form->error($model,'name',array('class'=>'help-block')); ?>
 	</div>	
-	 
-	 <div class="form-group">
-        <?php echo $form->labelEx($model,'lastname',array('class'=>'control-label')); ?>
-   		<?php echo $form->textField($model,'lastname',array('class'=>'form-control',"placeholder"=>$model->getAttributeLabel('lastname'))); ?>
-        <?php echo $form->error($model,'lastname',array('class'=>'help-block')); ?>
-	 </div>
 	
 	 <div class="form-group">
         <?php echo $form->labelEx($model,'email',array('class'=>'control-label')); ?>

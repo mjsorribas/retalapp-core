@@ -1,4 +1,30 @@
 <?php
+
+/*
+Script for inport a language core tags
+$messages=require(Yii::getPathOfAlias('app.messages.es').'/zii.php');
+foreach($messages as $data =>$msg) {
+	$model=TranslationSourceMessage::model()->find("message=? and category='zii'",array($data));
+	if($model===null)
+		$model=new TranslationSourceMessage;
+	$model->category='zii';
+	$model->message=$data;
+	if($model->save()) {
+		$d=new TranslationMessage;
+		$d->id=$model->id;
+		$d->language='es';
+		$d->translation=$msg;
+		$d->save();
+
+		$d=new TranslationMessage;
+		$d->id=$model->id;
+		$d->language='en_us';
+		$d->translation=$data;
+		$d->save();
+	}
+}
+			
+*/
 return array(
 
 	'Error sending email!!'=>'Error al enviar el correo!!',
