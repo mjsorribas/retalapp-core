@@ -3,6 +3,8 @@
  * The following variables are available in this template:
  * - $this: the CrudCode object
  */
+$module=Yii::app()->getModule('gii');
+
 $arratClean=Yii::app()->getModule('gii')->arrayClean;
 $nameColumn=$this->guessNameColumn($this->tableSchema->columns);
 $label=$this->pluralize($this->class2name($this->modelClass));
@@ -14,11 +16,13 @@ $label=$this->pluralize($this->class2name($this->modelClass));
 <div class="col-lg-3">
 	<div class="thumbnail">
 <?php foreach($this->tableSchema->columns as $column):?><?php 
+    $tangaColumn=$module->getParamsField($column);
+
 $columnLat=explode('_', $column->name);
     if(isset($columnLat[0]) and isset($columnLat[2]) and $columnLat[0]=='map' and ($columnLat[2]=='lat' or $columnLat[2]=='lng'))
         continue;
 ?>
-<?php if(strpos($column->name, 'img_')!==false):?>
+<?php if($tangaColumn['type']==='img'):?>
       <?php echo "<?php echo CHtml::image(Yii::app()->request->baseUrl.'/uploads/'.\$data->".$column->name.",'',array('class'=>'img-responsive','style'=>'width:100%'));?>"; ?>
 <?php break;?>
 <?php endif;?>
@@ -32,7 +36,7 @@ $columnLat=explode('_', $column->name);
         'zoom'=>'13',
     ));?>"; ?>
 <?php break;?>
-<?php endif;?><?php if(strpos($column->name, 'file_')!==false):?>
+<?php endif;?><?php if($tangaColumn['type']==='file'):?>
             <?php echo "<?php echo CHtml::link('<i style=\"font-size:10em\" class=\"fa fa-download\"></i>',Yii::app()->request->baseUrl.'/uploads/'.\$data->".$column->name.",array('class'=>'mhl mvl'));?>"; ?>
 <?php break;?>
 <?php endif;?>
@@ -41,7 +45,11 @@ $columnLat=explode('_', $column->name);
     <div class="caption">
     <h4>
         <?php echo ($nameColumn=='id')?$label." ":''; ?><?php echo "<?php echo \$data->{$nameColumn};?>"; ?>
-<?php foreach($this->tableSchema->columns as $column):?><?php if(strpos($column->dbType,'tinyint(1)')!==false or $column->type==='boolean'):?><?php echo "\n<?php if(\$data->{$column->name}):?>\n"; ?>
+<?php foreach($this->tableSchema->columns as $column):?>
+<?php     
+    $tangaColumn=$module->getParamsField($column);
+?>
+    <?php if($tangaColumn['type']==='boolean'):?><?php echo "\n<?php if(\$data->{$column->name}):?>\n"; ?>
         <?php echo "<?php echo '<span class=\"label label-success\">".ucwords(strtr($column->name,$arratClean))." '.Yii::t('app','Enabled').'</span>';?>\n"; ?>
         <?php echo "<?php else:?>\n"; ?>
         <?php echo "<?php echo '<span class=\"label label-danger\">".ucwords(strtr($column->name,$arratClean))." '.Yii::t('app','Disabled').'</span>';?>\n"; ?>
@@ -54,7 +62,10 @@ echo "\t<?php echo CHtml::link('<i class=\"fa fa-eye\"></i>', array('view', 'id'
 echo "\t<?php echo CHtml::link('<i class=\"fa fa-pencil-square\"></i>', array('update', 'id'=>\$data->{$this->tableSchema->primaryKey}),array('class'=>'btn btn-primary btn-large')); ?>";
 ?></p>
 <?php foreach($this->tableSchema->columns as $column):?>
-<?php if(stripos($column->dbType,'text')!==false):?>
+<?php     
+    $tangaColumn=$module->getParamsField($column);
+?>
+<?php if($tangaColumn['type']==='text'):?>
     <p class="text-muted"><em><?php echo "<?php echo (substr(strip_tags(\$data->".$column->name."),0,50));?>"; ?></em></p>
 <?php break;?>
 <?php endif;?><?php endforeach;?>

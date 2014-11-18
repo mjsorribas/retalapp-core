@@ -15,6 +15,7 @@ $optionsLayouts=array(
         array('5','7'),
     );
 shuffle($optionsLayouts);
+$module=Yii::app()->getModule('gii');
 ?>
 <?php echo "<?php\n"; ?>
 /* @var $this <?php echo $this->getControllerClass(); ?> */
@@ -43,12 +44,15 @@ echo "\$this->breadcrumbs=array(
 <div class="row">
     <div class="col-lg-<?php echo $optionsLayouts[0][0]?>">
 <div class="thumbnail">
-<?php foreach($this->tableSchema->columns as $column):?><?php 
+<?php foreach($this->tableSchema->columns as $column):?>
+<?php 
+  $tangaColumn=$module->getParamsField($column);
+?><?php 
 $columnLat=explode('_', $column->name);
     if(isset($columnLat[0]) and isset($columnLat[2]) and $columnLat[0]=='map' and ($columnLat[2]=='lat' or $columnLat[2]=='lng'))
         continue;
 ?>
-<?php if(strpos($column->name, 'img_')!==false):?>
+<?php if($tangaColumn['type']==='img'):?>
       <?php echo "<?php echo CHtml::image(Yii::app()->request->baseUrl.'/uploads/'.\$model->".$column->name.",'',array('class'=>'img-responsive','style'=>'width:100%'));?>"; ?>
 <?php break;?>
 <?php endif;?>
@@ -62,7 +66,7 @@ $columnLat=explode('_', $column->name);
         'zoom'=>'13',
     ));?>"; ?>
 <?php break;?>
-<?php endif;?><?php if(strpos($column->name, 'file_')!==false):?>
+<?php endif;?><?php if($tangaColumn['type']==='file'):?>
             <?php echo "<?php echo CHtml::link('<i style=\"font-size:10em\" class=\"fa fa-download\"></i>',Yii::app()->request->baseUrl.'/uploads/'.\$model->".$column->name.",array('class'=>'mhl mvl'));?>"; ?>
 <?php break;?>
 <?php endif;?>
@@ -71,7 +75,11 @@ $columnLat=explode('_', $column->name);
     <div class="caption">
     <h4>
         <?php echo ($nameColumn=='id')?$label." ":''; ?><?php echo "<?php echo \$model->{$nameColumn};?>"; ?>
-<?php foreach($this->tableSchema->columns as $column):?><?php if(strpos($column->dbType,'tinyint(1)')!==false or $column->type==='boolean'):?><?php echo "\n<?php if(\$model->{$column->name}):?>\n"; ?>
+<?php foreach($this->tableSchema->columns as $column):?>
+<?php 
+  $tangaColumn=$module->getParamsField($column);
+?>
+<?php if($tangaColumn['type']==='boolean'):?><?php echo "\n<?php if(\$model->{$column->name}):?>\n"; ?>
         <?php echo "<?php echo '<span class=\"label label-success\">".ucwords(strtr($column->name,$arratClean))." '.Yii::t('app','Enabled').'</span>';?>\n"; ?>
         <?php echo "<?php else:?>\n"; ?>
         <?php echo "<?php echo '<span class=\"label label-danger\">".ucwords(strtr($column->name,$arratClean))." '.Yii::t('app','Disabled').'</span>';?>\n"; ?>
@@ -80,7 +88,10 @@ $columnLat=explode('_', $column->name);
 <?php endif;?><?php endforeach;?>
     </h4>
 <?php foreach($this->tableSchema->columns as $column):?>
-<?php if(stripos($column->dbType,'text')!==false):?>
+<?php 
+  $tangaColumn=$module->getParamsField($column);
+?>
+<?php if($tangaColumn['type']==='text'):?>
     <p><?php echo "<?php echo Yii::app()->format->toBr(\$model->".$column->name.");?>"; ?></p>
 <?php break;?>
 <?php endif;?><?php endforeach;?>
@@ -93,6 +104,8 @@ $columnLat=explode('_', $column->name);
           <!-- Default panel contents -->
 <?php foreach($this->tableSchema->columns as $column):?>
 <?php 
+  $tangaColumn=$module->getParamsField($column);
+
     $columnLat=explode('_', $column->name);
 
     if($column->name=='orden_id')
@@ -105,12 +118,12 @@ $columnLat=explode('_', $column->name);
         continue;
 
 ?>
-<?php if(strpos($column->name, 'img_')!==false):?>
+<?php if($tangaColumn['type']==='img'):?>
           <div class="panel-heading"><?php echo ucwords(strtr($column->name,$arratClean)); ?></div>
           <div class="panel-body text-center">
             <?php echo "<?php echo CHtml::image(Yii::app()->request->baseUrl.'/uploads/'.\$model->".$column->name.",'',array('class'=>'img-responsive img-thumbnail'));?>\n"; ?>
           </div>
-<?php elseif(stripos($column->dbType,'text')!==false):?>
+<?php elseif($tangaColumn['type']==='text'):?>
           <div class="panel-heading"><?php echo ucwords(strtr($column->name,$arratClean)); ?></div>
           <div class="panel-body">
             <?php echo "<?php echo Yii::app()->format->toBr(\$model->".$column->name.");?>\n"; ?>
@@ -128,12 +141,12 @@ $columnLat=explode('_', $column->name);
             'zoom'=>'13',
         ));?>\n"; ?>
           </div>
-<?php elseif(strpos($column->name, 'file_')!==false):?>
+<?php elseif($tangaColumn['type']==='file'):?>
           <div class="panel-heading"><?php echo ucwords(strtr($column->name,$arratClean)); ?></div>
           <div class="panel-body">
             <?php echo "<?php echo CHtml::link('<i class=\"fa fa-download\"></i>',Yii::app()->request->baseUrl.'/uploads/'.\$model->".$column->name.",array('font-size:100%'));?>\n"; ?>
           </div>
-<?php elseif(strpos($column->dbType,'tinyint(1)')!==false or $column->type==='boolean'):?>
+<?php elseif($tangaColumn['type']==='boolean'):?>
           <div class="panel-heading"><?php echo ucwords(strtr($column->name,$arratClean)); ?></div>
           <div class="panel-body">
             <?php echo "<?php if(\$model->{$column->name}):?>\n"; ?>
@@ -142,7 +155,7 @@ $columnLat=explode('_', $column->name);
             <?php echo "<?php echo '<span class=\"label label-danger\">".ucwords(strtr($column->name,$arratClean))." '.Yii::t('app','Disabled').'</span>';?>\n"; ?>
             <?php echo "<?php endif;?>\n"; ?>
           </div>
-<?php elseif(strpos($column->dbType,'date')!==false):?>
+<?php elseif($tangaColumn['type']==='date'):?>
           <div class="panel-heading"><?php echo ucwords(strtr($column->name,$arratClean)); ?></div>
           <div class="panel-body">
               <?php echo "<?php echo Yii::app()->format->formatShort(\$model->".$column->name.");?>\n"; ?>

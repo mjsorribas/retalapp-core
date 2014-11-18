@@ -13,7 +13,6 @@
 $appAlias=Yii::getPathOfAlias('app');
 
 $paramsConfig=array(
-    // this is used in contact page
     'version' => 'v0.1.1',
 );
 
@@ -103,6 +102,7 @@ $componentsConfig['urlManager']=array(
 return array(
     'basePath' => $appAlias,
     'theme'=>'flat',
+    'language'=>isset($paramsConfig['language'])?$paramsConfig['language']:'en',
     'defaultController'=>$defaultController,
     'modules' => require($appAlias.'/config/modules.php'),
     'extensionPath' => dirname(__FILE__).'/../extensions/',

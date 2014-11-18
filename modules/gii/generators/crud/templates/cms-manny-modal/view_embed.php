@@ -3,6 +3,7 @@
  * The following variables are available in this template:
  * - $this: the CrudCode object
  */
+$module=Yii::app()->getModule('gii');
 ?>
 <?php echo "<?php\n"; ?>
 /* @var $this <?php echo $this->getControllerClass(); ?> */
@@ -115,12 +116,15 @@ $(function () {
 	   				console.log(data);
 	   				$('#<?php echo $this->class2id($this->modelClass)."-form"?>').attr('action',action);
 <?php foreach($this->tableSchema->columns as $column):?>
-<?php if(strpos($column->name, 'img_')!==false):?>
+<?php 
+	$tangaColumn=$module->getParamsField($column);
+?>
+<?php if($tangaColumn['type']==='img'):?>
 					$('.stick-image').empty();
 					$('#<?php echo $this->getModelClass(); ?>_<?php echo $column->name ?>').val('');
 					$('#<?php echo $this->getModelClass(); ?>_<?php echo $column->name ?>').val(data.<?php echo $column->name ?>);
 					$('.stick-image.<?php echo $this->getModelClass(); ?>_<?php echo $column->name ?>_img').html('<img class="img-responsive img-rounded" src="'+$('.<?php echo $this->getModelClass(); ?>_<?php echo $column->name ?>_img').attr('data-url')+'/'+data.<?php echo $column->name ?>+'" alt="">');
-<?php elseif(strpos($column->dbType,'tinyint(1)')!==false or $column->type==='boolean'):?>
+<?php elseif($tangaColumn['type']==='boolean'):?>
 					$('#<?php echo $this->getModelClass(); ?>_<?php echo $column->name ?>').attr('checked',data.<?php echo $column->name ?>);
 <?php else:?>
 					$('#<?php echo $this->getModelClass(); ?>_<?php echo $column->name ?>').val(data.<?php echo $column->name ?>);
@@ -152,7 +156,10 @@ $(function () {
 	              this.reset();
 	            });
 <?php foreach($this->tableSchema->columns as $column):?>
-<?php if(strpos($column->name, 'img_')!==false):?>
+<?php 
+	$tangaColumn=$module->getParamsField($column);
+?>
+<?php if($tangaColumn['type']==='img'):?>
 					$('.stick-image').empty();
 					$('#<?php echo $this->getModelClass(); ?>_<?php echo $column->name ?>').val('');
 <?php endif;?>

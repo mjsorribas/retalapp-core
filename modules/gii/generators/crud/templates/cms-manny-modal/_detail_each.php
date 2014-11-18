@@ -3,12 +3,11 @@
  * The following variables are available in this template:
  * - $this: the CrudCode object
  */
+$module=Yii::app()->getModule('gii');
 $arratClean=Yii::app()->getModule('gii')->arrayClean;
 $optionsLayouts=array(
         array('4','8'),
         array('8','4'),
-        array('3','9'),
-        array('9','3'),
         array('6','6'),
         array('7','5'),
         array('5','7'),
@@ -32,15 +31,17 @@ shuffle($optionsLayouts);
     <div class="col-lg-7 pls">
 <div class="col-lg-4 pln prn">
 <?php foreach($this->tableSchema->columns as $column):?><?php 
+
+$tangaColumn=$module->getParamsField($column);
 $columnLat=explode('_', $column->name);
     if(isset($columnLat[0]) and isset($columnLat[2]) and $columnLat[0]=='map' and ($columnLat[2]=='lat' or $columnLat[2]=='lng'))
         continue;
 ?>
-<?php if(strpos($column->name, 'img_')!==false):?>
+<?php if($tangaColumn['type']==='img'):?>
       <?php echo "<?php echo CHtml::image(Yii::app()->request->baseUrl.'/uploads/'.\$data->".$column->name.",'',array('class'=>'img-responsive img-thumbnail','style'=>'width:100%'));?>"; ?>
 <?php break;?>
 <?php endif;?>
-<?php if(strpos($column->name, 'file_')!==false):?>
+<?php if($tangaColumn['type']==='file'):?>
             <?php echo "<?php echo CHtml::link('<i style=\"font-size:10em\" class=\"fa fa-download\"></i>',Yii::app()->request->baseUrl.'/uploads/'.\$data->".$column->name.",array('class'=>'mhl mvl'));?>"; ?>
 <?php break;?>
 <?php endif;?>
