@@ -231,7 +231,7 @@ class PageController extends FrontController
 				*/
 				if($this->module->sendPassword)
 				{
-					$user=Users::model()->findByPk(r()->id);
+					$user=Users::model()->findByPk(r()->user->id);
 					$user->state_email=1;
 					$user->save(true,array('state_email'));
 				}

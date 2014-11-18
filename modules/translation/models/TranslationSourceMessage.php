@@ -18,6 +18,7 @@ class TranslationSourceMessage extends BaseTranslationSourceMessage
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array_merge(parent::rules(),array(
+			array('category, message', 'required'),
 		));
 	}
 
