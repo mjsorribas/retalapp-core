@@ -46,28 +46,30 @@ class Controller extends CController
 		/**
 		 * Client languane is updated
 		*/
-		Yii::app()->language=substr(Yii::app()->request->preferredLanguage,0,2);
+		$params=r()->params;
+		if(isset($params['languageUser']) and $params['languageUser']===true)
+			r()->language=substr(r()->request->preferredLanguage,0,2);
 		
 		/**
 		 * Theme front is the apptheme
 		*/
-		if(isset(Yii::app()->params['themeFront']))
-			$this->themeFront=Yii::app()->params['themeFront'];
+		if(isset($params['themeFront']))
+			$this->themeFront=$params['themeFront'];
 		
-		if(isset(Yii::app()->params['themeBack']))
-			$this->themeBack=Yii::app()->params['themeBack'];
+		if(isset($params['themeBack']))
+			$this->themeBack=$params['themeBack'];
 		
 
 		/**
 		 * Importmos jquery
 		*/
-		Yii::app()->clientScript
+		r()->clientScript
 		->registerCoreScript( 'jquery' )
 		->registerCoreScript( 'jquery.ui' );
-		if (Yii::app()->user->loginRequiredAjaxResponse){
-		    Yii::app()->clientScript->registerScript('ajaxLoginRequired', '
+		if (r()->user->loginRequiredAjaxResponse){
+		    r()->clientScript->registerScript('ajaxLoginRequired', '
 		    jQuery(document).ajaxComplete(function(event, request, options) {
-		            if (request.responseText == "'.Yii::app()->user->loginRequiredAjaxResponse.'") {
+		            if (request.responseText == "'.r()->user->loginRequiredAjaxResponse.'") {
 		                window.location.reload(true);
 		            }
 		        });
@@ -78,9 +80,9 @@ class Controller extends CController
 	
 	public function builtHeader()
 	{
-		foreach(Yii::app()->getModules() as $name => $config)
+		foreach(r()->getModules() as $name => $config)
      	{
-     	 	$module=Yii::app()->getModule($name);
+     	 	$module=r()->getModule($name);
      	 	if($module===null)
      	 		continue;
      	 	if(method_exists($module,'builtHeader'))
@@ -90,32 +92,32 @@ class Controller extends CController
 
 	public function builtMessages()
 	{
-		return Yii::app()->user->getFlashes();
+		return r()->user->getFlashes();
 	}
 
 	public function builtTitle()
 	{
-		return Yii::app()->name;
+		return r()->name;
 	}
 
 	public function builtUrlLogin()
 	{
-		return Yii::app()->getModule('users')->urlLogin;
+		return r()->getModule('users')->urlLogin;
 	}
 
 	public function builtUrlProfile()
 	{
-		return Yii::app()->getModule('users')->urlProfile;
+		return r()->getModule('users')->urlProfile;
 	}
 
 	public function builtUrlRegister()
 	{
-		return Yii::app()->getModule('users')->urlRegister;
+		return r()->getModule('users')->urlRegister;
 	}
 
 	public function builtUrlLogout()
 	{
-		return Yii::app()->getModule('users')->urlLogout;
+		return r()->getModule('users')->urlLogout;
 	}
 
 	public function builtUrlHome()
@@ -125,16 +127,16 @@ class Controller extends CController
 
 	public function themeUrl()
 	{
-		return Yii::app()->theme->baseUrl;
+		return r()->theme->baseUrl;
 	}
 
 	public function builtEndBody()
 	{
-		foreach(Yii::app()->getModules() as $name => $config)
+		foreach(r()->getModules() as $name => $config)
      	{
      	 	// if($name=="gii")
      	 	// 	continue;
-     	 	$module=Yii::app()->getModule($name);
+     	 	$module=r()->getModule($name);
      	 	if($module===null)
      	 		continue;
      	 	if(method_exists($module,'builtEndBody'))
@@ -144,9 +146,9 @@ class Controller extends CController
 
 	public function builtApp()
 	{
- 		foreach(Yii::app()->getModules() as $name => $config)
+ 		foreach(r()->getModules() as $name => $config)
      	{
-     	 	$module=Yii::app()->getModule($name);
+     	 	$module=r()->getModule($name);
      	 	if($module===null)
      	 		continue;
      	 	if(method_exists($module,'builtApp'))
@@ -157,9 +159,9 @@ class Controller extends CController
 	public function builtMenu()
 	{
 		$items=array();
-		foreach(Yii::app()->getModules() as $name => $config)
+		foreach(r()->getModules() as $name => $config)
      	{
-     	 	$module=Yii::app()->getModule($name);
+     	 	$module=r()->getModule($name);
      	 	if($module===null)
      	 		continue;
  	 	 	if($this->hasItems($module)!==false)
@@ -185,11 +187,11 @@ class Controller extends CController
 	public function addConfigsMenu()
 	{
      	$items=array();
-		foreach(Yii::app()->getModules() as $name => $config)
+		foreach(r()->getModules() as $name => $config)
      	{
      	 	if($name=="gii")
      	 		continue;
-			$module=Yii::app()->getModule($name);
+			$module=r()->getModule($name);
      	 	if($module===null)
      	 		continue;
  	 	 	if($this->hasConfigItems($module)!==false)
@@ -206,11 +208,11 @@ class Controller extends CController
 	public function builtDashboardCounters()
 	{
 		$counters=array();
-		foreach(Yii::app()->getModules() as $name => $config)
+		foreach(r()->getModules() as $name => $config)
      	{
      	 	if($name=="gii")
      	 		continue;
-     	 	$module=Yii::app()->getModule($name);
+     	 	$module=r()->getModule($name);
      	 	if($module===null)
      	 		continue;
     		if($this->dashboardCountersValide($module)!==false)
@@ -225,7 +227,7 @@ class Controller extends CController
 		$counters=array();
 		if($moduleName!==null)
 		{
-		 	$module=Yii::app()->getModule($moduleName);
+		 	$module=r()->getModule($moduleName);
      	 	if($module===null)
      	 		return array();
     		if($this->builtDocApi($module)!==false)
@@ -234,11 +236,11 @@ class Controller extends CController
 	    }
 		else
 		{
-			foreach(Yii::app()->getModules() as $name => $config)
+			foreach(r()->getModules() as $name => $config)
 	     	{
 	     	 	if($name=="gii")
 	     	 		continue;
-	     	 	$module=Yii::app()->getModule($name);
+	     	 	$module=r()->getModule($name);
 	     	 	if($module===null)
 	     	 		continue;
 	    		if($this->builtDocApi($module)!==false)
@@ -251,17 +253,17 @@ class Controller extends CController
 
 	public function built($moduleName)
 	{
-		return Yii::app()->getModule($moduleName);
+		return r()->getModule($moduleName);
 	}
 
 	public function builtDashboardReports()
 	{
 		$reports=array();
-		foreach(Yii::app()->getModules() as $name => $config)
+		foreach(r()->getModules() as $name => $config)
      	{
      	 	if($name=="gii")
      	 		continue;
-     	 	$module=Yii::app()->getModule($name);
+     	 	$module=r()->getModule($name);
      	 	if($module===null)
      	 		continue;
  	 		if($this->dashboardReportsValide($module)!==false)
@@ -342,14 +344,14 @@ class Controller extends CController
 			$role=array($role);
 		foreach($role as $row)
 		{
-			if(!Yii::app()->user->checkAccess($row))
+			if(!r()->user->checkAccess($row))
 				throw new CHttpException(403,Yii::t('yii','Login Required'));
 		}
 	}
 
 	protected function isFrontAction()
 	{
-		Yii::app()->theme=$this->themeFront;
+		r()->theme=$this->themeFront;
 		$this->layout='//layouts/column1';
 	}
 
@@ -357,9 +359,9 @@ class Controller extends CController
 	{
 		// Only front action can access
 		// without login
-		if(Yii::app()->user->isGuest)
-			Yii::app()->user->loginRequired();
-		Yii::app()->theme=$this->themeBack;
+		if(r()->user->isGuest)
+			r()->user->loginRequired();
+		r()->theme=$this->themeBack;
 	}
 
 	public function actionUpload()
