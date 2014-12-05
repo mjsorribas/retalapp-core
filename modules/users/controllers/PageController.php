@@ -396,6 +396,7 @@ class PageController extends FrontController
 	public function actionRegisterAjax()
 	{
 	    header('Content-type: application/json');
+		$model=new Users("signup");
 
 		$model->attributes=$_REQUEST;
 		$model->registered=date('Y-m-d H:i:s');
