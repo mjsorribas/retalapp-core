@@ -402,9 +402,9 @@ class PageController extends FrontController
 	{
 	    header('Content-type: application/json');
 		//$model=new Users("signup");
-	    if($this->model->modelUsers!=='Users')
-	    	Yii::import("app.config.users.".$this->model->modelUsers);
-		$model=CActiveRecord::model($this->model->modelUsers);
+	    if($this->module->modelUsers!=='Users')
+	    	Yii::import("app.config.users.".$this->module->modelUsers);
+		$model=CActiveRecord::model($this->module->modelUsers);
 		$model->setScenario("signup");
 
 		$model->attributes=$_REQUEST;
