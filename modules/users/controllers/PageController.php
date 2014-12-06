@@ -438,12 +438,18 @@ class PageController extends FrontController
 				}
 				else
 				{
+					$message="";
+					if($this->module->sendPassword)
+						$message=Yii::t('app','We have sent a new password to your email');
+					else
+						$message=Yii::t('app','We have sent the instructions to your email');
+					
 					if($this->module->sendPassword) {
 						echo CJSON::encode(array(
 			                'success'=>1,
 			                'data'=>$model,
 			                'error_code'=>null,
-			                'message'=>Yii::t('app','We have sent a new password to your email'),
+			                'message'=>$message,
 			                'params'=>$_REQUEST,
 			            ));
 
