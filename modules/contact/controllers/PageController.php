@@ -23,7 +23,7 @@ class PageController extends FrontController
 		$model->created_at = date('Y-m-d H:i:s');
         if ($model->save())
         {
-			$subject='Nuevo Contacto ' . strip_tags(Yii::app()->name);
+			$subject=r('contact','New contact message').' ' . strip_tags(Yii::app()->name);
 			#$targetEmail=YII_DEBUG?Yii::app()->params['adminEmail']:$config->email;
  			#if(empty($config->email))
 				$targetEmail=Yii::app()->params['adminEmail'];
@@ -37,7 +37,7 @@ class PageController extends FrontController
             r('email')->add($targetEmail, strip_tags(Yii::app()->name));
             r('email')->sendBody($subject, $body);
             
-            echo CJSON::encode(array('success'=>1,'data'=>$model));
+            echo CJSON::encode(array('success'=>1,'data'=>$model,'message'=>r('contact','Thanks for contacting us, message sent')));
         } else {
 			echo CJSON::encode(array('success'=>0,'data'=>$model->getErrors()));
         }
@@ -51,7 +51,7 @@ class PageController extends FrontController
 		$model->created_at = date('Y-m-d H:i:s');
         if ($model->save())
         {
-		    echo CJSON::encode(array('success'=>1,'data'=>$model));
+		    echo CJSON::encode(array('success'=>1,'data'=>$model,'message'=>r('contact','Thanks for contacting us, message sent')));
         } else {
 			echo CJSON::encode(array('success'=>0,'data'=>$model->getErrors()));
         }
