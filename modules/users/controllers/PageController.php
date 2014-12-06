@@ -403,7 +403,7 @@ class PageController extends FrontController
 		$model->state_email=0;
 		$model->state=1;
 		$model->trash=0;
-		$model->conditions=isset($_REQUEST['conditions'])?$_REQUEST['conditions']:1;
+		$model->conditions=isset($_REQUEST['conditions'])?$_REQUEST['conditions']:0;
 		$model->username=r()->format->trimAndLower($model->name).'.'.r()->format->trimAndLower($model->lastname);
 		if($this->module->sendPassword)
 			$model->password=sha1($model->username);
