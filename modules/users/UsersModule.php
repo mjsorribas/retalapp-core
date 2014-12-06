@@ -83,6 +83,13 @@ class UsersModule extends Module
 			r()->setComponents(require(dirname(__FILE__)."/components.php"), false);
 	}
 
+	public function loadModel()
+	{
+		if($this->modelUsers!=='Users')
+	    	Yii::import("app.config.".$this->id.".".$this->modelUsers);
+		return CActiveRecord::model($this->modelUsers);
+	}
+
 	/*
  	public function menuItems()
     {
