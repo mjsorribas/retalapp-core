@@ -694,7 +694,7 @@ class PageController extends FrontController
 		$model->attributes=$_REQUEST;
 
 		if($model->validate()) {
-			$user=Users::model()->find("email=? AND papelera=0",array($model->email));
+			$user=Users::model()->find("email=? AND trash=0",array($model->email));
 			
 			if(r('users')->sendForgotMail($user)) {
 				echo CJSON::encode(array(
