@@ -1,9 +1,9 @@
 <?php
-/* @var $this MessagesController */
-/* @var $model ContactMessages */
+/* @var $this NewsController */
+/* @var $model ContactNews */
 
 $this->breadcrumbs=array(
-	'Messages'=>array('admin'),
+	'Contact Newsletter'=>array('admin'),
 	Yii::t('app','Create'),
 );
  ?><div class="col-lg-12">

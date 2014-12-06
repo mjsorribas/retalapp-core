@@ -1,18 +1,14 @@
 <?php
 
 /**
- * This is the model class for table "contact_messages".
+ * This is the model class for table "contact_news".
  *
- * The followings are the available columns in table 'contact_messages':
+ * The followings are the available columns in table 'contact_news':
  * @property integer $id
- * @property string $name
- * @property string $phone
  * @property string $email
- * @property string $message
- * @property integer $read
  * @property string $created_at
  */
-class BaseContactMessages extends Model
+class BaseContactNews extends Model
 {
 
 	public function afterFind()
@@ -30,7 +26,7 @@ class BaseContactMessages extends Model
 	 */
 	public function tableName()
 	{
-		return 'contact_messages';
+		return 'contact_news';
 	}
 
 	/**
@@ -41,16 +37,13 @@ class BaseContactMessages extends Model
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, email, message, read, created_at', 'required'),
-			array('read', 'boolean'),
+			array('email, created_at', 'required'),
 			array('email', 'email'),
 			array('created_at', 'type', 'type'=>'datetime', 'datetimeFormat'=>'yyyy-MM-dd hh:mm:ss', 'message'=>'{attribute} have wrong format should be yyyy-MM-dd hh:mm:ss'),
-			array('name, email', 'length', 'max'=>255),
-			array('phone', 'length', 'max'=>100),
-			array('read', 'safe'),
+			array('email', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, phone, email, message, read, created_at', 'safe', 'on'=>'search'),
+			array('id, email, created_at', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,11 +65,7 @@ class BaseContactMessages extends Model
 	{
 		return array(
 			'id' => Yii::t('app','ID'),
-			'name' => Yii::t('app','Name'),
-			'phone' => Yii::t('app','Phone'),
 			'email' => Yii::t('app','Email'),
-			'message' => Yii::t('app','Message'),
-			'read' => Yii::t('app','Read'),
 			'created_at' => Yii::t('app','Created At'),
 		);
 	}
@@ -100,11 +89,7 @@ class BaseContactMessages extends Model
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('phone',$this->phone,true);
 		$criteria->compare('email',$this->email,true);
-		$criteria->compare('message',$this->message,true);
-		$criteria->compare('read',$this->read);
 		$criteria->compare('created_at',$this->created_at,true);
 
 		return new CActiveDataProvider($this, array(
@@ -118,6 +103,6 @@ class BaseContactMessages extends Model
 	 */
 	public static function listData()
 	{
-		return CHtml::listData(CActiveRecord::model(__CLASS__)->findAll(),'id','name');
+		return CHtml::listData(CActiveRecord::model(__CLASS__)->findAll(),'id','email');
 	}
 }

@@ -1,10 +1,10 @@
 <?php
-/* @var $this MessagesController */
-/* @var $model ContactMessages */
+/* @var $this NewsController */
+/* @var $model ContactNews */
 
 $this->breadcrumbs=array(
-	'Messages'=>array('admin'),
-	$model->name=>array('view','id'=>$model->id),
+	'Contact Newsletter'=>array('admin'),
+	$model->id=>array('view','id'=>$model->id),
 	Yii::t('app','Update'),
 );
 ?>

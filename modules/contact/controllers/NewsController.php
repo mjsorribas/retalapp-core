@@ -1,6 +1,6 @@
 <?php
 
-class MessagesController extends CmsController
+class NewsController extends CmsController
 {
 	/////////////////////////////
 	// This controller is for  //
@@ -8,8 +8,8 @@ class MessagesController extends CmsController
 	/////////////////////////////
 	
 	public $defaultAction='admin';
-	public $title='<i class="fa fa-envelope"></i> Messages';
-	public $subTitle='Admin Messages';
+	public $title='<i class="fa fa-envelope"></i> Contact Newsletter';
+	public $subTitle='Admin Contact Newsletter';
 	
 	/**
 	 * @return array action filters
@@ -62,14 +62,14 @@ class MessagesController extends CmsController
 	 */
 	public function actionCreate()
 	{
-		$model=new ContactMessages;
+		$model=new ContactNews;
 
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		if(isset($_POST['ContactMessages']))
+		if(isset($_POST['ContactNews']))
 		{
-			$model->attributes=$_POST['ContactMessages'];
+			$model->attributes=$_POST['ContactNews'];
 			$model->created_at=date('Y-m-d H:i:s');
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
@@ -92,9 +92,9 @@ class MessagesController extends CmsController
 		// Uncomment the following line if AJAX validation is needed
 		$this->performAjaxValidation($model);
 
-		if(isset($_POST['ContactMessages']))
+		if(isset($_POST['ContactNews']))
 		{
-			$model->attributes=$_POST['ContactMessages'];
+			$model->attributes=$_POST['ContactNews'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -123,10 +123,10 @@ class MessagesController extends CmsController
 	 */
 	public function actionAdmin()
 	{
-		$model=new ContactMessages('search');
+		$model=new ContactNews('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['ContactMessages']))
-			$model->attributes=$_GET['ContactMessages'];
+		if(isset($_GET['ContactNews']))
+			$model->attributes=$_GET['ContactNews'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -141,12 +141,12 @@ class MessagesController extends CmsController
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return ContactMessages the loaded model
+	 * @return ContactNews the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=ContactMessages::model()->findByPk($id);
+		$model=ContactNews::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -154,11 +154,11 @@ class MessagesController extends CmsController
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param ContactMessages $model the model to be validated
+	 * @param ContactNews $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='contact-messages-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='contact-news-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

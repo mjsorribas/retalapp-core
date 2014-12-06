@@ -7,10 +7,13 @@ class PageController extends FrontController
 	
 	public function actionIndex()
 	{
-		$this->render('index');
+		$contact=ContactInfo::model()->find();
+		$this->render('index',array(
+			'contact'=>$contact,
+		));
 	}
 
-
+	
 	public function actionContactJson()
 	{
         #$config=$this->module->getInfo();
@@ -35,6 +38,20 @@ class PageController extends FrontController
             r('email')->sendBody($subject, $body);
             
             echo CJSON::encode(array('success'=>1,'data'=>$model));
+        } else {
+			echo CJSON::encode(array('success'=>0,'data'=>$model->getErrors()));
+        }
+	}
+	
+	public function actionNewsJson()
+	{
+        #$config=$this->module->getInfo();
+        $model=new ContactNews;
+		$model->attributes = $_REQUEST;
+		$model->created_at = date('Y-m-d H:i:s');
+        if ($model->save())
+        {
+		    echo CJSON::encode(array('success'=>1,'data'=>$model));
         } else {
 			echo CJSON::encode(array('success'=>0,'data'=>$model->getErrors()));
         }

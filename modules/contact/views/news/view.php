@@ -1,10 +1,10 @@
 <?php
-/* @var $this MessagesController */
-/* @var $model ContactMessages */
+/* @var $this NewsController */
+/* @var $model ContactNews */
 
 $this->breadcrumbs=array(
-	'Messages'=>array('admin'),
-	$model->name,
+	'Contact Newsletter'=>array('admin'),
+	$model->id,
 );
 ?>
 <div class="col-lg-12">
@@ -21,33 +21,9 @@ $this->breadcrumbs=array(
     <div class="col-lg-7">
         <div class="panel panel-default">
           <!-- Default panel contents -->
-          <div class="panel-heading"><b><?php echo CHtml::encode($model->getAttributeLabel('name')); ?>:</b></div>
-          <div class="panel-body">
-            <p><?php echo $model->name;?></p>
-          </div>
-
-          <div class="panel-heading"><b><?php echo CHtml::encode($model->getAttributeLabel('phone')); ?>:</b></div>
-          <div class="panel-body">
-            <p><?php echo $model->phone;?></p>
-          </div>
-
           <div class="panel-heading"><b><?php echo CHtml::encode($model->getAttributeLabel('email')); ?>:</b></div>
           <div class="panel-body">
             <p><?php echo $model->email;?></p>
-          </div>
-
-          <div class="panel-heading"><b><?php echo CHtml::encode($model->getAttributeLabel('message')); ?>:</b></div>
-          <div class="panel-body">
-            <?php echo Yii::app()->format->toBr($model->message);?>
-          </div>
-
-          <div class="panel-heading"><b><?php echo CHtml::encode($model->getAttributeLabel('read')); ?>:</b></div>
-          <div class="panel-body">
-            <?php if($model->read):?>
-            <?php echo '<span class="label label-success">Read '.Yii::t('app','Enabled').'</span>';?>
-            <?php else:?>
-            <?php echo '<span class="label label-danger">Read '.Yii::t('app','Disabled').'</span>';?>
-            <?php endif;?>
           </div>
 
           <div class="panel-heading"><b><?php echo CHtml::encode($model->getAttributeLabel('created_at')); ?>:</b></div>

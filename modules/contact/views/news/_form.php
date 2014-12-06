@@ -1,13 +1,13 @@
 <?php
-/* @var $this MessagesController */
-/* @var $model ContactMessages */
+/* @var $this NewsController */
+/* @var $model ContactNews */
 /* @var $form CActiveForm */
 ?>
 <section class="panel">
     <div class="panel-body minimal">
         <div class="table-inbox-wrap ">
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'contact-messages-form',
+	'id'=>'contact-news-form',
 	'htmlOptions'=>array("class"=>"","role"=>"form"),
 	'enableAjaxValidation'=>true,
     'clientOptions'=>array('validateOnSubmit'=>true),
@@ -23,26 +23,6 @@
 	<div class="col-lg-5">
 
 <div class="form-group">
-	<?php echo $form->labelEx($model,'name',array('class'=>'control-label')); ?>
-	<?php echo $this->widget('ext.inputs.counter.GTextfield',array(
-					'model'=>$model,
-					'attribute'=>'name',
-					'allowed' => 255,
-					'htmlOptions' => array('class'=>'form-control'),
-				),true); ?>
-	<?php echo $form->error($model,'name',array('class'=>'help-block')); ?>
-</div>
-<div class="form-group">
-	<?php echo $form->labelEx($model,'phone',array('class'=>'control-label')); ?>
-	<?php echo $this->widget('ext.inputs.counter.GTextfield',array(
-					'model'=>$model,
-					'attribute'=>'phone',
-					'allowed' => 100,
-					'htmlOptions' => array('class'=>'form-control'),
-				),true); ?>
-	<?php echo $form->error($model,'phone',array('class'=>'help-block')); ?>
-</div>
-<div class="form-group">
 	<?php echo $form->labelEx($model,'email',array('class'=>'control-label')); ?>
 	<?php echo $this->widget('ext.inputs.counter.GTextfield',array(
 					'model'=>$model,
@@ -54,16 +34,6 @@
 </div>
 	</div>
 	<div class="col-lg-7">
-<div class="form-group">
-	<?php echo $form->labelEx($model,'message',array('class'=>'control-label')); ?>
-	<?php echo $form->textArea($model,'message',array('rows'=>5, 'cols'=>50,'class'=>'form-control')); ?>
-	<?php echo $form->error($model,'message',array('class'=>'help-block')); ?>
-</div>
-<div class="form-group">
-	<?php echo $form->labelEx($model,'read',array('class'=>'control-label')); ?>
-	<?php echo $form->checkBox($model,'read'); ?>
-	<?php echo $form->error($model,'read',array('class'=>'help-block')); ?>
-</div>
 	</div>
 </div>
 

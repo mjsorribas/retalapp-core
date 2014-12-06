@@ -33,14 +33,14 @@ class ContactModule extends Module
 			return false;
 	}
 
-	/**
-	 * For one link on admin sidebar
-	*/
-	public function menuItems()
+   	public function menuItems()
     {
         return array(
             array('label'=>Yii::t('app','Contact'), 'icon'=>'fa fa-envelope', 'url'=>array('#'), 'items'=>array(
-                array('label'=>Yii::t('app','Messages'), 'icon'=>'fa fa-envelope', 'url'=>array('/'.$this->id.'/messages/admin')),
+                array('label'=>Yii::t('app','Contact Info'), 'icon'=>'fa fa-envelope', 'url'=>array('/'.$this->id.'/info/')),
+                  array('label'=>Yii::t('app','Messages'), 'icon'=>'fa fa-envelope', 'url'=>array('/'.$this->id.'/messages/admin')),
+               array('label'=>Yii::t('app','Contact Newsletter'), 'icon'=>'fa fa-envelope', 'url'=>array('/'.$this->id.'/news/admin')),
+               
                 // ... Put here more sub-menues like this 
             )),
        );
@@ -59,11 +59,17 @@ class ContactModule extends Module
        );
 	}
 	*/
-
+	
+	public function renderPartialView($view,$params=array())
+    {
+    	if(r()->controller->getViewFile('//'.CONTACT_ID.'/page/'.$view)!==false)
+			return r()->controller->renderPartial('//'.CONTACT_ID.'/page/'.$view,$params,true);
+		return r()->controller->renderPartial(CONTACT_ID.'.views.page.'.$view,$params,true);
+	}
+	
 	/*
 	 * HOeee!! Do you want publish elements on the landing module
 	 * Here is
-	*/
 	public function getTypesBlocks()
     {
     	return array(
@@ -71,11 +77,11 @@ class ContactModule extends Module
 		);
     }
 
-
 	public function landingContact($item=null)
 	{
-		return r()->controller->renderPartial(CONTACT_ID.'.views.page._block',array(),true);
+		return $this->renderPartialView('_block');
 	}
+	*/
 
 	/*
 	 * HOeee!! Do you want show someting on the end body

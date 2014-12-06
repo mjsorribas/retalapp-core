@@ -1,18 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "contact_messages".
+ * This is the model class for table "contact_info".
  *
- * The followings are the available columns in table 'contact_messages':
+ * The followings are the available columns in table 'contact_info':
  * @property integer $id
- * @property string $name
+ * @property string $title
+ * @property string $subtitle
+ * @property string $contact_text
+ * @property string $address
  * @property string $phone
- * @property string $email
- * @property string $message
- * @property integer $read
- * @property string $created_at
+ * @property string $facebook
+ * @property string $twitter
+ * @property string $google_plus
+ * @property string $linked_in
+ * @property string $youtube
+ * @property string $skype
+ * @property string $map_address
+ * @property double $map_address_lat
+ * @property double $map_address_lng
  */
-class ContactMessages extends BaseContactMessages
+class ContactInfo extends BaseContactInfo
 {
 	/**
 	 * @return array validation rules for model attributes.
@@ -54,25 +62,5 @@ class ContactMessages extends BaseContactMessages
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
-	}
-
-	public function search()
-	{
-		// @todo Please modify the following code to remove attributes that should not be searched.
-
-		$criteria=new CDbCriteria;
-
-		$criteria->compare('id',$this->id);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('phone',$this->phone,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('message',$this->message,true);
-		$criteria->compare('read',$this->read);
-		$criteria->compare('created_at',$this->created_at,true);
-		$criteria->order='created_at DESC';
-
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
 	}
 }
