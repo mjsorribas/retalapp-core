@@ -2,17 +2,12 @@
 
 class UsersModule extends Module
 {
+	public $confirmPasswordRequired=false;
 	public $copyWelcomeEmail;
-	
 	public $copySendPasswordForgot;
-	
 	public $copyForgotEmail;
-
 	public $copySendPassword;
-
 	public $enableOAuth=false;
-		
-
 	public $allowBasicOAuth=false;
 	
 	/**

@@ -266,11 +266,16 @@ class PageController extends FrontController
 		if(isset($_POST['Users']))
 		{
 			$model->attributes=$_POST['Users'];
+			
+			if(!$this->module->confirmPasswordRequired and isset($_POST['password'])) {
+				$model->confirmPassword=$_POST['password'];
+			}
+
 			$model->registered=date('Y-m-d H:i:s');
 			$model->state_email=0;
 			$model->state=1;
 			$model->trash=0;
-			$model->conditions=isset($_POST['Users']['conditions'])?$_POST['Users']['conditions']:1;
+			$model->conditions=isset($_POST['Users']['conditions'])?$_POST['Users']['conditions']:0;
 			$model->username=r()->format->trimAndLower($model->name).'.'.r()->format->trimAndLower($model->lastname);
 			if($this->module->sendPassword)
 				$model->password=sha1($model->username);
@@ -399,6 +404,11 @@ class PageController extends FrontController
 		$model=new Users("signup");
 
 		$model->attributes=$_REQUEST;
+
+		if(!$this->module->confirmPasswordRequired and isset($_REQUEST['password'])) {
+			$model->confirmPassword=$_REQUEST['password'];
+		}
+		
 		$model->registered=date('Y-m-d H:i:s');
 		$model->state_email=0;
 		$model->state=1;
