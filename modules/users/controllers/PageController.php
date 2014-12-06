@@ -444,25 +444,14 @@ class PageController extends FrontController
 					else
 						$message=Yii::t('app','We have sent the instructions to your email');
 					
-					if($this->module->sendPassword) {
-						echo CJSON::encode(array(
-			                'success'=>1,
-			                'data'=>$model,
-			                'error_code'=>null,
-			                'message'=>$message,
-			                'params'=>$_REQUEST,
-			            ));
+					echo CJSON::encode(array(
+		                'success'=>1,
+		                'data'=>$model,
+		                'error_code'=>null,
+		                'message'=>$message,
+		                'params'=>$_REQUEST,
+		            ));
 
-					} else {
-
-						echo CJSON::encode(array(
-			                'success'=>1,
-			                'data'=>$model,
-			                'error_code'=>null,
-			                'message'=>Yii::t('app','We have sent the instructions to your email'),
-			                'params'=>$_REQUEST,
-			            ));
-					}
 				}
 			} else {
 				
