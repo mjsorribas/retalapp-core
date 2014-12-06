@@ -536,12 +536,18 @@ class PageController extends FrontController
 		$modelArray=$model;
          
         if($model->validate() && $model->login()) {
-         
+         	
+         	if(!r()->user->isGuest and r()->user->checkAccessArray($this->module->adminRoles))
+				$url=CHtml::normalizeUrl($this->module->redirectLoginAdmin);
+			else
+				$url=CHtml::normalizeUrl($this->module->redirectLogin);
+			
+
 			echo CJSON::encode(array(
                 'success'=>1,
                 'data'=>$modelArray,
                 'error_code'=>null,
-                'redirect'=>'/',
+                'redirect'=>$url,
                 'message'=>r('users','Welcome to ').r()->name,
                 'params'=>$_REQUEST,
             ));
