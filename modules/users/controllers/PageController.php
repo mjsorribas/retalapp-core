@@ -408,7 +408,7 @@ class PageController extends FrontController
 		if(!$this->module->confirmPasswordRequired and isset($_REQUEST['password'])) {
 			$model->confirmPassword=$_REQUEST['password'];
 		}
-		
+
 		$model->registered=date('Y-m-d H:i:s');
 		$model->state_email=0;
 		$model->state=1;
@@ -541,7 +541,8 @@ class PageController extends FrontController
                 'success'=>1,
                 'data'=>$modelArray,
                 'error_code'=>null,
-                'message'=>'Bienvenido',
+                'redirect'=>'/',
+                'message'=>r('users','Welcome to ').r()->name,
                 'params'=>$_REQUEST,
             ));
 
