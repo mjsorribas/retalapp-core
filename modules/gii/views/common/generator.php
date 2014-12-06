@@ -18,12 +18,12 @@
 
 <h4>History <?php echo $this->controller->id?></h4>
 <?php if($this->controller->id==='crud'):?>
-<?php foreach(GiiCruds::model()->findAll(array('group'=>'labelName','order'=>'created_at DESC','limit'=>'10')) as $data):?>
+<?php foreach(GiiCruds::model()->findAll(array('group'=>'labelName','order'=>'created_at DESC','limit'=>'100')) as $data):?>
 	<?php echo CHtml::link($data->labelName,array('index','history'=>$data->id))?> <span class="text-muted"><?php echo Yii::app()->format->ago($data->created_at)?></span> <br>
 <?php endforeach;?>
 <?php endif;?>
 <?php if($this->controller->id==='model'):?>
-<?php foreach(GiiModels::model()->findAll(array('group'=>'modelClass','order'=>'created_at DESC','limit'=>'10')) as $data):?>
+<?php foreach(GiiModels::model()->findAll(array('group'=>'modelClass','order'=>'created_at DESC','limit'=>'100')) as $data):?>
 	<?php echo CHtml::link($data->modelClass,array('index','model_history'=>$data->id))?> <span class="text-muted"><?php echo Yii::app()->format->ago($data->created_at)?></span> <br>
 <?php endforeach;?>
 <?php endif;?>
