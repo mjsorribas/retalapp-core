@@ -2,6 +2,7 @@
 
 class UsersModule extends Module
 {
+	public $modelUsers='Users';
 	public $confirmPasswordRequired=false;
 	public $copyWelcomeEmail;
 	public $copySendPasswordForgot;
