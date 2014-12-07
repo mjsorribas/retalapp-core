@@ -39,6 +39,14 @@ $label=$this->pluralize($this->class2name($this->modelClass));
     'cssFile'=>false,
     'itemsCssClass'=>'row',
     'summaryCssClass'=>'summary text-center mbl',
+    'pager'=>array(
+    	'class'=>'CLinkPager',
+    	'htmlOptions'=>array(
+    		'class'=>'pagination'
+		),
+		'header'=>false,
+	),
+    'pagerCssClass'=>'paginator-container',
 )); ?>
 	</div>
 </div>
