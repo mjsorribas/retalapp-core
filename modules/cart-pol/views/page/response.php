@@ -7,50 +7,92 @@
 
 		<div class="con-tb">
             <!-- <h2 class="bg1">DETALLES DEL PAGO</h2> -->
-            <?php
-$ApiKey=Yii::app()->pol->ApiKey;/////llave de usuario de pruebas 2 6u39nqhq8ftd0hlvnjfs66eh8c
-$merchant_id=$_REQUEST['merchantId'];
-$referenceCode=$_REQUEST['referenceCode'];
-$TX_VALUE=$_REQUEST['TX_VALUE'];
-$New_value=number_format($TX_VALUE, 1, '.', '');
-$currency=$_REQUEST['currency'];
-$transactionState=$_REQUEST['transactionState'];
-$firma_cadena= "$ApiKey~$merchant_id~$referenceCode~$New_value~$currency~$transactionState";
-$firmacreada = md5($firma_cadena);//firma que generaron ustedes
-$firma =$_REQUEST['signature'];//firma que envía nuestro sistema 
-/*echo $firma;
-echo ‘——’;
-echo $firmacreada;
-echo $ApiKey; echo ‘~’;echo $usuario_id;echo ‘~’;echo $ref_venta;echo ‘~’;echo $New_value;echo ‘~’;echo $moneda;echo ‘~’;echo $estado_pol;
-echo ‘ – ‘ ;
-echo $firma_cadena; 
-echo $firma; //verificación firmas codificadas
-echo ‘ – ‘ ;
-echo $firmacreada;
-$processingDate=$_REQUEST['processingDate'];
-$processingDate = date("Y-m-d H:i:s");*/
-$reference_pol=$_REQUEST['reference_pol'];
-$cus=$_REQUEST['cus'];
-$extra1=$_REQUEST['description'];
-$pseBank=$_REQUEST['pseBank'];
-$lapPaymentMethod=$_REQUEST['lapPaymentMethod'];
-$transactionId=$_REQUEST['transactionId'];
-if($_REQUEST['transactionState'] == 6 && $_REQUEST['polResponseCode'] == 5)
-{$estadoTx = "Transacci&oacute;n fallida";}
-else if($_REQUEST['transactionState'] == 6 && $_REQUEST['polResponseCode'] == 4)
-{$estadoTx = "Transacci&oacute;n rechazada";}
-else if($_REQUEST['transactionState'] == 12 && $_REQUEST['polResponseCode'] == 9994)
-{$estadoTx = "Pendiente, Por favor revisar si el d&eacute;bito fue realizado en el Banco";}
-else if($_REQUEST['transactionState'] == 4 && $_REQUEST['polResponseCode'] == 1)
-{$estadoTx = "Transacci&oacute;n aprobada";}
-else
-{
-  $estadoTx=@$_REQUEST['mensaje'];
+<?php
+if(r()->pol->typePlataform=='payu') {
+  $ApiKey=Yii::app()->pol->ApiKey;/////llave de usuario de pruebas 2 6u39nqhq8ftd0hlvnjfs66eh8c
+  $merchant_id=$_REQUEST['merchantId'];
+  $referenceCode=$_REQUEST['referenceCode'];
+  $TX_VALUE=$_REQUEST['TX_VALUE'];
+  $New_value=number_format($TX_VALUE, 1, '.', '');
+  $currency=$_REQUEST['currency'];
+  $transactionState=$_REQUEST['transactionState'];
+  $firma_cadena= "$ApiKey~$merchant_id~$referenceCode~$New_value~$currency~$transactionState";
+  $firmacreada = md5($firma_cadena);//firma que generaron ustedes
+  $firma =$_REQUEST['signature'];//firma que envía nuestro sistema 
+  /*echo $firma;
+  echo ‘——’;
+  echo $firmacreada;
+  echo $ApiKey; echo ‘~’;echo $usuario_id;echo ‘~’;echo $ref_venta;echo ‘~’;echo $New_value;echo ‘~’;echo $moneda;echo ‘~’;echo $estado_pol;
+  echo ‘ – ‘ ;
+  echo $firma_cadena; 
+  echo $firma; //verificación firmas codificadas
+  echo ‘ – ‘ ;
+  echo $firmacreada;
+  $processingDate=$_REQUEST['processingDate'];
+  $processingDate = date("Y-m-d H:i:s");*/
+  $reference_pol=$_REQUEST['reference_pol'];
+  $cus=$_REQUEST['cus'];
+  $extra1=$_REQUEST['description'];
+  $pseBank=$_REQUEST['pseBank'];
+  $lapPaymentMethod=$_REQUEST['lapPaymentMethod'];
+  $transactionId=$_REQUEST['transactionId'];
+  if($_REQUEST['transactionState'] == 6 && $_REQUEST['polResponseCode'] == 5)
+  {$estadoTx = "Transacci&oacute;n fallida";}
+  else if($_REQUEST['transactionState'] == 6 && $_REQUEST['polResponseCode'] == 4)
+  {$estadoTx = "Transacci&oacute;n rechazada";}
+  else if($_REQUEST['transactionState'] == 12 && $_REQUEST['polResponseCode'] == 9994)
+  {$estadoTx = "Pendiente, Por favor revisar si el d&eacute;bito fue realizado en el Banco";}
+  else if($_REQUEST['transactionState'] == 4 && $_REQUEST['polResponseCode'] == 1)
+  {$estadoTx = "Transacci&oacute;n aprobada";}
+  else
+  {
+    $estadoTx=@$_REQUEST['mensaje'];
+  }
+} else {
+  $ApiKey=Yii::app()->pol->ApiKey;/////llave de usuario de pruebas 2 6u39nqhq8ftd0hlvnjfs66eh8c
+  $merchant_id=$_REQUEST['usuario_id'];
+  $referenceCode=$_REQUEST['ref_venta'];
+  $TX_VALUE=@$_REQUEST['TX_VALUE'];
+  $New_value=number_format($TX_VALUE, 1, '.', '');
+  $currency=$_REQUEST['moneda'];
+  $transactionState=$_REQUEST['estado_pol'];
+  $firma_cadena= "$ApiKey~$merchant_id~$referenceCode~$New_value~$currency~$transactionState";
+  $firmacreada = md5($firma_cadena);//firma que generaron ustedes
+  $firma =$_REQUEST['firma'];//firma que envía nuestro sistema 
+  /*echo $firma;
+  echo ‘——’;
+  echo $firmacreada;
+  echo $ApiKey; echo ‘~’;echo $usuario_id;echo ‘~’;echo $ref_venta;echo ‘~’;echo $New_value;echo ‘~’;echo $moneda;echo ‘~’;echo $estado_pol;
+  echo ‘ – ‘ ;
+  echo $firma_cadena; 
+  echo $firma; //verificación firmas codificadas
+  echo ‘ – ‘ ;
+  echo $firmacreada;
+  $processingDate=$_REQUEST['processingDate'];
+  $processingDate = date("Y-m-d H:i:s");*/
+  $reference_pol=$_REQUEST['ref_pol'];
+  $cus=$_REQUEST['cus'];
+  $extra1=$_REQUEST['description'];
+  $pseBank=$_REQUEST['banco_pse'];
+  $lapPaymentMethod=$_REQUEST['tipo_medio_pago'];
+  $transactionId=$_REQUEST['ref_pol'];
+  if($_REQUEST['estado_pol'] == 6 && $_REQUEST['codigo_respuesta_pol'] == 5)
+  {$estadoTx = "Transacci&oacute;n fallida";}
+  else if($_REQUEST['estado_pol'] == 6 && $_REQUEST['codigo_respuesta_pol'] == 4)
+  {$estadoTx = "Transacci&oacute;n rechazada";}
+  else if($_REQUEST['estado_pol'] == 12 && $_REQUEST['codigo_respuesta_pol'] == 9994)
+  {$estadoTx = "Pendiente, Por favor revisar si el d&eacute;bito fue realizado en el Banco";}
+  else if($_REQUEST['estado_pol'] == 4 && $_REQUEST['codigo_respuesta_pol'] == 1)
+  {$estadoTx = "Transacci&oacute;n aprobada";}
+  else
+  {
+    $estadoTx=@$_REQUEST['mensaje'];
+  }
 }
+
 if(strtoupper($firma)==strtoupper($firmacreada)){//comparacion de las firmas para comprobar que los datos si vienen de Pagosonline
 ?>
-<table class="table table-striped" style="width: 500px;
-margin: 130px auto 20px">
+<table class="table table-striped">
 <tr>
 <td>Estado de la transaccion</td>
 <td><?php echo $estadoTx; ?> </td>
@@ -98,6 +140,8 @@ if(isset($banco_pse) and $banco_pse!=null){
 <td>Entidad:</td>
 <td><?php echo ($lapPaymentMethod); ?></td>
 </tr>
+
+<?php if(r()->pol->typePlataform=='payu'):?>
 <?php if($_REQUEST['transactionState'] == 4 && $_REQUEST['polResponseCode'] == 1):?>
 <tr>
 <td colspan="2">
@@ -105,7 +149,20 @@ if(isset($banco_pse) and $banco_pse!=null){
 </td>
 </tr>
 <?php endif;?>
+<?php else:?>
+  
+  <?php if($_REQUEST['estado_pol'] == 4 && $_REQUEST['codigo_respuesta_pol'] == 1):?>
+<tr>
+<td colspan="2">
+<a href="<?php echo CHtml::normalizeUrl($this->module->returnUrlAfterPay)?>" style="padding-left: 24px;" id="button-continuar" class="btn-irapagar submit-bt grl-bt fr tr"><?php echo CHtml::image(Yii::app()->request->baseUrl."/img/spinner.gif",'',array('style'=>'display:inline;width: 21px;margin-right:8px'))?> Cargando...</a>
+</td>
+</tr>
+<?php endif;?>
+<?php endif;?>
+
+
 </table>
+
 
 <?php
 }else{
