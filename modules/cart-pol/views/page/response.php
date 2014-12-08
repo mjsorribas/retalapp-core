@@ -52,7 +52,7 @@ if(r()->pol->typePlataform=='payu') {
   $ApiKey=Yii::app()->pol->ApiKey;/////llave de usuario de pruebas 2 6u39nqhq8ftd0hlvnjfs66eh8c
   $merchant_id=$_REQUEST['usuario_id'];
   $referenceCode=$_REQUEST['ref_venta'];
-  $TX_VALUE=@$_REQUEST['TX_VALUE'];
+  $TX_VALUE=$_REQUEST['valor'];
   $New_value=number_format($TX_VALUE, 1, '.', '');
   $currency=$_REQUEST['moneda'];
   $transactionState=$_REQUEST['estado_pol'];
