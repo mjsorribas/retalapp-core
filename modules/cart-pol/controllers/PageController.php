@@ -195,8 +195,8 @@ class PageController extends FrontController
 			if($this->module->successCallback!==array())
 				call_user_func_array($this->module->successCallback, array($model,$message));
 
-			Yii::app()->email->add($mailDestino,"Admin ".strip_tags(Yii::app()->name));
-			Yii::app()->email->sendBody(Yii::t('app','New shop on').' ['."REF:[{$refVenta}] PAY APPROVED".'] '.strip_tags(Yii::app()->name),array(
+			r('email')->add($mailDestino,"Admin ".strip_tags(Yii::app()->name));
+			r('email')->sendBody(Yii::t('app','New shop on').' ['."REF:[{$refVenta}] PAY APPROVED".'] '.strip_tags(Yii::app()->name),array(
 				'body'=>Yii::t('app','There is a new shop on').' '.strip_tags(Yii::app()->name),
 				'url'=>$this->createAbsoluteUrl('/'.$this->module->id.'/purchases/view',array('id'=>$model->id)),
 				'label'=>'Ver compra',
@@ -226,8 +226,8 @@ class PageController extends FrontController
 
 			$mailDestino=($this->module->pol_test)?Yii::app()->params['adminEmail']:Yii::app()->params['adminEmail'];
 
-			Yii::app()->email->add($mailDestino,"Admin ".strip_tags(Yii::app()->name));
-			Yii::app()->email->sendBody(Yii::t('app','New shop on').' ['."REF:[{$refVenta}] PAY PENDING".'] '.strip_tags(Yii::app()->name),array(
+			r('email')->add($mailDestino,"Admin ".strip_tags(Yii::app()->name));
+			r('email')->sendBody(Yii::t('app','New shop on').' ['."REF:[{$refVenta}] PAY PENDING".'] '.strip_tags(Yii::app()->name),array(
 				'body'=>Yii::t('app','There is a new shop on').' '.strip_tags(Yii::app()->name),
 				'url'=>$this->createAbsoluteUrl('/'.$this->module->id.'/purchases/view',array('id'=>$model->id)),
 				'label'=>'Ver compra',
@@ -256,8 +256,8 @@ class PageController extends FrontController
 
 			$mailDestino=($this->module->pol_test)?Yii::app()->params['adminEmail']:Yii::app()->params['adminEmail'];
 
-			Yii::app()->email->add($mailDestino,"Admin ".strip_tags(Yii::app()->name));
-			Yii::app()->email->sendBody(Yii::t('app','New shop on').' ['."REF:[{$refVenta}] PAY REJECT".'] '.strip_tags(Yii::app()->name),array(
+			r('email')->add($mailDestino,"Admin ".strip_tags(Yii::app()->name));
+			r('email')->sendBody(Yii::t('app','New shop on').' ['."REF:[{$refVenta}] PAY REJECT".'] '.strip_tags(Yii::app()->name),array(
 				'body'=>Yii::t('app','There is a new shop on').' '.strip_tags(Yii::app()->name),
 				'url'=>$this->createAbsoluteUrl('/'.$this->module->id.'/purchases/view',array('id'=>$model->id)),
 				'label'=>'Ver compra',
