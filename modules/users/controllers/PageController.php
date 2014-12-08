@@ -14,7 +14,7 @@ class PageController extends FrontController
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('resendVerify','view','confirm','password','forgot','logout','login','register','registerAjax','loginAjax','changePasswordAjax','forgotAjax'),
+				'actions'=>array('resendVerify','view','confirm','password','forgot','logout','login','register','registerAjax','loginAjax','changePasswordAjax','forgotAjax','isGuest'),
 				// 'roles'=>array('admin'),
 				'users'=>array('*'),
 			),
@@ -974,5 +974,20 @@ class PageController extends FrontController
 			$this->redirect($redirect_uri.'&'.http_build_query($param));
 		else
 			$this->redirect($redirect_uri.'?'.http_build_query($param));
+	}
+
+	public function actionIsGuest()
+	{
+		if(r()->user->isGuest) {
+			echo CJSON::encode(array(
+				'success'=>1,
+				'data'=>null,
+			));
+		} else {
+			echo CJSON::encode(array(
+				'success'=>0,
+				'data'=>null,
+			));
+		}
 	}
 }
