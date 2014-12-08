@@ -105,7 +105,7 @@ if(1){//comparacion de las firmas para comprobar que los datos si vienen de Pago
 <td><?php echo $transactionId; ?> </td>
 </tr>
 <tr>
-<td>referencia de la venta </td>
+<td>Referencia de la venta </td>
 <td><?php echo $reference_pol; ?> </td> </tr>
 <tr>
 <td>Referencia de la transaccion </td>
@@ -131,7 +131,7 @@ if(isset($banco_pse) and $banco_pse!=null){
 <td>$<?php echo number_format($TX_VALUE); ?> </td>
 </tr>
 <tr>
-<td>moneda </td>
+<td>Moneda </td>
 <td><?php echo $currency; ?></td>
 </tr>
 <tr>
