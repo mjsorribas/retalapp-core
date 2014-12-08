@@ -83,7 +83,7 @@
 			<?php foreach($model->files as $i=>$file): ?>
 			<tr class="<?php echo $file->operation; ?>">
 				<td class="file">
-					<?php echo CHtml::link(CHtml::encode($file->relativePath), array('code','id'=>$i), array('class'=>'view-code','rel'=>$file->path)); ?>
+					<?php echo CHtml::link(CHtml::encode(substr($file->relativePath, 0,100)), array('code','id'=>$i), array('class'=>'view-code','rel'=>$file->path)); ?>
 					<?php if($file->operation===CCodeFile::OP_OVERWRITE): ?>
 						(<?php echo CHtml::link('diff', array('diff','id'=>$i), array('class'=>'view-code','rel'=>$file->path)); ?>)
 					<?php endif; ?>
