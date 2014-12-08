@@ -123,8 +123,33 @@ class PageController extends FrontController
 		 * pagosonline no nos puede enviar el post
 		 * a la accion de confirmacion en local
 		*/
-		if(YII_DEBUG)
-			$this->procesarPago($_GET['referenceCode'],$_GET['transactionState'],$_REQUEST['signature'],$_REQUEST['message'],$_REQUEST['lapTransactionState']);
+		if(YII_DEBUG) {
+			// public function procesarPago($refVenta,$state_pol,$signature=null,$message='',$code2_response_pay='')
+			Yii::log("RESPONSE: POST:".CJSON::encode($_POST)." | GET:".CJSON::encode($_GET),"error","cart");
+			if(Yii::app()->pol->typePlataform ==='payu')
+				$this->procesarPago($_GET['referenceCode'],$_GET['transactionState'],$_REQUEST['signature'],$_REQUEST['message'],$_REQUEST['lapTransactionState']);
+			else {
+
+				$response_message_pol='Sin mensaje';
+
+				if($_GET['estado_pol']==4){
+					$response_message_pol='Transacción aprobada.';
+				}
+				if($_GET['estado_pol']==6 and $_GET['codigo_respuesta_pol']==5){
+					$response_message_pol='Transacción Fallida';
+				}
+				if($_GET['estado_pol']==6 and $_GET['codigo_respuesta_pol']==4){
+					$response_message_pol='Transacción Rechazada';
+				}
+				if($_GET['estado_pol']==6 and $_GET['codigo_respuesta_pol']==15){
+					$response_message_pol='En proceso de validación';
+				}
+				if($_GET['estado_pol']==12 and $_GET['codigo_respuesta_pol']==9994){
+					$response_message_pol='Pendiente, Por favor revisar si el débito fue realizado en el Banco';
+				}
+				$this->procesarPago($_GET['ref_venta'],$_GET['estado_pol'],$_GET['firma'],$response_message_pol,$response_message_pol);
+			}
+		}
 
 		if($this->module->redirectResponse!==null)
 			$this->redirect(CHtml::normalizeUrl(array($this->module->redirectResponse))."?".http_build_query($_REQUEST));
@@ -247,7 +272,7 @@ class PageController extends FrontController
 	public function actionConfirmation()
 	{
 		// public function procesarPago($refVenta,$state_pol,$signature=null,$message='',$code2_response_pay='')
-		Yii::log("RESPONSE: POST:".CJSON::encode($_POST)." | GET:".CJSON::encode($_GET),"error","cart");
+		Yii::log("CONFIRMATION: POST:".CJSON::encode($_POST)." | GET:".CJSON::encode($_GET),"error","cart");
 		if(Yii::app()->pol->typePlataform ==='payu')
 			$this->procesarPago($_POST['reference_sale'],$_POST['state_pol'],$_POST['sign'],$_POST['response_message_pol'],$_POST['response_message_pol']);
 		else {
