@@ -87,7 +87,8 @@ class UsersModule extends Module
 	{
 		if($this->modelUsers!=='Users')
 	    	Yii::import("app.config.".$this->id.".".$this->modelUsers);
-		return CActiveRecord::model($this->modelUsers);
+		//return CActiveRecord::model($this->modelUsers);
+		return $this->modelUsers;
 	}
 
 	/*

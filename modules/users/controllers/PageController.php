@@ -402,7 +402,9 @@ class PageController extends FrontController
 	{
 	    header('Content-type: application/json');
 		//$model=new Users("signup");
-	    $model=$this->module->loadActive();
+        $modelName=$this->module->loadActive();
+		$model=new $modelName;
+	
 		$model->setScenario("signup");
 
 		$model->attributes=$_REQUEST;
