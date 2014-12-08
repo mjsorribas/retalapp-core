@@ -72,7 +72,7 @@ if(r()->pol->typePlataform=='payu') {
   $processingDate = date("Y-m-d H:i:s");*/
   $reference_pol=$_REQUEST['ref_pol'];
   $cus=$_REQUEST['cus'];
-  $extra1=$_REQUEST['description'];
+  $extra1=@$_REQUEST['extra1'];
   $pseBank=$_REQUEST['banco_pse'];
   $lapPaymentMethod=$_REQUEST['tipo_medio_pago'];
   $transactionId=$_REQUEST['ref_pol'];
@@ -150,7 +150,7 @@ if(isset($banco_pse) and $banco_pse!=null){
 </tr>
 <?php endif;?>
 <?php else:?>
-  
+
   <?php if($_REQUEST['estado_pol'] == 4 && $_REQUEST['codigo_respuesta_pol'] == 1):?>
 <tr>
 <td colspan="2">
