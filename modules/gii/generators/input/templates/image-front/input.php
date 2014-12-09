@@ -15,7 +15,7 @@ $viewName=basename($this->viewName);
     'selector' => '#id-link-selected',
     'successCallback'=>\"
       $('[name={$this->viewName}]').val(responseJSON.fileName);
-      $('#div-preview').html('<img style=\"width:30px\" src=\"'+uploadDir+'/'+responseJSON.fileName+'\" title=\"Clic para insertar {$this->viewName}\"/>');
+      $('#div-preview').html('<img style=\\\"width:30px\\\" src=\\\"'+uploadDir+'/'+responseJSON.fileName+'\\\" title=\\\"Clic para insertar {$this->viewName}\\\"/>');
     \",
     'name' => '{$this->viewName}',
     'value' => \$model->{$this->viewName},
