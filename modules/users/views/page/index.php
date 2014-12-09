@@ -5,7 +5,7 @@
 
 $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
 ?>
-<style>
+<style media="screen">
 
 *{
     font-family: 'Open Sans', sans-serif;
