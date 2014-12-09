@@ -24,9 +24,14 @@ class PageController extends FrontController
 		);
 	}
 
-	public function actionIndex()
+	public function actionIndex($id=null)
 	{
-		$this->render('index');
+		if($id===null)
+			$id=r()->user->id;
+		$model=Users::model()->findByPk($id);
+		$this->render('index',array(
+			'model'=>$model
+		));
 	}
 
 	public function actionResendVerify()
