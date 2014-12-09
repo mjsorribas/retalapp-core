@@ -8,7 +8,7 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
 
 <section>
     <div class="container">
-        <div class="row">
+        <div class="row row-no-padding">
             
             <div class="col-md-4">
                 <img src="<?=$model->imageUrl?>" alt="">
