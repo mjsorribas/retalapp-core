@@ -14,7 +14,7 @@ class PageController extends FrontController
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('resendVerify','view','confirm','password','forgot','logout','login','register','registerAjax','loginAjax','changePasswordAjax','forgotAjax','isGuest'),
+				'actions'=>array('index','resendVerify','view','confirm','password','forgot','logout','login','register','registerAjax','loginAjax','changePasswordAjax','forgotAjax','isGuest'),
 				// 'roles'=>array('admin'),
 				'users'=>array('*'),
 			),
@@ -22,6 +22,11 @@ class PageController extends FrontController
 				'users'=>array('*'),
 			),
 		);
+	}
+
+	public function actionIndex()
+	{
+		$this->render('index');
 	}
 
 	public function actionResendVerify()
