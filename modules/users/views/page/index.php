@@ -6,14 +6,14 @@
 $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
 ?>
 
-
+<section>
     <div class="container">
         <div class="row">
             
-            <div class="col-lg-4">
+            <div class="col-md-4">
                 <img src="<?=$model->imageUrl?>" alt="">
             </div>
-            <div class="col-lg-8">
+            <div class="col-md-8">
 
                 <div role="tabpanel">
 
@@ -39,4 +39,4 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
   
         </div>
     </div>
-
+</section>
