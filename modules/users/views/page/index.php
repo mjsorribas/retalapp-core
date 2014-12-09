@@ -6,7 +6,7 @@
 $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
 ?>
 
-<section>
+
     <div class="container">
         <div class="row">
             
@@ -39,4 +39,4 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
   
         </div>
     </div>
-</section>
+
