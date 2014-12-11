@@ -91,6 +91,27 @@ class UsersModule extends Module
 		return $this->modelUsers;
 	}
 
+	public function sendNotification($id,$message,$subject='',$body='',$url=null,$label=null)
+	{
+		
+		$model=new UsersNotifications;
+		$model->message=$message;   // Message to show on the notification list
+		$model->subject=$subject;   // subject apply if you need to send a email
+		$model->body=$body;         // Content for email 
+		$model->url=$url;           // Url to show in thr email if you want to enabled a link to the site
+						            // and this url is used for create links on the notificaciones list
+		$model->label=$label;       // This label is just for email buttons
+		
+		$model->send=0;
+		$model->read=0;
+		$model->users_users_id=$id;
+		$model->created_at=date('Y-m-d H:i:s');
+		if(!$model->save())
+			return $model->errors;
+		else
+			return true;
+	}
+
 	/*
  	public function menuItems()
     {

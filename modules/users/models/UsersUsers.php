@@ -61,6 +61,10 @@ class UsersUsers extends BaseUsersUsers
 		// class name for the relations automatically generated below.
 		return array(
 			'tokens'=>array(self::HAS_MANY,'AccessTokens','users_id'),
+			'notifications'=>array(self::HAS_MANY,'UsersNotifications','users_users_id','limit'=>'10','order'=>'created_at DESC'),
+			'countNotificacionsUnread'=>array(self::STAT,'UsersNotifications','users_users_id','condition'=>'t.read=0'),
+			'countFollowers'=>array(self::STAT,'UsersFollowers','users_users_id'),
+			'countFollowings'=>array(self::STAT,'UsersFollowing','users_users_id'),
 		);
 	}
 

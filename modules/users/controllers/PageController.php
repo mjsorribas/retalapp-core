@@ -29,8 +29,31 @@ class PageController extends FrontController
 		if($id===null)
 			$id=r()->user->id;
 		$model=Users::model()->findByPk($id);
-		$this->render('index',array(
-			'model'=>$model
+
+		$followers=new UsersFollowers;
+		$criteria=new CDbCriteria;
+		$criteria->compare('users_users_id',$id);
+
+		$followersDataProvider=new CActiveDataProvider('UsersFollowers',array(
+		    "criteria"=>$criteria,
+		));
+
+		$following=new UsersFollowing;
+		$criteria=new CDbCriteria;
+		$criteria->compare('users_users_id',$id);
+
+		$followingDataProvider=new CActiveDataProvider('UsersFollowing',array(
+		    "criteria"=>$criteria,
+		));
+
+
+		$typeRender=Yii::app()->request->isAjaxRequest?"renderPartial":"render";
+		$this->{$typeRender}('index_naftalanja',array(
+		    'model'=>$model,
+		    'following'=>$following,
+		    'followingDataProvider'=>$followingDataProvider,
+		    'followers'=>$followers,
+		    'followersDataProvider'=>$followersDataProvider,
 		));
 	}
 
