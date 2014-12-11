@@ -143,7 +143,8 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
                   <div class="caption">
                     <h3><?=$model->name?> <?=$model->lastname?></h3>
                     <strong><?=$model->email?></strong>
-                    <p><?=$model->about_me?></p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam beatae voluptatum,</p>
+                    <?php /*<p><?=$model->about_me?></p>*/ ?>
 
                     <p>
                         <a href="<?=$this->createUrl("profile")?>" class="btn btn-block btn-primary" role="button"><?=r('users','Update profile')?></a> 
