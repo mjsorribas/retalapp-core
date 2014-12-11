@@ -19,6 +19,7 @@ class GSummerNote extends CInputWidget {
 	/**
 	 * @var string path to assets
 	 */
+	protected $height='250px';
 	protected $assetsPath;
 
 	/**
@@ -76,6 +77,15 @@ class GSummerNote extends CInputWidget {
 		$cs = Yii::app()->clientScript;
 		$cs->registerScriptFile($this->assetsUrl.'/dist/summernote.min.js');
 		$cs->registerCssFile($this->assetsUrl.'/dist/summernote.css');
+		$cs->registerCss('SummernotePadding',"
+			.note-editor .note-toolbar {
+				margin-left: 0;
+			}
+		");
+		
+		if(!isset($this->options['height']))
+			$this->options['height']=$this->height;
+
 		$cs->registerScript(
 			__CLASS__ . '#' . $this->id,
 			'jQuery('. CJavaScript::encode($this->selector) .').summernote('. CJavaScript::encode($this->options) .');',
