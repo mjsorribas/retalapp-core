@@ -134,37 +134,41 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
 }
 </style>
 <section>
-    <div class="container">
+    <div class="container container-profile">
         <div class="row">
             
             <div class="col-md-3">
-                <img class="img-thumbnail" src="<?=$model->imageUrl?>" alt="">
+                <div class="thumbnail">
+                  <img data-src="<?=$model->imageUrl?>" alt="...">
+                  <div class="caption">
+                    <h3><?=$model->name?> <?=$model->lastname?></h3>
+                    <strong><?=$model->email?></strong>
+                    <p><?=$model->about_me?></p>
 
-                <?=$model->email?><br>
+                    <p>
+                        <a href="<?=$this->createUrl("profile")?>" class="btn btn-block btn-primary" role="button"><?=r('users','Update profile')?></a> 
+                        <a href="#" id="popover-notifications" 
+                          tabindex="0" 
+                          class="btn btn-block btn-default" 
+                          role="button" 
+                          data-toggle="popover" 
+                          data-content="
+                            <?php foreach($model->notifications as $data):?>
+                            <a href='<?=$data->url?>'><?=$data->message?></a> 
+                            <hr>
+                            <?php endforeach;?>
+                          " 
+                          data-html="true">Notifications <span class="badge"><?=$model->countNotificacionsUnread?></span></a>
+
+                    </p>
+                  </div>
+                </div>
+
             </div>
             <div class="col-md-9">
-                
-
-<h1><?=$model->name?> <?=$model->lastname?></h1>
-  <a href="<?=$this->createUrl("profile")?>">Editar perfil</a>
-  
-  <a href="#" id="popover-notifications" 
-  tabindex="0" 
-  class="" 
-  role="button" 
-  data-toggle="popover" 
-  data-content="
-    <?php foreach($model->notifications as $data):?>
-    <a href='<?=$data->url?>'><?=$data->message?></a> 
-    <hr>
-    <?php endforeach;?>
-  " 
-  data-html="true">Notificaciones <span class="badge"><?=$model->countNotificacionsUnread?></span></a>
-    
-  <br>
 
 
-<div role="tabpanel">
+<div class="mtl" role="tabpanel">
 
     <!-- Nav tabs -->
     <ul class="nav nav-tabs" role="tablist">
@@ -270,7 +274,7 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
     </ul>
       </div>
       
-      <div role="tabpanel" class="tab-pane" id="followers">
+      <div role="tabpanel" class="tab-pane ptl" id="followers">
 
 <?php $this->renderPartial('../followers/view_embed',array(
 
@@ -279,7 +283,7 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
     'followers'=>$followers,
 ))?>
   </div>
-  <div role="tabpanel" class="tab-pane" id="following">
+  <div role="tabpanel" class="tab-pane ptl" id="following">
 
 <?php $this->renderPartial('../following/view_embed',array(
 
