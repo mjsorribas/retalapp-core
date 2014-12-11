@@ -142,8 +142,7 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
                   <img class="imgthumbnail" src="<?=$model->imageUrl?>" data-src="<?=$model->imageUrl?>" alt="...">
                   <div class="caption">
                     <h3><?=$model->name?> <?=$model->lastname?></h3>
-                    <strong><?=$model->email?></strong>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam beatae voluptatum,</p>
+                    <h5><?=$model->email?></h5>
                     <?php /*<p><?=$model->about_me?></p>*/ ?>
 
                     <p>
