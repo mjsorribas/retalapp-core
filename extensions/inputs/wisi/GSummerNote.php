@@ -11,6 +11,9 @@
  */
 
 class GSummerNote extends CInputWidget {
+	
+	public $height='250px';
+	
 	/**
 	 * Assets package ID.
 	 */
@@ -19,7 +22,6 @@ class GSummerNote extends CInputWidget {
 	/**
 	 * @var string path to assets
 	 */
-	protected $height='250px';
 	protected $assetsPath;
 
 	/**
