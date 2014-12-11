@@ -138,8 +138,8 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Profile');
         <div class="row">
             
             <div class="col-md-3">
-                <div class="thumbnail">
-                  <img data-src="<?=$model->imageUrl?>" alt="...">
+                <div class="thumbnail mtl">
+                  <img class="imgthumbnail" src="<?=$model->imageUrl?>" data-src="<?=$model->imageUrl?>" alt="...">
                   <div class="caption">
                     <h3><?=$model->name?> <?=$model->lastname?></h3>
                     <strong><?=$model->email?></strong>
