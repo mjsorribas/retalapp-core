@@ -90,6 +90,7 @@ class GiiModule extends Module
 		'link_'=>'',
 		'money_'=>'',
 		'redactor_'=>'',
+		'wisi_'=>'',
 		'code_'=>'',
 		'cms_'=>'',
 	);
@@ -383,6 +384,9 @@ class GiiModule extends Module
 
 		if(stripos($column->name,'redactor_')!==false)
 			$type='redactor';
+
+		if(stripos($column->name,'wisi_')!==false)
+			$type='wisi';
 
 		if(stripos($column->name,'code_')!==false)
 			$type='code';
@@ -719,6 +723,17 @@ class GiiModule extends Module
 		if($inputField=='redactor')
 		{
 			return "\$this->widget('yiiwheels.widgets.redactor.WhRedactor', array(
+            	'model'=>\$model,
+                'attribute'=>'{$column->name}',
+            	'height'=>'250px',
+                'htmlOptions' => array(
+                    'class' => 'form-control',
+                )
+			),true)";
+		}
+		if($inputField=='wisi')
+		{
+			return "\$this->widget('ext.inputs.wisi.GSummerNote', array(
             	'model'=>\$model,
                 'attribute'=>'{$column->name}',
             	'height'=>'250px',
