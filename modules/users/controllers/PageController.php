@@ -48,7 +48,7 @@ class PageController extends FrontController
 
 
 		$typeRender=Yii::app()->request->isAjaxRequest?"renderPartial":"render";
-		$this->{$typeRender}('index_naftalanja',array(
+		$this->{$typeRender}('index',array(
 		    'model'=>$model,
 		    'following'=>$following,
 		    'followingDataProvider'=>$followingDataProvider,
