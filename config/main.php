@@ -57,7 +57,7 @@ $componentsConfig['db']=$dbConfig;
 $defaultController='home';
 if(isset($paramsConfig['defaultModule']))
     $defaultController=$paramsConfig['defaultModule'];
-
+/*
 if(isset($componentsConfig['log'])) {
     unset($componentsConfig['log']); 
     $componentsConfig['log']['class'] = 'CLogRouter';
@@ -78,7 +78,6 @@ if(isset($componentsConfig['log'])) {
         );
     }
 
-    /*
     $componentsConfig['log']['routes'][] = array(
         // uncomment the following to show log messages on web pages
         'class'=>'CEmailLogRoute',
@@ -86,8 +85,8 @@ if(isset($componentsConfig['log'])) {
         'subject'=>"[ERRORS] APP ".time(),
         'levels'=>'error, warning',
     );
-    */
 }
+*/
 
 if(isset($componentsConfig['urlManager'])) {
     unset($componentsConfig['urlManager']); 
