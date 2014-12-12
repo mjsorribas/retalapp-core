@@ -117,13 +117,9 @@ class PageController extends FrontController
 
 	public function actionResponse()
 	{
-		var_dump(Yii::getPathOfAlias('app.config.cart').'/CartEvents.php'));
-		exit;
 		if(file_exists(Yii::getPathOfAlias('app.config.cart').'/CartEvents.php')) {
 			Yii::import('app.config.cart.CartEvents');
 			if(method_exists('CartEvents','onResponse')) {
-				echo "TEst";
-				exit;
 				CartEvents::onResponse($_REQUEST);
 			}
 		}
@@ -176,12 +172,28 @@ class PageController extends FrontController
 	{
 		$model=CartShoppingHeader::model()->find('ref_venta=?',array($refVenta));
 
+
+		
 		// here validate model
 		if($model===null)
 		{
 			Yii::log("REF:[{$refVenta}] SHOPPING NOT FOUND POST:".CJSON::encode($_POST)." | GET:".CJSON::encode($_GET),"error","cart");
 			return;
 		}
+
+		r('email')->add(r()->params['adminEmail'],"Admin ".strip_tags(Yii::app()->name));
+		r('email')->sendBody(Yii::t('app','New shop on').' '.strip_tags(Yii::app()->name),array(
+			'body'=>'
+				<br> NAME:'.$model->user->name.' 
+				<br> EMAIL:'.$model->user->email.' 
+				<br> REF:'.$model->ref_venta.' 
+				<br> MESSAGE:'.$message.' 
+				<br> RESPONSE:'.$code2_response_pay.' 
+				<br> CODE RESPONSE:'.$state_pol.' 
+			',
+			'url'=>$this->createAbsoluteUrl('/'.$this->module->id.'/purchases/view',array('id'=>$model->id)),
+			'label'=>r('app','Details'),
+		));
 
 		// @TODO validate signature
 		if($state_pol==4)
@@ -211,12 +223,6 @@ class PageController extends FrontController
 				}
 			}
 			
-			r('email')->add(r()->params['adminEmail'],"Admin ".strip_tags(Yii::app()->name));
-			r('email')->sendBody(Yii::t('app','New shop on').' ['."REF:[{$refVenta}] PAY APPROVED".'] '.strip_tags(Yii::app()->name),array(
-				'body'=>Yii::t('app','There is a new shop on').' '.strip_tags(Yii::app()->name),
-				'url'=>$this->createAbsoluteUrl('/'.$this->module->id.'/purchases/view',array('id'=>$model->id)),
-				'label'=>'Ver compra',
-			));
 			return;
 		}
 		else if($state_pol==6)
@@ -247,13 +253,6 @@ class PageController extends FrontController
 					CartEvents::penddingCallback($model,$message);
 				}
 			}
-
-			r('email')->add(r()->params['adminEmail'],"Admin ".strip_tags(Yii::app()->name));
-			r('email')->sendBody(Yii::t('app','New shop on').' ['."REF:[{$refVenta}] PAY PENDING".'] '.strip_tags(Yii::app()->name),array(
-				'body'=>Yii::t('app','There is a new shop on').' '.strip_tags(Yii::app()->name),
-				'url'=>$this->createAbsoluteUrl('/'.$this->module->id.'/purchases/view',array('id'=>$model->id)),
-				'label'=>'Ver compra',
-			));
 		}
 		else
 		{
@@ -282,13 +281,6 @@ class PageController extends FrontController
 					CartEvents::rejectCallback($model,$message);
 				}
 			}
-
-			r('email')->add(r()->params['adminEmail'],"Admin ".strip_tags(Yii::app()->name));
-			r('email')->sendBody(Yii::t('app','New shop on').' ['."REF:[{$refVenta}] PAY REJECT".'] '.strip_tags(Yii::app()->name),array(
-				'body'=>Yii::t('app','There is a new shop on').' '.strip_tags(Yii::app()->name),
-				'url'=>$this->createAbsoluteUrl('/'.$this->module->id.'/purchases/view',array('id'=>$model->id)),
-				'label'=>'Ver compra',
-			));
 		}
 	}
 
