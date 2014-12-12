@@ -117,6 +117,14 @@ class PageController extends FrontController
 
 	public function actionResponse()
 	{
+
+		if(file_exists(Yii::getPathOfAlias('app.config.cart').'/CartEvents.php')) {
+			Yii::import('app.config.cart.CartEvents');
+			if(method_exists('CartEvents','onResponse')) {
+				CartEvents::onResponse($_REQUEST);
+			}
+		}
+
 		/*
 		 * En este caso ejecutamos el proces desde
 		 * la página de respuesta solo porque
@@ -190,12 +198,17 @@ class PageController extends FrontController
 			));
 			Yii::log("REF:[{$refVenta}] PAY SUCCESSFULLY :".CJSON::encode($model),"trace","cart");
 
-			$mailDestino=($this->module->pol_test)?Yii::app()->params['adminEmail']:Yii::app()->params['adminEmail'];
-
 			if($this->module->successCallback!==array())
 				call_user_func_array($this->module->successCallback, array($model,$message));
-
-			r('email')->add($mailDestino,"Admin ".strip_tags(Yii::app()->name));
+			
+			if(file_exists(Yii::getPathOfAlias('app.config.cart').'/CartEvents.php')) {
+				Yii::import('app.config.cart.CartEvents');
+				if(method_exists('CartEvents','successCallback')) {
+					CartEvents::successCallback($model,$message);
+				}
+			}
+			
+			r('email')->add(r()->params['adminEmail'],"Admin ".strip_tags(Yii::app()->name));
 			r('email')->sendBody(Yii::t('app','New shop on').' ['."REF:[{$refVenta}] PAY APPROVED".'] '.strip_tags(Yii::app()->name),array(
 				'body'=>Yii::t('app','There is a new shop on').' '.strip_tags(Yii::app()->name),
 				'url'=>$this->createAbsoluteUrl('/'.$this->module->id.'/purchases/view',array('id'=>$model->id)),
@@ -211,10 +224,7 @@ class PageController extends FrontController
 			$model->code_response_pay=$state_pol;
 			$model->code2_response_pay=$code2_response_pay;
 			$model->cart_states_id=4; // pendiente
-
-			if($this->module->penddingCallback!==array())
-				call_user_func_array($this->module->penddingCallback, array($model,$message));
-
+			
 			$model->save(true,array(
 				'datetime_return_pay',
 				'message_return_pay',
@@ -224,9 +234,18 @@ class PageController extends FrontController
 			));
 			Yii::log("REF:[{$refVenta}] PAY PENDING :".CJSON::encode($model),"warning","cart");
 
-			$mailDestino=($this->module->pol_test)?Yii::app()->params['adminEmail']:Yii::app()->params['adminEmail'];
 
-			r('email')->add($mailDestino,"Admin ".strip_tags(Yii::app()->name));
+			if($this->module->penddingCallback!==array())
+				call_user_func_array($this->module->penddingCallback, array($model,$message));
+
+			if(file_exists(Yii::getPathOfAlias('app.config.cart').'/CartEvents.php')) {
+				Yii::import('app.config.cart.CartEvents');
+				if(method_exists('CartEvents','penddingCallback')) {
+					CartEvents::penddingCallback($model,$message);
+				}
+			}
+
+			r('email')->add(r()->params['adminEmail'],"Admin ".strip_tags(Yii::app()->name));
 			r('email')->sendBody(Yii::t('app','New shop on').' ['."REF:[{$refVenta}] PAY PENDING".'] '.strip_tags(Yii::app()->name),array(
 				'body'=>Yii::t('app','There is a new shop on').' '.strip_tags(Yii::app()->name),
 				'url'=>$this->createAbsoluteUrl('/'.$this->module->id.'/purchases/view',array('id'=>$model->id)),
@@ -242,9 +261,6 @@ class PageController extends FrontController
 			$model->code2_response_pay=$code2_response_pay;
 			$model->cart_states_id=2; // rechazada
 
-			if($this->module->errorCallback!==array())
-				call_user_func_array($this->module->errorCallback, array($model,$message));
-
 			$model->save(true,array(
 				'datetime_return_pay',
 				'message_return_pay',
@@ -254,9 +270,17 @@ class PageController extends FrontController
 			));
 			Yii::log("REF:[{$refVenta}] PAY REJECT :".CJSON::encode($model),"error","cart");
 
-			$mailDestino=($this->module->pol_test)?Yii::app()->params['adminEmail']:Yii::app()->params['adminEmail'];
+			if($this->module->rejectCallback!==array())
+				call_user_func_array($this->module->rejectCallback, array($model,$message));
 
-			r('email')->add($mailDestino,"Admin ".strip_tags(Yii::app()->name));
+			if(file_exists(Yii::getPathOfAlias('app.config.cart').'/CartEvents.php')) {
+				Yii::import('app.config.cart.CartEvents');
+				if(method_exists('CartEvents','rejectCallback')) {
+					CartEvents::rejectCallback($model,$message);
+				}
+			}
+
+			r('email')->add(r()->params['adminEmail'],"Admin ".strip_tags(Yii::app()->name));
 			r('email')->sendBody(Yii::t('app','New shop on').' ['."REF:[{$refVenta}] PAY REJECT".'] '.strip_tags(Yii::app()->name),array(
 				'body'=>Yii::t('app','There is a new shop on').' '.strip_tags(Yii::app()->name),
 				'url'=>$this->createAbsoluteUrl('/'.$this->module->id.'/purchases/view',array('id'=>$model->id)),
@@ -272,7 +296,15 @@ class PageController extends FrontController
 	public function actionConfirmation()
 	{
 		// public function procesarPago($refVenta,$state_pol,$signature=null,$message='',$code2_response_pay='')
-		Yii::log("CONFIRMATION: POST:".CJSON::encode($_POST)." | GET:".CJSON::encode($_GET),"error","cart");
+	    Yii::log("CONFIRMATION: POST:".CJSON::encode($_POST),"error","cart");
+   
+		if(file_exists(Yii::getPathOfAlias('app.config.cart').'/CartEvents.php')) {
+			Yii::import('app.config.cart.CartEvents');
+			if(method_exists('CartEvents','onConfirmation')) {
+				CartEvents::onConfirmation($_REQUEST);
+			}
+		}
+
 		if(Yii::app()->pol->typePlataform ==='payu')
 			$this->procesarPago($_POST['reference_sale'],$_POST['state_pol'],$_POST['sign'],$_POST['response_message_pol'],$_POST['response_message_pol']);
 		else {
