@@ -36,16 +36,6 @@ $this->breadcrumbs=array(
 <div class="row">
     <div class="col-lg-8">
 
-<div class="form-group">
-    <?php echo $form->labelEx($model,'overall_tax',array('class'=>'control-label')); ?>
-    <?php echo $this->widget('ext.inputs.counter.GTextfield',array(
-				'model'=>$model,
-				'attribute'=>'overall_tax',
-				'allowed' => 11,
-				'htmlOptions' => array('class'=>'form-control'),
-			),true); ?>
-    <?php echo $form->error($model,'overall_tax',array('class'=>'help-block')); ?>
-</div>
 <?php /*
 <div class="form-group">
     <?php echo $form->labelEx($model,'shipping_cost',array('class'=>'control-label')); ?>
@@ -73,16 +63,7 @@ $this->breadcrumbs=array(
     <?php echo $form->error($model,'editor_purchase_terms',array('class'=>'help-block')); ?>
 </div>
 */?>
-<div class="form-group">
-    <?php echo $form->labelEx($model,'email_just_test',array('class'=>'control-label')); ?>
-    <?php echo $this->widget('ext.inputs.counter.GTextfield',array(
-                'model'=>$model,
-                'attribute'=>'email_just_test',
-				'allowed' => 255,
-				'htmlOptions' => array('class'=>'form-control'),
-			),true); ?>
-    <?php echo $form->error($model,'email_just_test',array('class'=>'help-block')); ?>
-</div>
+
     </div>
     <div class="col-lg-4">
 <div class="form-group">
@@ -129,6 +110,27 @@ $this->breadcrumbs=array(
 				'htmlOptions' => array('class'=>'form-control'),
 			),true); ?>
     <?php echo $form->error($model,'pol_description',array('class'=>'help-block')); ?>
+</div>
+
+<div class="form-group">
+    <?php echo $form->labelEx($model,'overall_tax',array('class'=>'control-label')); ?>
+    <?php echo $this->widget('ext.inputs.counter.GTextfield',array(
+                'model'=>$model,
+                'attribute'=>'overall_tax',
+                'allowed' => 11,
+                'htmlOptions' => array('class'=>'form-control'),
+            ),true); ?>
+    <?php echo $form->error($model,'overall_tax',array('class'=>'help-block')); ?>
+</div>
+<div class="form-group">
+    <?php echo $form->labelEx($model,'email_just_test',array('class'=>'control-label')); ?>
+    <?php echo $this->widget('ext.inputs.counter.GTextfield',array(
+                'model'=>$model,
+                'attribute'=>'email_just_test',
+                'allowed' => 255,
+                'htmlOptions' => array('class'=>'form-control'),
+            ),true); ?>
+    <?php echo $form->error($model,'email_just_test',array('class'=>'help-block')); ?>
 </div>
     </div>
 </div>

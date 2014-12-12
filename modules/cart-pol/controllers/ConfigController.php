@@ -3,7 +3,7 @@
 class ConfigController extends CmsController
 {
 	public $title='Config';
-	public $subTitle='Admin config';
+	public $subTitle='<i class="fa fa-cogs"></i> Admin config';
 	
 	/**
 	 * @return array action filters
