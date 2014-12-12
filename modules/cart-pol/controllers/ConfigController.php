@@ -2,8 +2,8 @@
 
 class ConfigController extends CmsController
 {
-	public $title='Config';
-	public $subTitle='<i class="fa fa-cogs"></i> Admin config';
+	public $title='<i class="fa fa-cogs"></i> Config purcharse';
+	public $subTitle='Admin config';
 	
 	/**
 	 * @return array action filters
@@ -40,8 +40,9 @@ class ConfigController extends CmsController
 	 */
 	public function actionIndex()
 	{
-		$this->title='CartConfig';
-		$this->subTitle='Admin CartConfig';
+		$this->title='<i class="fa fa-cogs"></i> '.r('app','Cart').' Config';
+	
+		// $this->subTitle='Admin CartConfig';
 		$model=CartConfig::model()->find();
 		if($model===null)
 			$model=new CartConfig;

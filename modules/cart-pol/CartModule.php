@@ -6,6 +6,7 @@ class CartModule extends Module
 	public $successCallback = array();
 	public $errorCallback = array();
 	public $penddingCallback = array();
+	public $showConditions = false;
 
 	public $typesAllowed=array(
 		'ProductosResultados'=>array(

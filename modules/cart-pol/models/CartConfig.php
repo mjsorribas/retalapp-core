@@ -70,7 +70,7 @@ class CartConfig extends Model
 			'overall_tax' => Yii::t('app','Overall Tax'),
 			'shipping_cost' => Yii::t('app','Shipping Cost'),
 			'shipping_data_required' => Yii::t('app','Shipping Data Required'),
-			'editor_purchase_terms' => Yii::t('app','Editor Purchase Terms'),
+			'editor_purchase_terms' => Yii::t('app','Purchase Terms'),
 			'email_just_test' => Yii::t('app','Email Just Test'),
 			'pol_api_key' => Yii::t('app','Pol Api Key'),
 			'pol_merchant_id' => Yii::t('app','Pol Merchant'),

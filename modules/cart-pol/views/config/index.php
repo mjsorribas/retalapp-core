@@ -34,38 +34,16 @@ $this->breadcrumbs=array(
     </div>
 
 <div class="row">
-    <div class="col-lg-8">
-
-<?php /*
-<div class="form-group">
-    <?php echo $form->labelEx($model,'shipping_cost',array('class'=>'control-label')); ?>
-    <?php echo $form->textField($model,'shipping_cost',array('class'=>'form-control')); ?>
-    <?php echo $form->error($model,'shipping_cost',array('class'=>'help-block')); ?>
-</div>
-<div class="form-group">
-    <?php echo $form->labelEx($model,'shipping_data_required',array('class'=>'control-label')); ?>
-    <?php echo $form->checkBox($model,'shipping_data_required'); ?>
-    <?php echo $form->error($model,'shipping_data_required',array('class'=>'help-block')); ?>
-</div>
-<div class="form-group">
-    <?php echo $form->labelEx($model,'editor_purchase_terms',array('class'=>'control-label')); ?>
-    <?php echo $this->widget('ext.widgets.xheditor.XHeditor',array(
-                'model'=>$model,
-                'modelAttribute'=>'editor_purchase_terms',
-                'config'=>array(
-                    'tools'=>'mfull', // mini, simple, mfull, full or from XHeditor::$_tools, tool names are case sensitive
-                    'skin'=>'default', // default, nostyle, o2007blue, o2007silver, vista
-                    'width'=>'100%',
-                    'height'=>'300px',
-                    'upImgUrl'=>$this->createUrl('request/uploadFile'), // NB! Access restricted by IP        'upImgExt'=>'jpg,jpeg,gif,png',
-                ),
-            ),true); ?>
-    <?php echo $form->error($model,'editor_purchase_terms',array('class'=>'help-block')); ?>
-</div>
-*/?>
-
+<div class="col-lg-4">
+    
+    <div class="alert alert-info mtl">
+        <em>For testing <strong>POL</strong> you can see more info <a target="_black" href="http://www.pagosonline.com/desarrolladores/manuales/pagosonline.net%20-%20manual%20de%20integracin%20tradicional%203.pdf">here</a></em> 
+        <br>
+        <em>For testing <strong>PAYU</strong> you can see more info <a target="_black" href="http://docs.payulatam.com/manual-integracion-web-checkout/paso-a-produccion/">here</a></em> 
     </div>
-    <div class="col-lg-4">
+    
+    <legend><?=r('app','Config account')?></legend>
+
 <div class="form-group">
     <?php echo $form->labelEx($model,'pol_api_key',array('class'=>'control-label')); ?>
     <?php echo $this->widget('ext.inputs.counter.GTextfield',array(
@@ -79,11 +57,11 @@ $this->breadcrumbs=array(
 <div class="form-group">
     <?php echo $form->labelEx($model,'pol_merchant_id',array('class'=>'control-label')); ?>
     <?php echo $this->widget('ext.inputs.counter.GTextfield',array(
-				'model'=>$model,
-				'attribute'=>'pol_merchant_id',
-				'allowed' => 255,
-				'htmlOptions' => array('class'=>'form-control'),
-			),true); ?>
+                'model'=>$model,
+                'attribute'=>'pol_merchant_id',
+                'allowed' => 255,
+                'htmlOptions' => array('class'=>'form-control'),
+            ),true); ?>
     <?php echo $form->error($model,'pol_merchant_id',array('class'=>'help-block')); ?>
 </div>
 <div class="form-group">
@@ -94,21 +72,21 @@ $this->breadcrumbs=array(
 <div class="form-group">
     <?php echo $form->labelEx($model,'pol_currency',array('class'=>'control-label')); ?>
     <?php echo $this->widget('ext.inputs.counter.GTextfield',array(
-				'model'=>$model,
-				'attribute'=>'pol_currency',
-				'allowed' => 3,
-				'htmlOptions' => array('class'=>'form-control'),
-			),true); ?>
+                'model'=>$model,
+                'attribute'=>'pol_currency',
+                'allowed' => 3,
+                'htmlOptions' => array('class'=>'form-control'),
+            ),true); ?>
     <?php echo $form->error($model,'pol_currency',array('class'=>'help-block')); ?>
 </div>
 <div class="form-group">
     <?php echo $form->labelEx($model,'pol_description',array('class'=>'control-label')); ?>
     <?php echo $this->widget('ext.inputs.counter.GTextfield',array(
-				'model'=>$model,
-				'attribute'=>'pol_description',
-				'allowed' => 255,
-				'htmlOptions' => array('class'=>'form-control'),
-			),true); ?>
+                'model'=>$model,
+                'attribute'=>'pol_description',
+                'allowed' => 255,
+                'htmlOptions' => array('class'=>'form-control'),
+            ),true); ?>
     <?php echo $form->error($model,'pol_description',array('class'=>'help-block')); ?>
 </div>
 
@@ -133,6 +111,39 @@ $this->breadcrumbs=array(
     <?php echo $form->error($model,'email_just_test',array('class'=>'help-block')); ?>
 </div>
     </div>
+    <div class="col-lg-8">
+ 
+
+<?php /*
+<div class="form-group">
+    <?php echo $form->labelEx($model,'shipping_cost',array('class'=>'control-label')); ?>
+    <?php echo $form->textField($model,'shipping_cost',array('class'=>'form-control')); ?>
+    <?php echo $form->error($model,'shipping_cost',array('class'=>'help-block')); ?>
+</div>
+<div class="form-group">
+    <?php echo $form->labelEx($model,'shipping_data_required',array('class'=>'control-label')); ?>
+    <?php echo $form->checkBox($model,'shipping_data_required'); ?>
+    <?php echo $form->error($model,'shipping_data_required',array('class'=>'help-block')); ?>
+</div>
+*/?>
+    <!-- <legend><?=r('app','Emails and copies')?></legend> -->
+<?php if($this->module->showConditions):?>
+    <legend><?=r('app','Purcharse Conditions')?></legend>
+    <div class="form-group">
+        <?php echo $form->labelEx($model,'editor_purchase_terms',array('class'=>'control-label')); ?>
+        <?php echo $this->widget('ext.inputs.wisi.GSummerNote', array(
+                    'model'=>$model,
+                    'attribute'=>'editor_purchase_terms',
+                    'height'=>'250px',
+                    'htmlOptions' => array(
+                        'class' => 'form-control',
+                    )
+                ),true)?>
+        <?php echo $form->error($model,'editor_purchase_terms',array('class'=>'help-block')); ?>
+    </div>
+<?php endif;?>
+    </div>
+    
 </div>
     <div class="form-group">
         <div class="pull-right">
