@@ -117,10 +117,13 @@ class PageController extends FrontController
 
 	public function actionResponse()
 	{
-
+		var_dump(Yii::getPathOfAlias('app.config.cart').'/CartEvents.php'));
+		exit;
 		if(file_exists(Yii::getPathOfAlias('app.config.cart').'/CartEvents.php')) {
 			Yii::import('app.config.cart.CartEvents');
 			if(method_exists('CartEvents','onResponse')) {
+				echo "TEst";
+				exit;
 				CartEvents::onResponse($_REQUEST);
 			}
 		}
