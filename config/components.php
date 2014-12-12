@@ -45,7 +45,7 @@ return array(
         "assignmentTable" => 'users_authassignment',
     ),
 
-    // TODO for PHP
+    // TODO from PHP to BD
     'coreMessages' => array(
         'language'=>'en_us',
         'class'=>'CPhpMessageSource',
