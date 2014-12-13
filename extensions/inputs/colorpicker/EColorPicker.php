@@ -392,6 +392,7 @@ $('#{$this->htmlOptions['id']}').ColorPicker({
 	},
    onChange: function(hsb, hex, rgb) {
       $('#{$this->htmlOptions['id']}').val(hex);
+      $('#{$this->htmlOptions['id']}_div').css('backgroundColor', '#' + hex);
    }
 })
 .bind('keyup', function(){
