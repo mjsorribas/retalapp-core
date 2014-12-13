@@ -128,7 +128,7 @@ if(isset($banco_pse) and $banco_pse!=null){
 ?>
 <tr>
 <td>Valor total</td>
-<td>$<?php echo number_format($TX_VALUE); ?> </td>
+<td>$<?php echo number_format((float)$TX_VALUE, 2, '.', ''); ?> </td>
 </tr>
 <tr>
 <td>Moneda </td>
