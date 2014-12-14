@@ -245,21 +245,24 @@ class BFormatter extends CFormatter
 
 	public function sirToHtml($field_sir)
 	{
+		include_once(dirname(__FILE__)."/parsedown/Parsedown.php");
+		$Parsedown = new Parsedown();
+
 		$html="";
 		$array=CJSON::decode($field_sir);
 		foreach($array['data'] as $data)
 		{
  			if($data['type']==='heading')
-				$html.="<h1>".$data['data']['text']."</h1>";
+				$html.="<h1>".$Parsedown->text($data['data']['text'])."</h1>";
  			if($data['type']==='text')
-				$html.="<p>".$data['data']['text']."</p>";
+				$html.="<p>".$Parsedown->text($data['data']['text'])."</p>";
  			if($data['type']==='list')
-				$html.="<ul>".implode("</li><li>",explode("-",$data['data']['text']))."</li></ul>";
+				$html.="<ul>".implode("</li><li>",explode("-",$Parsedown->text($data['data']['text'])))."</li></ul>";
  			if($data['type']==='quote')
  			{
 				$html.="<blockquote class=\"blockquote-reverse\">";
 				$html.="<p>".$data['data']['text']."</p>";
-				$html.="<footer><cite title=\"Source Title\">".$data['data']['cite']."</cite></footer>";
+				$html.="<footer><cite title=\"Source Title\">".$Parsedown->text($data['data']['cite'])."</cite></footer>";
 				$html.="</blockquote>";
  			}
  			if($data['type']==='image')
