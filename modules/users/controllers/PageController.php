@@ -1025,4 +1025,20 @@ class PageController extends FrontController
 			));
 		}
 	}
+
+	/**
+	 * This action is for implement
+	 * cron job por see what is user notifications
+	 * pendding and send
+	 * This apply for push notificacions implementing
+	 * and email notificaciotins
+	 * Here we need to implement other actions for
+	 * Unsuscribe module integration and
+	 * And push message new module for implement
+	 *
+	*/
+	public function actionSend()
+	{
+		# @TODO
+	}
 }
