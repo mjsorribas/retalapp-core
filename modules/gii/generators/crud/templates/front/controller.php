@@ -36,11 +36,11 @@ class <?php echo $this->controllerClass; ?> extends FrontController
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('delete','update','view','create','order','upload'),
+				'actions'=>array('delete','update','view','create','createAjax','order','upload'),
 				'roles'=>$this->module->getAllowPermissoms(false),
 			),
 			array('deny', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('delete','update','view','create','order','upload'),
+				'actions'=>array('delete','update','view','create','createAjax','order','upload'),
 				'users'=>array('*'),
 			),
 			array('allow',  // deny all users
@@ -136,6 +136,73 @@ foreach($this->tableSchema->columns as $column)
 		$this->render('create',array(
 			'model'=>$model,
 		));
+	}
+
+
+    /**
+	 * Creates a new model through ajax.
+	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 *	 
+	 *  $(document).on('submit','#<?php echo $this->class2id($this->modelClass); ?>-form',function(e) {
+	 *    e.preventDefault();
+	 *    var $form = $(this);
+	 *    $.ajax({
+	 *        url: '<?php echo "<?php echo \$this->createUrl(\"createAjax\");?>"?>',
+	 *        dataType: 'json', 
+	 *        type: 'post',
+	 *        data: $form.serialize(),
+	 *        success: function (data){
+	 *
+	 *          console.log(data);
+	 *
+	 *          $.each($form.serializeArray(), function(index, name) {
+	 *            $('[name='+name.name+']')
+	 *              .parent()
+	 *              .find('#validate-'+name.name)
+	 *              .remove();
+	 *          });
+	 *
+	 *          if(data.success) {
+	 *            // here submit 
+	 *            alert(data.message);
+	 *
+	 *          } else {
+	 *
+	 *            $.each(data.data, function(name, errors) {
+	 *              $('[name='+name+']')
+	 *              .parent()
+	 *              .append($('<p id="validate-'+name+'" class="help-block text-danger">'+errors.join(',<br>')+'</p>'));
+	 *            });
+	 *          }
+	 *        }
+	 *    });
+	 *  });
+	 *
+	*/
+	public function actionCreateAjax()
+	{
+
+        $model=new <?php echo $this->modelClass; ?>;
+		$model->attributes = $_REQUEST;
+<?php 
+foreach($this->tableSchema->columns as $column)
+{
+	if($column->name=='orden_id')
+	{
+		echo "\$last=".$this->modelClass."::model()->findAll();\n";
+		echo "\t\t\t\$model->orden_id=count(\$last)+1;\n";
+	}
+	if($column->name=='updated_at')
+		echo "\t\t\t\$model->updated_at=date('Y-m-d H:i:s');\n";
+	if($column->name=='created_at')
+		echo "\t\t\t\$model->created_at=date('Y-m-d H:i:s');\n";
+}
+?>
+        if ($model->save()) { 
+        	echo CJSON::encode(array('success'=>1,'data'=>$model,'message'=>r('app','Record created!')));
+        } else {
+			echo CJSON::encode(array('success'=>0,'data'=>$model->getErrors()));
+        }
 	}
 
 	/**
