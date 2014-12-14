@@ -367,6 +367,6 @@ class Controller extends CController
 	public function actionUpload()
     {
     	$uploader=Yii::createComponent('ext.inputs.uploader.GComponentUpload');
-		$uploader->upload(array('png','jpg','jpeg','csv','xls','xlsx','doc','docx','pdf','rar','zip','txt','mp4','mp3','mov','swf'),100 * 1024 * 1024);
+		$uploader->upload(array('png','jpg','jpeg','csv','xls','xlsx','doc','docx','pdf','rar','zip','txt','mp4','mp3','mov','swf'),30 * 1024 * 1024);
 	}
 }
