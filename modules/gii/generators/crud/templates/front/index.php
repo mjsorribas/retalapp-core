@@ -39,6 +39,7 @@ $label=$this->pluralize($this->class2name($this->modelClass));
     'cssFile'=>false,
     'itemsCssClass'=>'row',
     'summaryCssClass'=>'summary text-center mbl',
+    'emptyText'=>r('app','There is nothing here yet, start now').' <br> <a href="'.$this->createUrl("create").'" class="btn btn-primary">'.r('app','Create').'</a>',
     'pager'=>array(
     	'class'=>'CLinkPager',
     	'htmlOptions'=>array(
