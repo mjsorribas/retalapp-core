@@ -543,14 +543,17 @@ class GiiModule extends Module
 		}
 		if($inputField=='date')
 		{
-			return "\$this->widget('yiiwheels.widgets.datepicker.WhDatePicker', array(
-				'model'=>\$model,
-				'attribute'=>'{$column->name}',
-		        'pluginOptions' => array(
-		            'format' => 'yyyy-mm-dd'
-		        ),
+			return "\$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+				'model' => \$model,
+				'attribute' => '{$column->name}',
+				'language' =>  Yii::app()->language,
 				'htmlOptions' => array('class'=>'form-control'),
-		    ),true)";
+				'options' => array(
+					'showButtonPanel' => true,
+					'changeYear' => true,
+					'dateFormat' => 'yy-mm-dd',
+				),
+			),true)";
 		}
 		if($inputField=='datetime')
 		{

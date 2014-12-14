@@ -36,7 +36,7 @@ class GComponentUpload extends CApplicationComponent {
         // $allowedExtensions = array("jpeg", "png", "jpg");
         // max file size in bytes
         if($sizeLimit===null)
-            $sizeLimit = 100 * 1024 * 1024;
+            $sizeLimit = 30 * 1024 * 1024;
 
         require(dirname(__FILE__) . '/uploader.php');
         $uploader = new qqFileUploader($allowedExtensions, $sizeLimit);
