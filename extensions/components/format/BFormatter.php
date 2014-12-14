@@ -255,7 +255,7 @@ class BFormatter extends CFormatter
  			if($data['type']==='heading')
 				$html.="<h1>".strtr($Parsedown->text($data['data']['text']),array("<p>"=>"","</p>"=>""))."</h1>";
  			if($data['type']==='text')
-				$html.=$Parsedown->text($data['data']['text']);
+				$html.=strtr($Parsedown->text($data['data']['text']),array("<p></p>"=>""));
  			if($data['type']==='list')
 				$html.="<ul>".implode("</li><li>",explode("-",$Parsedown->text($data['data']['text'])))."</li></ul>";
  			if($data['type']==='quote')
