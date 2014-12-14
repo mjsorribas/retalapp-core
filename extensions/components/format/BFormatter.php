@@ -253,15 +253,15 @@ class BFormatter extends CFormatter
 		foreach($array['data'] as $data)
 		{
  			if($data['type']==='heading')
-				$html.="<h1>".$Parsedown->text($data['data']['text'])."</h1>";
+				$html.="<h1>".strtr($Parsedown->text($data['data']['text']),array("<p>"=>"","</p>"=>""))."</h1>";
  			if($data['type']==='text')
-				$html.="<p>".$Parsedown->text($data['data']['text'])."</p>";
+				$html.=$Parsedown->text($data['data']['text']);
  			if($data['type']==='list')
 				$html.="<ul>".implode("</li><li>",explode("-",$Parsedown->text($data['data']['text'])))."</li></ul>";
  			if($data['type']==='quote')
  			{
 				$html.="<blockquote class=\"blockquote-reverse\">";
-				$html.="<p>".$data['data']['text']."</p>";
+				$html.=$Parsedown->text($data['data']['text']);
 				$html.="<footer><cite title=\"Source Title\">".$Parsedown->text($data['data']['cite'])."</cite></footer>";
 				$html.="</blockquote>";
  			}
