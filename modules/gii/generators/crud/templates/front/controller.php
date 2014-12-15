@@ -241,6 +241,25 @@ foreach($this->tableSchema->columns as $column)
 		));
 	}
 
+	/**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionPdf($id)
+	{
+		$model=$this->loadModel($id);
+		$content=$this->renderPartial('view',array(
+			'model'=>$model,
+		),true);
+
+		$html2pdf = Yii::app()->ePdf->HTML2PDF('P', 'A4', 'es');
+	    // $html2pdf->setModeDebug();
+        $html2pdf->setDefaultFont('Arial');
+        $html2pdf->pdf->SetDisplayMode('fullpage');
+		$html2pdf->WriteHTML($content);
+		$html2pdf->Output('<?php echo $this->modelClass; ?>.pdf');
+	}
+
 	//////////////////////////
 	// Reutilizable methods //
 	//////////////////////////
