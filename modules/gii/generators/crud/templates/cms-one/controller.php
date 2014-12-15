@@ -36,7 +36,7 @@ class <?php echo $this->controllerClass; ?> extends CmsController
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('index','upload'),
+				'actions'=>array('index','upload','pdf'),
 				'roles'=>$this->module->getAllowPermissoms(),
 			),
 			array('deny',  // deny all users
@@ -92,6 +92,25 @@ foreach($this->tableSchema->columns as $column)
 		$this->render('index',array(
 			'model'=>$model,
 		));
+	}
+
+	/**
+	 * Displays a particular model.
+	 * @param integer $id the ID of the model to be displayed
+	 */
+	public function actionPdf()
+	{
+		$model=<?php echo $this->modelClass; ?>::model()->find();
+		$content=$this->renderPartial('view',array(
+			'model'=>$model,
+		),true);
+
+		$html2pdf = Yii::app()->ePdf->HTML2PDF('P', 'A4', 'es');
+	    // $html2pdf->setModeDebug();
+        $html2pdf->setDefaultFont('Arial');
+        $html2pdf->pdf->SetDisplayMode('fullpage');
+		$html2pdf->WriteHTML($content);
+		$html2pdf->Output('<?php echo $this->modelClass; ?>.pdf');
 	}
 
 	//////////////////////////

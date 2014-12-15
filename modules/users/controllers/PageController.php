@@ -1035,7 +1035,7 @@ class PageController extends FrontController
 	 * Here we need to implement other actions for
 	 * Unsuscribe module integration and
 	 * And push message new module for implement
-	 *
+	 * @TODO Push notifications implemen
 	*/
 	public function actionSend()
 	{
