@@ -36,6 +36,7 @@ class UsersNotifications extends BaseUsersNotifications
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array_merge(parent::relations(),array(
+			'user'=>array(self::BELONGS_TO,'Users','users_users_id'),
 		));
 	}
 

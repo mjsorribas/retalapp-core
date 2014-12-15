@@ -1039,6 +1039,23 @@ class PageController extends FrontController
 	*/
 	public function actionSend()
 	{
-		# @TODO
+		$model=UsersNotifications::model()->findAll(array(
+			"condition"=>"send=0",
+			"order"=>"created_at DESC",
+			"limit"=>500,
+		));
+
+		foreach($model as $data) {
+			
+			r('email')->add($data->user->email,$data->user->name);
+			r('email')->sendBody($data->subject,array(
+				'body'=>$data->body,
+				'url'=>$data->url,
+				'label'=>$data->label,
+			));
+			
+			$data->send=1;
+			$data->save(true,array('send'));
+		}
 	}
 }
