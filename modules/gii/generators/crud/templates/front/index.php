@@ -37,7 +37,7 @@ $label=$this->pluralize($this->class2name($this->modelClass));
 	'itemView'=>'_view',
     'itemsTagName'=>'div',
     'cssFile'=>false,
-    'itemsCssClass'=>'row',
+    'itemsCssClass'=>'row text-center',
     'summaryCssClass'=>'summary text-center mbl',
     'emptyText'=>r('app','There is nothing here yet, start now').' <br> <a href="'.$this->createUrl("create").'" class="btn btn-primary">'.r('app','Create').'</a>',
     'pager'=>array(
