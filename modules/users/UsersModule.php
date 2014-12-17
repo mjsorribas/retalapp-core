@@ -48,11 +48,11 @@ class UsersModule extends Module
 	public $urlAdminProfile=array("/users/users/profile");
 	
 	// Redirects
-	public $redirectLogin=array("/");
+	public $redirectLogin=array("/home");
 	
 	public $redirectLoginAdmin=array("/admin");
 	
-	public $redirectLogout=array("/");
+	public $redirectLogout=array("/home");
 	
 	public $redirectLogoutAdmin=array("/users/users/login");
 	
