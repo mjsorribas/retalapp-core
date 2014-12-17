@@ -216,6 +216,7 @@ class EmailModule extends Module
 			return false;
 		} else {
 			$this->ErrorInfo='Message has been sent';
+			$this->_dest=array();
 			$this->_a=array();
 		    return true;
 		}
