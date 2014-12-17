@@ -11,11 +11,11 @@ $module=Yii::app()->getModule('gii');
 			<th><?=strtoupper($column->name)?></th>
 		<?php endforeach;?>
 	</tr>
-	<?php echo "<?php foreach({$this->modelClass}::model()->findAll(\$model->search()->getCriteria()) as \$data):?>"?>
+	<?php echo "<?php foreach({$this->modelClass}::model()->findAll(\$model->search()->getCriteria()) as \$data):?>\n"?>
 	<tr>
 		<?php foreach($this->tableSchema->columns as $column):?>
 			<td><?php echo "<?=\$data->{$column->name}?>"?></td>
 		<?php endforeach;?>
 	</tr>
-	<?php echo "<?php endforeach;?>"?>
+	<?php echo "<?php endforeach;?>\n"?>
 </table>
