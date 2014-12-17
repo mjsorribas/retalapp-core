@@ -41,7 +41,7 @@ class <?php echo $this->controllerClass; ?> extends CmsController
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','view','create','order','upload','pdf'),
+				'actions'=>array('admin','delete','update','view','create','order','upload','pdf','excel'),
 				'roles'=>$this->module->getAllowPermissoms(),
 			),
 			array('deny',  // deny all users
@@ -224,6 +224,23 @@ foreach($this->tableSchema->columns as $column)
         $html2pdf->pdf->SetDisplayMode('fullpage');
 		$html2pdf->WriteHTML($content);
 		$html2pdf->Output('<?php echo $this->modelClass; ?>.pdf');
+	}
+
+	/**
+	 * Manages all models.
+	 */
+	public function actionExcel()
+	{
+		$model=new <?php echo $this->modelClass; ?>('search');
+		$model->unsetAttributes();  // clear any default values
+
+		if(isset($_GET['<?php echo $this->modelClass; ?>']))
+			$model->attributes=$_GET['<?php echo $this->modelClass; ?>'];
+
+		$content=$this->renderPartial('excel',array(
+			'model'=>$model,
+		),true);
+		r()->request->sendFile('<?php echo $this->labelName; ?>.xls',$content);
 	}
 
 	//////////////////////////
