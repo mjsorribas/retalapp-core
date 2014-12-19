@@ -265,8 +265,12 @@ class BFormatter extends CFormatter
 				$html.="<footer><cite title=\"Source Title\">".$Parsedown->text($data['data']['cite'])."</cite></footer>";
 				$html.="</blockquote>";
  			}
- 			if($data['type']==='image')
- 				$html.="<img class=\"img-responsive mbm mtm\" src=\"".@$data['data']['file']['url']."\">";
+ 			if($data['type']==='image') {
+				$html.="<img class=\"img-responsive mbm mtm\" src=\"".@$data['data']['file']['url']."\">";
+ 				if(!empty($data['data']['alt'])) {
+					$html.="<div class=\"alt-text-for-image\">".$data['data']['alt']."</div>";
+ 				}
+ 			}
 			if($data['type']==='video')
  			{
 				if(strpos($data['data']['source'],"youtube")!==false)
