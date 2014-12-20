@@ -32,8 +32,7 @@ echo "\$this->breadcrumbs=array(
 	'rowHtmlOptionsExpression'=>'array("id"=>$row."-".$data->id,"class"=>"cursor-move")',
 <?php endif;?>
 <?php endforeach;?>
-	'emptyText'=>r('app','There is nothing here yet, start now').' <br> <a href="'.$this->createUrl("create").'" class="btn btn-primary">'.r('app','Create').'</a>',
-    'pager'=>array(
+	'pager'=>array(
     	'class'=>'CLinkPager',
     	'htmlOptions'=>array(
     		'class'=>'pagination'
