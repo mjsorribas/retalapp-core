@@ -32,9 +32,17 @@ echo "\$this->breadcrumbs=array(
 	'rowHtmlOptionsExpression'=>'array("id"=>$row."-".$data->id,"class"=>"cursor-move")',
 <?php endif;?>
 <?php endforeach;?>
-	'pager'=>array('htmlOptions'=>array('class'=>'pagination'),'header'=>false),
+	'emptyText'=>r('app','There is nothing here yet, start now').' <br> <a href="'.$this->createUrl("create").'" class="btn btn-primary">'.r('app','Create').'</a>',
+    'pager'=>array(
+    	'class'=>'CLinkPager',
+    	'htmlOptions'=>array(
+    		'class'=>'pagination'
+		),
+		'header'=>false,
+	),
+    'pagerCssClass'=>'paginator-container',
 	'dataProvider'=>$model->search(),
-	'summaryCssClass'=>'text-right',
+	'summaryCssClass'=>'text-center',
 	'filter'=>$model,<?php foreach($this->tableSchema->columns as $column):?>
 <?php if($column->name=='orden_id'):?>
     'afterAjaxUpdate'=>"js:function(){
