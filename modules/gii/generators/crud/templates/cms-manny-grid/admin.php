@@ -22,14 +22,8 @@ echo "\$this->breadcrumbs=array(
 <section class="panel">
     <div class="panel-body minimal">
         <div class="table-inbox-wrap">
-<div class="row">
-	<div class="col-lg-6">
-		<?php echo "<?php echo CHtml::link('<i class=\"fa fa-file\"></i> '.Yii::t('app','Download CSV file'),array('excel'),array('class'=>'btn btn-success btn-lg btn-block'))?>"?>
-	</div>
-	<div class="col-lg-6">
-		<?php echo "<?php echo CHtml::link('<i class=\"fa fa-plus\"></i> '.Yii::t('app','Upload new CSV file'),array('create'),array('class'=>'btn btn-primary btn-lg btn-block'))?>"?>
-		<h5><?php echo "<?=r('app','History of updates')?>"?></h5>
-
+       <?php echo "<?php echo CHtml::link('<i class=\"fa fa-plus\"></i> '.Yii::t('app','Create'),array('create'),array('class'=>'mrs btn btn-primary'))?>\n"?>
+       <?php echo "<?php #echo CHtml::link('<i class=\"fa fa-list\"></i> '.Yii::t('app','Excel'),array('excel'),array('class'=>'mrs btn btn-success'))?>\n"?>
 <?php echo "<?php"; ?> $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'<?php echo $this->class2id($this->modelClass); ?>-grid',
 	'itemsCssClass'=>'table table-inbox table-hover',
@@ -184,20 +178,29 @@ if($count>=5)
 		/*array(
 			'class'=>'CButtonColumn',
 		),*/
-		//array(
-		//	'class'=>'CLinkColumn',
-		//	'label'=>Yii::t('app','Delete'),
-		//	'htmlOptions'=>array('style'=>'width:60px'),
-		//	'urlExpression'=>'Yii::app()->controller->createUrl("delete",array("id"=>$data->primaryKey))',
-		//	'linkHtmlOptions'=>array('class'=>'btn btn-danger','data-action'=>'delete'),
-		//),
+		array(
+			'class'=>'CLinkColumn',
+			'label'=>Yii::t('app','View'),
+			'htmlOptions'=>array('style'=>'width:60px'),
+			'urlExpression'=>'Yii::app()->controller->createUrl("view",array("id"=>$data->primaryKey))',
+			'linkHtmlOptions'=>array('class'=>'btn btn-success'),
+		),
+		array(
+			'class'=>'CLinkColumn',
+			'label'=>Yii::t('app','Update'),
+			'htmlOptions'=>array('style'=>'width:60px'),
+			'urlExpression'=>'Yii::app()->controller->createUrl("update",array("id"=>$data->primaryKey))',
+			'linkHtmlOptions'=>array('class'=>'btn btn-primary'),
+		),
+		array(
+			'class'=>'CLinkColumn',
+			'label'=>Yii::t('app','Delete'),
+			'htmlOptions'=>array('style'=>'width:60px'),
+			'urlExpression'=>'Yii::app()->controller->createUrl("delete",array("id"=>$data->primaryKey))',
+			'linkHtmlOptions'=>array('class'=>'btn btn-danger','data-action'=>'delete'),
+		),
 	),
 )); ?>
-	
-	</div>
-</div>
-
-
 		</div>
     </div>
 </section>
