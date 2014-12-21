@@ -52,18 +52,18 @@ $this->breadcrumbs=array(
           <div class="panel-heading"><b><?php echo CHtml::encode($model->getAttributeLabel('state')); ?>:</b></div>
           <div class="panel-body">
             <?php if($model->state):?>
-            <?php echo '<span class="label label-success">State '.Yii::t('app','Enabled').'</span>';?>
+            <?php echo '<span class="label label-success">'.Yii::t('app','Enabled').'</span>';?>
             <?php else:?>
-            <?php echo '<span class="label label-danger">State '.Yii::t('app','Disabled').'</span>';?>
+            <?php echo '<span class="label label-danger">'.Yii::t('app','Disabled').'</span>';?>
             <?php endif;?>
           </div>
 
           <div class="panel-heading"><b><?php echo CHtml::encode($model->getAttributeLabel('state_email')); ?>:</b></div>
           <div class="panel-body">
             <?php if($model->state_email):?>
-            <?php echo '<span class="label label-success">State Email '.Yii::t('app','Enabled').'</span>';?>
+            <?php echo '<span class="label label-success">'.Yii::t('app','Enabled').'</span>';?>
             <?php else:?>
-            <?php echo '<span class="label label-danger">State Email '.Yii::t('app','Disabled').'</span>';?>
+            <?php echo '<span class="label label-danger">'.Yii::t('app','Disabled').'</span>';?>
             <?php endif;?>
           </div>
 
@@ -74,16 +74,6 @@ $this->breadcrumbs=array(
               <?php echo Yii::app()->format->formatAgoComment($model->registered);?>
             </span>
           </div>
-
-          <div class="panel-heading"><b><?php echo CHtml::encode($model->getAttributeLabel('trash')); ?>:</b></div>
-          <div class="panel-body">
-            <?php if($model->trash):?>
-            <?php echo '<span class="label label-success">Trash '.Yii::t('app','Enabled').'</span>';?>
-            <?php else:?>
-            <?php echo '<span class="label label-danger">Trash '.Yii::t('app','Disabled').'</span>';?>
-            <?php endif;?>
-          </div>
-
 
         </div>
     </div>

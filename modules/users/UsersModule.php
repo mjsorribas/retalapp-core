@@ -209,7 +209,7 @@ class UsersModule extends Module
 			return false;
 		if($this->sendPassword)
 		{
-			$model->password=sha1($pass=r()->security->randomWord(4));
+			$model->password=sha1($pass=strtolower(r()->security->randomWord(5)));
 			$model->save(true,array('password'));
 
 			$body=$this->copySendPassword;

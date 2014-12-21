@@ -141,8 +141,16 @@ class UsersController extends CmsController
 		if(isset($_POST['UsersUsers']))
 		{
 			$model->attributes=$_POST['UsersUsers'];
-			if($model->save())
+			$model->state_email=1;
+			$model->state=1;
+			$model->registered=date("Y-m-d H:i:s");
+			$model->trash=0;
+			$model->password=sha1(strtolower(r()->security->randomWord(5)));
+			if($model->save()) {
+				$this->module->sendPassword=true;
+				$this->module->sendRegisterMail($model);
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('create',array(
