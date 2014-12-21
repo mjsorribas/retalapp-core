@@ -21,18 +21,20 @@ $module=Yii::app()->getModule('gii');
 <?php 
 foreach($columns as $column)
 {
+	if($column->name=='id')
+		continue;
 	if($column->name=='orden_id')
 	{
 		echo " *\t\$last=".$modelClass."::model()->findAll();\n";
 		echo " *\t\$model->orden_id=count(\$last)+1;\n";
 	}
-	if($column->name=='updated_at')
+	elseif($column->name=='updated_at')
 		echo " *\t\$model->updated_at=date('Y-m-d H:i:s');\n";
-	if($column->name=='created_at')
+	elseif($column->name=='created_at')
 		echo " *\t\$model->created_at=date('Y-m-d H:i:s');\n";
-	if($column->name=='users_id' or $column->name=='users_users_id' or $column->name=='user_id')
+	elseif($column->name=='users_id' or $column->name=='users_users_id' or $column->name=='user_id')
 		echo " *\t\$model->".$column->name."=Yii::app()->user->id;\n";
-	if(stripos($column->name, "money_")!==false)
+	elseif(stripos($column->name, "money_")!==false)
 		echo " *\t\$model->".$column->name."=strtr(\$model->".$column->name.",array(\",\"=>\"\"));\n";
 	else
 		echo " *\t\$model->".$column->name."='value';\n";
@@ -42,13 +44,20 @@ foreach($columns as $column)
  * $model->save();
  *
  *
- * Retrive Severals field
+ * Retrive Severals records
  * $<?php echo strtolower($tableName); ?>=<?php echo $modelClass; ?>::model()->findAll(array('order'=>'orden_id'));
  * <?php echo "<?php foreach(\$".strtolower($tableName)." as \$data): ?>\n"?>
  <?php foreach($columns as $column): ?>
 * <?php echo "<?=\$data->".$column->name.";?>\n"; ?>
  <?php endforeach; ?>
- * <?php echo "<?php endforeach; ?>\n"?>
+* <?php echo "<?php endforeach; ?>\n"?>
+ * 
+ *
+ * Retrive first record
+ * $<?php echo strtolower($tableName); ?>=<?php echo $modelClass; ?>::model()->find();
+ <?php foreach($columns as $column): ?>
+* <?php echo "<?=\$".strtolower($tableName)."->".$column->name.";?>\n"; ?>
+ <?php endforeach; ?>
  * 
  * This is the model class for table "<?php echo $tableName; ?>".
  *
