@@ -27,7 +27,7 @@ echo "\$this->breadcrumbs=array(
 		<?php echo "<?php echo CHtml::link('<i class=\"fa fa-file\"></i> '.Yii::t('app','Download CSV file'),array('excelToUpload'),array('class'=>'btn btn-success btn-lg btn-block'))?>"?>
 	</div>
 	<div class="col-lg-6">
-		<?php echo "<?php echo CHtml::link('<i class=\"fa fa-plus\"></i> '.Yii::t('app','Upload new CSV file'),array('create'),array('class'=>'btn btn-primary btn-lg btn-block'))?>"?>
+		<?php echo "<?php echo CHtml::link('<i class=\"fa fa-upload\"></i> '.Yii::t('app','Upload new CSV file'),array('create'),array('class'=>'btn btn-primary btn-lg btn-block'))?>"?>
 		<h2 class="text-center mtl"><?php echo "<?=r('app','History of updates')?>"?></h2>
 
 <?php echo "<?php"; ?> $this->widget('zii.widgets.grid.CGridView', array(
