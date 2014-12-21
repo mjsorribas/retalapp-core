@@ -102,7 +102,7 @@ foreach($this->tableSchema->columns as $column)
 		echo "\t\t\t'filter'=>false,\n";
 		echo "\t\t\t'type'=>'raw',\n";
 		echo "\t\t\t'value'=>'\"<span class=\\\"text-muted\\\">\".substr(\$data->".$column->name.",0,50).\"...</span>\"',\n";
-		echo "\t\t\t'value'=>'CHtml::image(Yii::app()->request->baseUrl.\"/uploads/\".\$data->".$column->name.",\"\",array(\"class\"=>\"img-responsive img-thumbnail\",\"style\"=>\"max-width:100px\"))',\n";
+		echo "\t\t\t'value'=>'CHtml::image(\$data->".$column->name."_path,\"\",array(\"class\"=>\"img-responsive img-thumbnail\",\"style\"=>\"max-width:100px\"))',\n";
 		echo "\t\t),\n";
 	elseif($tangaColumn['type']==='text' or $tangaColumn['type']==='editor' or $tangaColumn['type']==='redactor'):
     	echo "\t\tarray(\n";
@@ -114,7 +114,7 @@ foreach($this->tableSchema->columns as $column)
     	echo "\t\tarray(\n";
 		echo "\t\t\t'name'=>'".$column->name."',\n";
 		echo "\t\t\t'type'=>'raw',\n";
-		echo "\t\t\t'value'=>'CHtml::link(\"<i class=\\\"fa fa-download\\\"></i>\",Yii::app()->request->baseUrl.\"/uploads/\".\$data->".$column->name.",array(\"font-size:100%\"))',\n";
+		echo "\t\t\t'value'=>'CHtml::link(\"<i class=\\\"fa fa-download\\\"></i>\",\$data->".$column->name."_path,array(\"font-size:100%\"))',\n";
 		echo "\t\t),\n";
     elseif($tangaColumn['type']==='link' or $tangaColumn['type']==='url'):
     	echo "\t\tarray(\n";
