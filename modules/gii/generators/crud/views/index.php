@@ -5,7 +5,7 @@ $('#{$class}_controller').change(function(){
 	$(this).data('changed',$(this).val()!='');
 });
 $('#{$class}_template').change(function(){
-	if($(this).val()=='cms-manny-modal' or $(this).val()=='cms-upload-csv') {
+	if($(this).val()=='cms-manny-modal' || $(this).val()=='cms-upload-csv') {
 		$('.foraneKey-container').show();		
 	} else {
 		$('.foraneKey-container').hide();	
