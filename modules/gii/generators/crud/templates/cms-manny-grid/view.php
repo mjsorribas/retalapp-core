@@ -50,7 +50,7 @@ $columnLat=explode('_', $column->name);
         continue;
 ?><?php if($tangaColumn['type']==='img'):?>
 <?php $showImage=true; ?>
-  <?php echo "<?php echo CHtml::image(Yii::app()->request->baseUrl.'/uploads/'.\$model->".$column->name.",'',array('class'=>'img-responsive img-thumbnail','style'=>'width:100%'));?>"; ?>
+  <?php echo "<?php echo CHtml::image(\$model->".$column->name."_path,'',array('class'=>'img-responsive img-thumbnail','style'=>'width:100%'));?>"; ?>
 <?php break;?>
 <?php endif;?>
 <?php $columnLat=explode('_', $column->name);
@@ -66,7 +66,7 @@ $columnLat=explode('_', $column->name);
 <?php break;?>
 <?php endif;?><?php if($tangaColumn['type']==='file'):?>
    <?php $showDownload=true; ?>
-  <?php echo "<?php echo CHtml::link('<i style=\"font-size:10em\" class=\"fa fa-download\"></i>',Yii::app()->request->baseUrl.'/uploads/'.\$model->".$column->name.",array('class'=>'mhl mvl'));?>"; ?>
+  <?php echo "<?php echo CHtml::link('<i style=\"font-size:10em\" class=\"fa fa-download\"></i>',\$model->".$column->name."_path,array('class'=>'mhl mvl'));?>"; ?>
 <?php break;?>
 <?php endif;?>
 <?php endforeach;?>
@@ -105,7 +105,7 @@ $columnLat=explode('_', $column->name);
 <?php if($tangaColumn['type']==='img'):?>
           <div class="panel-heading"><?php echo "<b><?php echo CHtml::encode(\$model->getAttributeLabel('{$column->name}')); ?>:</b>"; ?></div>
           <div class="panel-body text-center">
-            <?php echo "<?php echo CHtml::image(Yii::app()->request->baseUrl.'/uploads/'.\$model->".$column->name.",'',array('class'=>'img-responsive img-thumbnail'));?>\n"; ?>
+            <?php echo "<?php echo CHtml::image(\$model->".$column->name."_path,'',array('class'=>'img-responsive img-thumbnail'));?>\n"; ?>
           </div>
 <?php elseif($tangaColumn['type']==='code'):?>
           <div class="panel-heading"><?php echo "<b><?php echo CHtml::encode(\$model->getAttributeLabel('{$column->name}')); ?>:</b>"; ?></div>
@@ -147,7 +147,7 @@ $columnLat=explode('_', $column->name);
 <?php elseif($tangaColumn['type']==='file'):?>
           <div class="panel-heading"><?php echo "<b><?php echo CHtml::encode(\$model->getAttributeLabel('{$column->name}')); ?>:</b>"; ?></div>
           <div class="panel-body">
-            <?php echo "<?php echo CHtml::link('<i class=\"fa fa-download\"></i>',Yii::app()->request->baseUrl.'/uploads/'.\$model->".$column->name.",array('font-size:100%'));?>\n"; ?>
+            <?php echo "<?php echo CHtml::link('<i class=\"fa fa-download\"></i>',\$model->".$column->name."_path,array('font-size:100%'));?>\n"; ?>
           </div>
 <?php elseif($tangaColumn['type']==='boolean'):?>
           <div class="panel-heading"><?php echo "<b><?php echo CHtml::encode(\$model->getAttributeLabel('{$column->name}')); ?>:</b>"; ?></div>

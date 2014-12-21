@@ -92,7 +92,7 @@ foreach($this->tableSchema->columns as $column)
 ?>
 			if($model->save()) 
 			{
-				$errors=$this->uploadAndUpdate($model);
+				$errors=$this->csvUploadAndUpdate($model);
 				if($errors===array())
 					$this->redirect(array('view','id'=>$model-><?php echo $this->tableSchema->primaryKey; ?>));
 			}
@@ -106,7 +106,7 @@ foreach($this->tableSchema->columns as $column)
 
 	}
 
-	public function uploadAndUpdate($model)
+	public function csvUploadAndUpdate($model, $separator=";")
 	{
 		$errors=array();
 		$fp = fopen(Yii::getPathOfAlias('webroot') . "/uploads/" . $model->file, 'r');
@@ -114,18 +114,25 @@ foreach($this->tableSchema->columns as $column)
 		{
 			$transaction = Yii::app()->db->beginTransaction();
 			$i=0;
-			while(($line=fgetcsv($fp,1000,";"))!=false)
+			while(($line=fgetcsv($fp,1000,$separator))!=false)
 			{
 				$i++;
-				if($i==1)
-					continue;
+				//if($i==1)
+				//	continue;
 
 				$data = Model::model()->findByPk($line[0]);
+
+				$first=$this->trim($line[0]);
+				$second=$this->trim($line[1]);
+				
+				// This is for update
+				$data = Model::model()->findByPk($first);
 				if($data===null)
 					continue;
 				else
 				{
-					// $data->money_precio_1=$line[1];
+					// This is for update
+					// $data->other_field=$second;
 					if(!$data->save())
 						$errors[$data->id]=$data->getErrors();
 				}
@@ -148,11 +155,76 @@ foreach($this->tableSchema->columns as $column)
 			throw new CHttpException(500,r('app','Could not open the file, please try again'));
 	}
 
+	public function excelUploadAndUpdate($model)
+	{
+		$errors=array();
+		$fp = fopen(Yii::getPathOfAlias('webroot') . "/uploads/" . $model->file, 'r');
+		if($fp)
+		{
+			$transaction = Yii::app()->db->beginTransaction();
+
+			$excelSheet = Yii::app()->excel->load(@$file)->getActiveSheet();
+            for($row = 6; $row <= $excelSheet->getHighestRow(); ++$row)
+            {
+            	//if($i==1)
+				//	continue;
+				
+				$first=$this->trim($excelSheet->getCellByColumnAndRow(0, $row)->getValue());
+				$second=$this->trim($excelSheet->getCellByColumnAndRow(1, $row)->getValue());
+				
+				// This is for update
+				$data = Model::model()->findByPk($first);
+				if($data===null)
+					continue;
+				else
+				{
+					// This is for update
+					// $data->other_field=$second;
+					if(!$data->save())
+						$errors[$data->id]=$data->getErrors();
+				}
+			}
+						 
+			fclose($fp);
+			
+			if($errors===array())
+			{
+				$transaction->commit();
+				return $errors;
+			}
+			else
+			{
+        		$transaction->rollBack();
+				return $errors;
+			}
+		}
+		else
+			throw new CHttpException(500,r('app','Could not open the file, please try again'));
+	}
+	
+	public function trim($value='',$int=false)
+	{
+		$value=trim($value);
+		if($value=="")
+			return null;
+		if($int)
+		{
+			$value=strtr($value,array(
+				"%"=>"","$"=>"","?"=>"","*"=>"","+"=>""
+			));
+			$value=(int)$value;
+			if($value<0)
+				$value=$value*10;
+			return $value;
+		}
+		return $value;
+	}
+
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
-	 */
+	*/
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
