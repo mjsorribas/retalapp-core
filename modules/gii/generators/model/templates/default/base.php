@@ -18,6 +18,8 @@ $module=Yii::app()->getModule('gii');
  * 
  * Update one record  
  * $model=<?php echo $modelClass; ?>::model()->findByPk($id);
+ * // Or create a new record
+ * // $model=new <?php echo $modelClass; ?>;
 <?php 
 foreach($columns as $column)
 {
@@ -25,19 +27,19 @@ foreach($columns as $column)
 		continue;
 	if($column->name=='orden_id')
 	{
-		echo " *\t\$last=".$modelClass."::model()->findAll();\n";
-		echo " *\t\$model->orden_id=count(\$last)+1;\n";
+		echo " * \$last=".$modelClass."::model()->findAll();\n";
+		echo " * \$model->orden_id=count(\$last)+1;\n";
 	}
 	elseif($column->name=='updated_at')
-		echo " *\t\$model->updated_at=date('Y-m-d H:i:s');\n";
+		echo " * \$model->updated_at=date('Y-m-d H:i:s');\n";
 	elseif($column->name=='created_at')
-		echo " *\t\$model->created_at=date('Y-m-d H:i:s');\n";
+		echo " * \$model->created_at=date('Y-m-d H:i:s');\n";
 	elseif($column->name=='users_id' or $column->name=='users_users_id' or $column->name=='user_id')
-		echo " *\t\$model->".$column->name."=Yii::app()->user->id;\n";
+		echo " * \$model->".$column->name."=Yii::app()->user->id;\n";
 	elseif(stripos($column->name, "money_")!==false)
-		echo " *\t\$model->".$column->name."=strtr(\$model->".$column->name.",array(\",\"=>\"\"));\n";
+		echo " * \$model->".$column->name."=strtr(\$model->".$column->name.",array(\",\"=>\"\"));\n";
 	else
-		echo " *\t\$model->".$column->name."='value';\n";
+		echo " * \$model->".$column->name."='value';\n";
 
 }
 ?>
