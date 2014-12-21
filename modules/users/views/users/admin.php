@@ -27,7 +27,7 @@ $this->breadcrumbs=array(
 			'name'=>'img',
 			'filter'=>false,
 			'type'=>'raw',
-			'value'=>'CHtml::image($data->imageUrl,"",array("class"=>"img-responsive img-thumbnail","style"=>"max-width:100px"))',
+			'value'=>'CHtml::image($data->imageUrl,"",array("class"=>"img-responsive img-thumbnail","style"=>"max-width:40px"))',
 		),
 		array(
 			'name'=>'email',
