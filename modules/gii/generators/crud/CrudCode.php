@@ -116,7 +116,7 @@ EOD;
 
 			return $output.highlight_string($code,true);
 		}
-		elseif($this->template==='cms-manny-grid' or $this->template==='cms-one')
+		elseif($this->template==='cms-manny-grid' or $this->template==='cms-one' or $this->template==='cms-upload-csv')
 		{
 $orderString='';
 $admin=($this->template==='cms-one')?'':'admin';
