@@ -27,6 +27,9 @@ return array(
     'security' => array(
         'class' => 'core.extensions.components.security.GSecurityManager',
     ),
+    'excel'=>array(
+        'class'=>'core.extensions.components.office.excel.GExcel',
+    ),
     'user' => array(
         'class' => 'core.extensions.components.auth.GSWebUser',
         'allowAutoLogin' => true,
