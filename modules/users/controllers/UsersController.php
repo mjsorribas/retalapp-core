@@ -96,7 +96,7 @@ class UsersController extends CmsController
 	{
 		$model=$this->loadModel($id);
 		
-		if($model->state=1)
+		if($model->state)
 		{
 			$model->state=0;	
 			$model->save(true,array("state"));
