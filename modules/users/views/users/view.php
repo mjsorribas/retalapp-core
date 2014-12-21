@@ -23,9 +23,21 @@ $this->breadcrumbs=array(
     <div class="col-lg-6">
         <div class="panel panel-default">
           <!-- Default panel contents -->
-          <div class="panel-heading"><b><?php echo CHtml::encode($model->getAttributeLabel('img')); ?>:</b></div>
+          <div class="panel-heading"><b><?=r('app','Details user')?>:</b></div>
           <div class="panel-body">
-            <?php echo CHtml::image($model->imageUrl,'',array('class'=>'img-responsive img-thumbnail'));?>    
+          <div class="row">
+            <div class="col-lg-4">
+              <?php echo CHtml::image($model->imageUrl,'',array('class'=>'img-responsive img-thumbnail'));?>    
+            </div>
+            <div class="col-lg-8">
+              <a href="#" data-action="reset" class="btn btn-lg btn-block btn-warning"><?=r('app','Reset password')?></a>
+              <?php if($model->state):?>
+                <a href="#" data-action="enabled" class="btn btn-lg btn-block btn-success"><?=r('app','Disabled')?></a>
+              <?php else:?>
+                <a href="#" data-action="enabled" class="btn btn-lg btn-block btn-danger"><?=r('app','Enabled')?></a>
+              <?php endif;?>
+            </div>
+          </div>
   
           </div>
 
@@ -87,29 +99,69 @@ $this->breadcrumbs=array(
     </div>
 </section>
 </div>
-
-<?php Yii::app()->clientScript->registerScript("assignRoles","
-  $(document).on('click', '.assign', function(e) {
-    e.preventDefault();
-    var that=$(this);
-    var content=that.html();
-    that.html('...');
-    that.removeClass('btn-primary btn-info');
-    $.ajax({
-        url: that.attr('href'),
-        type: 'post',
-        data: { action: content},
-        dataType: 'json',
-        success: function(data){
-            if(data.result==0)
-                alert(data.message);
-            else {
-          setTimeout(function(){
+<script>
+  $(function(){
+    $(document).on('click', '.assign', function(e) {
+      e.preventDefault();
+      var that=$(this);
+      var content=that.html();
+      that.html('...');
+      that.removeClass('btn-primary btn-info');
+      $.ajax({
+          url: that.attr('href'),
+          type: 'post',
+          data: { action: content},
+          dataType: 'json',
+          success: function(data){
+              if(data.result==0) {
+                bootbox.alert(data.message);
+              } else {
+                setTimeout(function(){
                   that.addClass(data.btn);
                   that.html(data.message);
-        },200);
-            }
-        },
+                },200);
+              }
+          },
+      });
     });
-});
-");?>
+    
+    $(document).on('click', '[data-action="reset"]', function(e) {
+      e.preventDefault();
+      var that=$(this);
+      that.html('...');
+      // that.removeClass('btn-primary btn-info');
+      $.ajax({
+          url: '<?=$this->createUrl("reset",array("id"=>$model->id))?>',
+          type: 'post',
+          dataType: 'json',
+          success: function(data){
+            bootbox.alert(data.message);
+          },
+      });
+    });
+
+    $(document).on('click', '[data-action="enabled"]', function(e) {
+      e.preventDefault();
+      var that=$(this);
+      that.html('...');
+      that.removeClass('btn-success btn-danger');
+      $.ajax({
+          url: '<?=$this->createUrl("enabled",array("id"=>$model->id))?>',
+          type: 'post',
+          dataType: 'json',
+          success: function(data){
+              
+              if(data.result) {
+                setTimeout(function(){
+                  that.addClass(data.btn);
+                  that.html(data.html);
+                },200);
+              } else {
+                bootbox.alert(data.message);
+              }
+          },
+      });
+    });
+    
+  })
+</script>

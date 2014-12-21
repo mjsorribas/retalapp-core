@@ -30,7 +30,7 @@ class UsersController extends CmsController
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','roles','assign','delete','update','view','create','order','upload'),
+				'actions'=>array('admin','roles','assign','delete','update','view','create','order','upload','enabled','reset'),
 				'roles'=>$this->module->getAllowPermissoms(),
 			),
 			array('deny',  // deny all users
@@ -91,8 +91,55 @@ class UsersController extends CmsController
 		else
 			$this->redirect(array("view","id"=>$id));
 	}
-
 	
+	public function actionEnabled($id)
+	{
+		$model=$this->loadModel($id);
+		
+		if($model->state=1)
+		{
+			$model->state=0;	
+			$model->save(true,array("state"));
+			echo CJSON::encode(array(
+				"html"=>r('app','Enabled'),
+				"btn"=>"btn-danger",
+				"result"=>1,
+			));
+		}
+		else
+		{
+			$model->state=1;	
+			$model->save(true,array("state"));
+			echo CJSON::encode(array(
+				"html"=>r('app','Disabled'),
+				"btn"=>"btn-success",
+				"result"=>1,
+			));
+		}
+	}
+
+	public function actionReset($id)
+	{
+		$model=$this->loadModel($id);
+		// $model->state=1;	
+		// $model->save(true,array("state"));
+		$this->module->sendPassword=true;
+		if($this->module->sendRegisterMail($model)) {
+			echo CJSON::encode(array(
+				"message"=>r('app','Email sent successfully'),
+				"data"=>"",
+				"result"=>1,
+			));
+		} else {
+			echo CJSON::encode(array(
+				"message"=>r('app','The email was not sent, can be a mistake on the email server configuration output'),
+				"data"=>"",
+				"result"=>0,
+			));
+		}
+		
+	}
+
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
