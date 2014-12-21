@@ -41,7 +41,7 @@ class <?php echo $this->controllerClass; ?> extends CmsController
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','view','create','order','upload','pdf','excel'),
+				'actions'=>array('admin','delete','update','view','create','order','upload','pdf','excel','enabled'),
 				'roles'=>$this->module->getAllowPermissoms(),
 			),
 			array('deny',  // deny all users
@@ -241,6 +241,32 @@ foreach($this->tableSchema->columns as $column)
 			'model'=>$model,
 		),true);
 		r()->request->sendFile('<?php echo $this->labelName; ?>.xls',$content);
+	}
+
+	public function actionEnabled($id)
+	{
+		$model=$this->loadModel($id);
+		$field=$_POST['field'];
+		if($model->{$field})
+		{
+			$model->{$field}=0;	
+			$model->save(true,array($field));
+			echo CJSON::encode(array(
+				"html"=>r('app','Enabled'),
+				"btn"=>"btn-danger",
+				"result"=>1,
+			));
+		}
+		else
+		{
+			$model->{$field}=1;	
+			$model->save(true,array($field));
+			echo CJSON::encode(array(
+				"html"=>r('app','Disabled'),
+				"btn"=>"btn-success",
+				"result"=>1,
+			));
+		}
 	}
 
 	//////////////////////////

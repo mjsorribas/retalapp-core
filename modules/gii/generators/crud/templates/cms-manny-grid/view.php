@@ -153,10 +153,16 @@ $columnLat=explode('_', $column->name);
           <div class="panel-heading"><?php echo "<b><?php echo CHtml::encode(\$model->getAttributeLabel('{$column->name}')); ?>:</b>"; ?></div>
           <div class="panel-body">
             <?php echo "<?php if(\$model->{$column->name}):?>\n"; ?>
-            <?php echo "<?php echo '<span class=\"label label-success\">".ucwords(strtr($column->name,$arratClean))." '.Yii::t('app','Enabled').'</span>';?>\n"; ?>
+              <a href="#" data-field="<?=$column->name?>" data-action="enabled" class="btn btn-lg btn-block btn-success"><?=r('app','Disabled')?></a>
             <?php echo "<?php else:?>\n"; ?>
-            <?php echo "<?php echo '<span class=\"label label-danger\">".ucwords(strtr($column->name,$arratClean))." '.Yii::t('app','Disabled').'</span>';?>\n"; ?>
+              <a href="#" data-field="<?=$column->name?>" data-action="enabled" class="btn btn-lg btn-block btn-danger"><?=r('app','Enabled')?></a>
             <?php echo "<?php endif;?>\n"; ?>
+
+            <?php echo "<?php // if(\$model->{$column->name}):?>\n"; ?>
+            <?php echo "<?php // echo '<span class=\"label label-success\">".ucwords(strtr($column->name,$arratClean))." '.Yii::t('app','Enabled').'</span>';?>\n"; ?>
+            <?php echo "<?php // else:?>\n"; ?>
+            <?php echo "<?php // echo '<span class=\"label label-danger\">".ucwords(strtr($column->name,$arratClean))." '.Yii::t('app','Disabled').'</span>';?>\n"; ?>
+            <?php echo "<?php // endif;?>\n"; ?>
           </div>
 <?php elseif($tangaColumn['type']==='date' or $tangaColumn['type']==='datetime'):?>
           <div class="panel-heading"><?php echo "<b><?php echo CHtml::encode(\$model->getAttributeLabel('{$column->name}')); ?>:</b>"; ?></div>
@@ -190,3 +196,32 @@ $columnLat=explode('_', $column->name);
     </div>
 </section>
 </div>
+<script>
+  $(function(){
+
+    $(document).on('click', '[data-action="enabled"]', function(e) {
+      e.preventDefault();
+      var that=$(this);
+      var field = that.attr('data-field');
+      that.html('...');
+      that.removeClass('btn-success btn-danger');
+      $.ajax({
+          url: '<?=$this->createUrl("enabled",array("id"=>$model->id))?>',
+          type: 'post',
+          data: { 'field': field },
+          dataType: 'json',
+          success: function(data){
+              
+              if(data.result) {
+                setTimeout(function(){
+                  that.addClass(data.btn);
+                  that.html(data.html);
+                },200);
+              } else {
+                bootbox.alert(data.message);
+              }
+          },
+      });
+    });
+  })
+</script>

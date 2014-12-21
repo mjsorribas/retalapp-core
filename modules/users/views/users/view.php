@@ -61,15 +61,6 @@ $this->breadcrumbs=array(
             <p><?php echo $model->username;?></p>
           </div>
 
-          <div class="panel-heading"><b><?php echo CHtml::encode($model->getAttributeLabel('state')); ?>:</b></div>
-          <div class="panel-body">
-            <?php if($model->state):?>
-            <?php echo '<span class="label label-success">'.Yii::t('app','Enabled').'</span>';?>
-            <?php else:?>
-            <?php echo '<span class="label label-danger">'.Yii::t('app','Disabled').'</span>';?>
-            <?php endif;?>
-          </div>
-
           <div class="panel-heading"><b><?php echo CHtml::encode($model->getAttributeLabel('state_email')); ?>:</b></div>
           <div class="panel-body">
             <?php if($model->state_email):?>
