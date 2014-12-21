@@ -24,11 +24,11 @@ echo "\$this->breadcrumbs=array(
         <div class="table-inbox-wrap">
 <div class="row">
 	<div class="col-lg-6">
-		<?php echo "<?php echo CHtml::link('<i class=\"fa fa-file\"></i> '.Yii::t('app','Download CSV file'),array('excel'),array('class'=>'btn btn-success btn-lg btn-block'))?>"?>
+		<?php echo "<?php echo CHtml::link('<i class=\"fa fa-file\"></i> '.Yii::t('app','Download CSV file'),array('excelToUpload'),array('class'=>'btn btn-success btn-lg btn-block'))?>"?>
 	</div>
 	<div class="col-lg-6">
 		<?php echo "<?php echo CHtml::link('<i class=\"fa fa-plus\"></i> '.Yii::t('app','Upload new CSV file'),array('create'),array('class'=>'btn btn-primary btn-lg btn-block'))?>"?>
-		<h5><?php echo "<?=r('app','History of updates')?>"?></h5>
+		<h2 class="text-center mtl"><?php echo "<?=r('app','History of updates')?>"?></h2>
 
 <?php echo "<?php"; ?> $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'<?php echo $this->class2id($this->modelClass); ?>-grid',
