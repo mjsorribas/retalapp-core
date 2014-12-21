@@ -49,6 +49,12 @@ if($column->autoIncrement)
 		continue;
 	if($column->name=='updated_at')
 		continue;
+	if($column->name=='users_users_id')
+		continue;
+	if($column->name=='users_id')
+		continue;
+	if($column->name=='user_id')
+		continue;
 
 	$columnLat=explode('_', $column->name);
 	if(isset($columnLat[0]) and isset($columnLat[2]) and $columnLat[0]=='map' and ($columnLat[2]=='lat' or $columnLat[2]=='lng'))
@@ -70,6 +76,12 @@ if($column->autoIncrement)
 	if($column->name=='created_at')
 		continue;
 	if($column->name=='updated_at')
+		continue;
+	if($column->name=='users_users_id')
+		continue;
+	if($column->name=='users_id')
+		continue;
+	if($column->name=='user_id')
 		continue;
 
 	$columnLat=explode('_', $column->name);
@@ -98,6 +110,12 @@ if($column->autoIncrement)
 	if($column->name=='created_at')
 		continue;
 	if($column->name=='updated_at')
+		continue;
+	if($column->name=='users_users_id')
+		continue;
+	if($column->name=='users_id')
+		continue;
+	if($column->name=='user_id')
 		continue;
 
 	$columnLat=explode('_', $column->name);
