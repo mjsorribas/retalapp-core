@@ -17,27 +17,39 @@ $module=Yii::app()->getModule('gii');
  * Examples how to use for retrive data
  * 
  * Update one record  
- * $model=<?php echo $tableName; ?>::model()->findByPk($id);
- <?php foreach($columns as $column): ?>
- * $model-><?php echo $column->name.""; ?>='value';
- <?php endforeach; ?>
+ * $model=<?php echo $modelClass; ?>::model()->findByPk($id);
+<?php 
+foreach($columns as $column)
+{
+	if($column->name=='orden_id')
+	{
+		echo "\t*\t\t\$last=".$modelClass."::model()->findAll();\n";
+		echo "\t*\t\t\$model->orden_id=count(\$last)+1;\n";
+	}
+	if($column->name=='updated_at')
+		echo "\t*\t\t\$model->updated_at=date('Y-m-d H:i:s');\n";
+	if($column->name=='created_at')
+		echo "\t*\t\t\$model->created_at=date('Y-m-d H:i:s');\n";
+	if($column->name=='users_id' or $column->name=='users_users_id' or $column->name=='user_id')
+		echo "\t*\t\t\$model->".$column->name."=Yii::app()->user->id;\n";
+	if(stripos($column->name, "money_")!==false)
+		echo "\t*\t\t\$model->".$column->name."=strtr(\$model->".$column->name.",array(\",\"=>\"\"));\n";
+	else
+		echo "\t*\t\t\$model->".$column->name."='value';\n";
+
+}
+?>
  * $model->save();
  *
- * 
- * Create a new record  
- * $model=new <?php echo $tableName; ?>;
- <?php foreach($columns as $column): ?>
- * $model-><?php echo $column->name.""; ?>='value';
- <?php endforeach; ?>
- * $model->save();
  *
  * Retrive Severals field
- * $<?php echo strtolower($tableName); ?>=<?php echo $tableName; ?>::model()->findAll(array('order'=>'orden_id'));
- * <?php echo "<?php foreach(\$".strtolower($tableName)." as \$data): ?>"?>
+ * $<?php echo strtolower($tableName); ?>=<?php echo $modelClass; ?>::model()->findAll(array('order'=>'orden_id'));
+ * <?php echo "<?php foreach(\$".strtolower($tableName)." as \$data): ?>\n"?>
  <?php foreach($columns as $column): ?>
  * <?php echo "<?=\$data->".$column->name.";?>\n"; ?>
  <?php endforeach; ?>
  * <?php echo "<?php endforeach; ?>\n"?>
+ * 
  * This is the model class for table "<?php echo $tableName; ?>".
  *
  * The followings are the available columns in table '<?php echo $tableName; ?>':
