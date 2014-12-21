@@ -206,7 +206,7 @@ $columnLat=explode('_', $column->name);
       that.html('...');
       that.removeClass('btn-success btn-danger');
       $.ajax({
-          url: '<?php echo "<?=\$this->createUrl("enabled",array("id"=>\$model->id))?>"?>',
+          url: '<?php echo "<?=\$this->createUrl(\"enabled\",array(\"id\"=>\$model->id))?>"?>',
           type: 'post',
           data: { 'field': field },
           dataType: 'json',
