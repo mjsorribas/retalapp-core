@@ -17,27 +17,27 @@ $module=Yii::app()->getModule('gii');
  * Examples how to use for retrive data
  * 
  * Update one record  
-$model=<?php echo $tableName; ?>::model()->findByPk($id);
-<?php foreach($columns as $column): ?>
-$model-><?php echo $column->name."\n"; ?>='value';
-<?php endforeach; ?>
-$model->save();
+ * $model=<?php echo $tableName; ?>::model()->findByPk($id);
+ <?php foreach($columns as $column): ?>
+ * $model-><?php echo $column->name.""; ?>='value';
+ <?php endforeach; ?>
+ * $model->save();
  *
  * 
  * Create a new record  
-$model=new <?php echo $tableName; ?>;
-<?php foreach($columns as $column): ?>
-$model-><?php echo $column->name."\n"; ?>='value';
-<?php endforeach; ?>
-$model->save();
+ * $model=new <?php echo $tableName; ?>;
+ <?php foreach($columns as $column): ?>
+ * $model-><?php echo $column->name.""; ?>='value';
+ <?php endforeach; ?>
+ * $model->save();
  *
  * Retrive Severals field
-$<?php echo strtolower($tableName); ?>=<?php echo $tableName; ?>::model()->findAll(array('order'=>'orden_id'));
-<?php echo "<?php foreach(\$".strtolower($tableName)." as \$data): ?>"?>
-<?php foreach($columns as $column): ?>
-<?php echo "<?=\$data->".$column->name.";?>"; ?>
-<?php endforeach; ?>
-<?php echo "<?php endforeach; ?>"?>
+ * $<?php echo strtolower($tableName); ?>=<?php echo $tableName; ?>::model()->findAll(array('order'=>'orden_id'));
+ * <?php echo "<?php foreach(\$".strtolower($tableName)." as \$data): ?>"?>
+ <?php foreach($columns as $column): ?>
+ * <?php echo "<?=\$data->".$column->name.";?>\n"; ?>
+ <?php endforeach; ?>
+ * <?php echo "<?php endforeach; ?>\n"?>
  * This is the model class for table "<?php echo $tableName; ?>".
  *
  * The followings are the available columns in table '<?php echo $tableName; ?>':
