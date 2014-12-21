@@ -41,7 +41,7 @@ class <?php echo $this->controllerClass; ?> extends CmsController
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','update','view','create','order','upload','pdf','excel'),
+				'actions'=>array('admin','delete','create','order','upload','excelToUpload','csvToUpload'),
 				'roles'=>$this->module->getAllowPermissoms(),
 			),
 			array('deny',  // deny all users
@@ -55,17 +55,6 @@ class <?php echo $this->controllerClass; ?> extends CmsController
 	///////////////////
 	// Put here your rest actions and just response a json
 
-	
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
 
 	/**
 	 * Creates a new model.
@@ -73,6 +62,7 @@ class <?php echo $this->controllerClass; ?> extends CmsController
 	 */
 	public function actionCreate()
 	{
+		$errors=array();
 		$model=new <?php echo $this->modelClass; ?>;
 
 		// Uncomment the following line if AJAX validation is needed
@@ -100,48 +90,62 @@ foreach($this->tableSchema->columns as $column)
 
 }
 ?>
-			if($model->save())
-				$this->redirect(array('view','id'=>$model-><?php echo $this->tableSchema->primaryKey; ?>));
+			if($model->save()) 
+			{
+				$errors=$this->uploadAndUpdate($model);
+				if($errors===array())
+					$this->redirect(array('view','id'=>$model-><?php echo $this->tableSchema->primaryKey; ?>));
+			}
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
+			'errors'=>$errors,
+			'modelToUpload'=>new Model,
 		));
+
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
+	public function uploadAndUpdate($model)
 	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		$this->performAjaxValidation($model);
-
-		if(isset($_POST['<?php echo $this->modelClass; ?>']))
+		$errors=array();
+		$fp = fopen(Yii::getPathOfAlias('webroot') . "/uploads/" . $model->file, 'r');
+		if($fp)
 		{
-			$model->attributes=$_POST['<?php echo $this->modelClass; ?>'];
-<?php 
-foreach($this->tableSchema->columns as $column)
-{
-	if($column->name=='updated_at')
-		echo "\t\t\t\$model->updated_at=date('Y-m-d H:i:s');\n";
-	if($column->name=='users_id' or $column->name=='users_users_id' or $column->name=='user_id')
-		echo "\t\t\t\$model->".$column->name."=Yii::app()->user->id;\n";
-	if(stripos($column->name, "money_")!==false)
-		echo "\t\t\t\$model->".$column->name."=strtr(\$model->".$column->name.",array(\",\"=>\"\"));\n";
-}
-?>
-			if($model->save())
-				$this->redirect(array('view','id'=>$model-><?php echo $this->tableSchema->primaryKey; ?>));
-		}
+			$transaction = Yii::app()->db->beginTransaction();
+			$i=0;
+			while(($line=fgetcsv($fp,1000,";"))!=false)
+			{
+				$i++;
+				if($i==1)
+					continue;
 
-		$this->render('update',array(
-			'model'=>$model,
-		));
+				$data = Model::model()->findByPk($line[0]);
+				if($data===null)
+					continue;
+				else
+				{
+					// $data->money_precio_1=$line[1];
+					if(!$data->save())
+						$errors[$data->id]=$data->getErrors();
+				}
+			}
+			 
+			fclose($fp);
+			
+			if($errors===array())
+			{
+				$transaction->commit();
+				return $errors;
+			}
+			else
+			{
+        		$transaction->rollBack();
+				return $errors;
+			}
+		}
+		else
+			throw new CHttpException(500,r('app','Could not open the file, please try again'));
 	}
 
 	/**
@@ -207,40 +211,39 @@ foreach($this->tableSchema->columns as $column)
 <?php endif;?>
 <?php endforeach;?>
 	
+
 	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
+	 * Manages all models.
 	 */
-	public function actionPdf($id)
+	public function actionExcelToUpload()
 	{
-		$model=$this->loadModel($id);
-		$content=$this->renderPartial('view',array(
+		$model=new Model('search');
+		$model->unsetAttributes();  // clear any default values
+
+		// set attributes to filter
+		// $model->attribute1=1
+
+		$content=$this->renderPartial('_excel_to_upload',array(
 			'model'=>$model,
 		),true);
-
-		$html2pdf = Yii::app()->ePdf->HTML2PDF('P', 'A4', 'es');
-	    // $html2pdf->setModeDebug();
-        $html2pdf->setDefaultFont('Arial');
-        $html2pdf->pdf->SetDisplayMode('fullpage');
-		$html2pdf->WriteHTML($content);
-		$html2pdf->Output('<?php echo $this->modelClass; ?>.pdf');
+		r()->request->sendFile('example_to_upload.xls',$content);
 	}
 
 	/**
 	 * Manages all models.
 	 */
-	public function actionExcel()
+	public function actionCsvToUpload()
 	{
-		$model=new <?php echo $this->modelClass; ?>('search');
+		$model=new Model('search');
 		$model->unsetAttributes();  // clear any default values
 
-		if(isset($_GET['<?php echo $this->modelClass; ?>']))
-			$model->attributes=$_GET['<?php echo $this->modelClass; ?>'];
+		// set attributes to filter
+		// $model->attribute1=1
 
-		$content=$this->renderPartial('excel',array(
+		$content=$this->renderPartial('_csv_to_upload',array(
 			'model'=>$model,
 		),true);
-		r()->request->sendFile('<?php echo $this->labelName; ?>.xls',$content);
+		r()->request->sendFile('example_to_upload.csv',$content);
 	}
 
 	//////////////////////////
