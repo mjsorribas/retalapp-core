@@ -157,14 +157,16 @@ foreach($this->tableSchema->columns as $column)
 		echo "\t\t\t'name'=>'".$column->name."',\n";
 		echo "\t\t\t'filter'=>Users::listData(),\n";
 		echo "\t\t\t'type'=>'raw',\n";
-		echo "\t\t\t'value'=>'\$data->".$column->name."',\n";
-		echo "\t\t\t//'value'=>'\$data->user->name.\" \".\$data->user->lastname',\n";
+		echo "\t\t\t'value'=>'\$data->user->name.\" \".\$data->user->lastname',\n";
 		echo "\t\t),\n";
 	elseif($tangaColumn['type']==='select'):
         echo "\t\tarray(\n";
 		echo "\t\t\t'name'=>'".$column->name."',\n";
-		echo "\t\t\t'filter'=> array('1'=>'Value 1','2'=>'Value 2','3'=>'Value 3'),\n";
-		echo "\t\t\t//'filter'=> CHtml::listData(NameModelRelated::model()->findAll(array('condition'=>'1=1')),'id','nameValueToShow'),\n";
+		$result='Model';
+		if(isset($tangaColumn['table'])) {
+			$result=$module->generateClassName($tangaColumn['table']);
+		}
+		echo "\t\t\t'filter'=> ".$result."::listData(),\n";
 		echo "\t\t\t'type'=>'raw',\n";
 		echo "\t\t\t'value'=>'\$data->".$column->name."',\n";
 		echo "\t\t\t//'value'=>'\$data->relationame->namefieldtoshow',\n";
