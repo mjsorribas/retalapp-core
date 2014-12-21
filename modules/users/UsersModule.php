@@ -318,8 +318,8 @@ class UsersModule extends Module
 		{
 			return array(
 	            array('label'=>$this->labelMenu!==null?$this->labelMenu:Yii::t('app','Users'), 'icon'=>'fa fa-user', 'url'=>'#','items'=>array(
-	        		array('label'=>Yii::t('app','Users system'), 'icon'=>'fa fa-users', 'url'=>array('/'.$this->id.'/users')),
-    		        array('label'=>Yii::t('app','Profiles system'), 'icon'=>'fa fa-sitemap', 'url'=>array('/'.$this->id.'/profiles/admin'),'visible'=>r()->user->check('root')),
+	        		array('label'=>Yii::t('app','System Users'), 'icon'=>'fa fa-users', 'url'=>array('/'.$this->id.'/users')),
+    		        array('label'=>Yii::t('app','System Profiles'), 'icon'=>'fa fa-sitemap', 'url'=>array('/'.$this->id.'/profiles/admin'),'visible'=>r()->user->check('root')),
 	        		array('label'=>Yii::t('app','Applications'), 'icon'=>'fa fa-mobile', 'url'=>array('/'.$this->id.'/apps'),'visible'=>r()->user->check('root')),
     		        array('label'=>Yii::t('app','API'), 'icon'=>'fa fa-code', 'url'=>array('/'.$this->id.'/api'),'visible'=>r()->user->check('root')),
       

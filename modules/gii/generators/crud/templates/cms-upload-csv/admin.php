@@ -113,6 +113,7 @@ foreach($this->tableSchema->columns as $column)
 	elseif($tangaColumn['type']==='file'):
     	echo "\t\tarray(\n";
 		echo "\t\t\t'name'=>'".$column->name."',\n";
+		echo "\t\t\t'filter'=>false,\n";
 		echo "\t\t\t'type'=>'raw',\n";
 		echo "\t\t\t'value'=>'CHtml::link(\"<i class=\\\"fa fa-download\\\"></i>\",\$data->".$column->name."_path,array(\"font-size:100%\"))',\n";
 		echo "\t\t),\n";

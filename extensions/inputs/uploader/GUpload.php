@@ -185,7 +185,7 @@ $(function(){
 		        action: '{$this->actionUrl}',
 		        params: {$params},
 		        allowedExtensions: ".CJSON::encode($this->allowedExtensions).",
-		        dragText: 'Arrastre su archivo aquí',
+		        dragText: '".r('app','Drag and drog your file here')."',
 		        uploadButtonText: '<a class=\"btn btn-primary btn-large btn-block\" href=\"#\">{$iconSmall} {$this->buttonText}</a>',
 		        // debug: true,
 		        // multiple: false,
