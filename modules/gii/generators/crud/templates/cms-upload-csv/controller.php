@@ -276,4 +276,10 @@ foreach($this->tableSchema->columns as $column)
 			Yii::app()->end();
 		}
 	}
+
+	public function actionUpload()
+    {
+    	$uploader=Yii::createComponent('ext.inputs.uploader.GComponentUpload');
+		$uploader->upload(array('xls','xlsx','csv','tsv'),30 * 1024 * 1024);
+	}
 }
