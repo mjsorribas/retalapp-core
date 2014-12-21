@@ -5,7 +5,7 @@ $('#{$class}_controller').change(function(){
 	$(this).data('changed',$(this).val()!='');
 });
 $('#{$class}_template').change(function(){
-	if($(this).val()=='cms-manny-modal') {
+	if($(this).val()=='cms-manny-modal' or $(this).val()=='cms-upload-csv') {
 		$('.foraneKey-container').show();		
 	} else {
 		$('.foraneKey-container').hide();	
@@ -90,7 +90,7 @@ $('#{$class}_model').bind('keyup change', function(){
 		<?php echo $form->error($model,'fontIcon'); ?>
 	</div>
 
-	<div class="form-group foraneKey-container"<?php echo $model->template=='cms-manny-modal'?"":" style=\"display:none\""?>>
+	<div class="form-group foraneKey-container"<?php echo ($model->template=='cms-manny-modal' or $model->template=='cms-upload-csv')?"":" style=\"display:none\""?>>
 		<?php echo $form->labelEx($model,'foraneKey'); ?>
 		<?php echo $form->textField($model,'foraneKey',array('class'=>'form-control')); ?>
 		<?php echo $form->error($model,'foraneKey'); ?>

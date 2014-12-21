@@ -162,6 +162,8 @@ EOD;
 	{
 		if($this->template=='cms-manny-modal' and empty($this->foraneKey))
 			$this->addError('foraneKey', "If Your template is <strong>cms-manny-modal</strong> enter first a foraneKey eg. <strong>"."foraneKey_id</strong>.");
+		if($this->template=='cms-upload-csv' and empty($this->foraneKey))
+			$this->addError('foraneKey', "If Your template is <strong>cms-upload-csv</strong> enter first a model to import into this field eg. <strong>"."UsersContacts</strong>.");
 		
 		if($this->template=='cms-manny-modal')
 		{

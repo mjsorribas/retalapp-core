@@ -101,7 +101,7 @@ foreach($this->tableSchema->columns as $column)
 		$this->render('create',array(
 			'model'=>$model,
 			'errors'=>$errors,
-			'modelToUpload'=>new Model,
+			'modelToUpload'=>new <?php echo $this->foraneKey?>,
 		));
 
 	}
@@ -120,13 +120,11 @@ foreach($this->tableSchema->columns as $column)
 				//if($i==1)
 				//	continue;
 
-				$data = Model::model()->findByPk($line[0]);
-
 				$first=$this->trim($line[0]);
 				$second=$this->trim($line[1]);
 				
 				// This is for update
-				$data = Model::model()->findByPk($first);
+				$data = <?php echo $this->foraneKey?>::model()->findByPk($first);
 				if($data===null)
 					continue;
 				else
@@ -173,7 +171,7 @@ foreach($this->tableSchema->columns as $column)
 				$second=$this->trim($excelSheet->getCellByColumnAndRow(1, $row)->getValue());
 				
 				// This is for update
-				$data = Model::model()->findByPk($first);
+				$data = <?php echo $this->foraneKey?>::model()->findByPk($first);
 				if($data===null)
 					continue;
 				else
@@ -289,7 +287,7 @@ foreach($this->tableSchema->columns as $column)
 	 */
 	public function actionExcelToUpload()
 	{
-		$model=new Model('search');
+		$model=new <?php echo $this->foraneKey?>('search');
 		$model->unsetAttributes();  // clear any default values
 
 		// set attributes to filter
@@ -306,7 +304,7 @@ foreach($this->tableSchema->columns as $column)
 	 */
 	public function actionCsvToUpload()
 	{
-		$model=new Model('search');
+		$model=new <?php echo $this->foraneKey?>('search');
 		$model->unsetAttributes();  // clear any default values
 
 		// set attributes to filter
