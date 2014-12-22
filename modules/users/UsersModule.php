@@ -10,6 +10,7 @@ class UsersModule extends Module
 	public $copySendPassword;
 	public $enableOAuth=false;
 	public $allowBasicOAuth=false;
+	public $allowRegister=true;
 	
 	/**
 	 * Para loguear al usuario un a vez este
