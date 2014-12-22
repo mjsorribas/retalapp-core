@@ -369,4 +369,13 @@ class Controller extends CController
     	$uploader=Yii::createComponent('ext.inputs.uploader.GComponentUpload');
 		$uploader->upload(array('png','jpg','jpeg','csv','xls','xlsx','doc','docx','pdf','rar','zip','txt','mp4','mp3','mov','swf'),30 * 1024 * 1024);
 	}
+
+	public function actions()
+	{
+		return array(
+		    'uploadEditor'=>array(
+		        'class'=>'ext.widgets.xheditor.XHEditorUpload',
+		    ),
+		);
+	}
 }
