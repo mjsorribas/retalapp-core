@@ -41,7 +41,7 @@ class <?php echo $this->controllerClass; ?> extends CmsController
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete','create','order','upload','excelToUpload','csvToUpload'),
+				'actions'=>array('admin','delete','create','order','upload','excelToUpload','csvToUpload','view'),
 				'roles'=>$this->module->getAllowPermissoms(),
 			),
 			array('deny',  // deny all users
@@ -92,7 +92,14 @@ foreach($this->tableSchema->columns as $column)
 ?>
 			if($model->save()) 
 			{
-				$errors=$this->csvUploadAndUpdate($model);
+				$pices=explode('.', $model->file);
+				$extension = end($pices);
+				if($extension==='xls' or $extension==='xlsx')
+					$errors=$this->excelUploadAndUpdate($model);
+				if($extension==='csv')
+					$errors=$this->csvUploadAndUpdate($model,';'); //";" for windows or "," for mac or linux
+				if($extension==='tsv')
+					$errors=$this->csvUploadAndUpdate($model,'	');
 				if($errors===array())
 					$this->redirect(array('view','id'=>$model-><?php echo $this->tableSchema->primaryKey; ?>));
 			}
@@ -113,27 +120,34 @@ foreach($this->tableSchema->columns as $column)
 		if($fp)
 		{
 			$transaction = Yii::app()->db->beginTransaction();
-			$i=0;
+			$row=0;
 			while(($line=fgetcsv($fp,1000,$separator))!=false)
 			{
-				$i++;
-				//if($i==1)
-				//	continue;
-
-				$first=$this->trim($line[0]);
-				$second=$this->trim($line[1]);
-				
-				// This is for update
-				$data = <?php echo $this->foraneKey?>::model()->findByPk($first);
-				if($data===null)
-					continue;
-				else
-				{
-					// This is for update
-					// $data->other_field=$second;
-					if(!$data->save())
-						$errors[$data->id]=$data->getErrors();
+				if($row===0)
+            	{
+            		//$header1=$line[0];
+        			//if($header1!=='FIRST_NAME')
+					//	return false;
+					//$header2=$line[1];
+					//if($header2!=='LAST_NAME')
+					//	return false;
+					//$header3=$line[2];
+					//if($header3!=='PHONE_NUMBER')
+					//	return false;
 				}
+            	else
+            	{
+            		// This is for update
+					// $data = <?php echo $this->foraneKey?>::model()->findByPk($id);
+            		// This is for create
+					$data = new <?php echo $this->foraneKey?>;
+					//$data->first_name=$line[0];
+					//$data->last_name=$line[1];
+					//$data->phone_number=$line[2];
+					if(!$data->save())
+						$errors[$row]=$data->getErrors();
+            	}
+            	$row++;
 			}
 			 
 			fclose($fp);
@@ -156,35 +170,39 @@ foreach($this->tableSchema->columns as $column)
 	public function excelUploadAndUpdate($model)
 	{
 		$errors=array();
-		$fp = fopen(Yii::getPathOfAlias('webroot') . "/uploads/" . $model->file, 'r');
-		if($fp)
+		if(file_exists(Yii::getPathOfAlias("webroot.uploads")."/".$model->file))
 		{
 			$transaction = Yii::app()->db->beginTransaction();
 
-			$excelSheet = Yii::app()->excel->load(@$file)->getActiveSheet();
-            for($row = 6; $row <= $excelSheet->getHighestRow(); ++$row)
+			$excelSheet = Yii::app()->excel->load(@Yii::getPathOfAlias("webroot.uploads")."/".$model->file)->getActiveSheet();
+            for($row = 1; $row <= $excelSheet->getHighestRow(); $row++)
             {
-            	//if($i==1)
-				//	continue;
-				
-				$first=$this->trim($excelSheet->getCellByColumnAndRow(0, $row)->getValue());
-				$second=$this->trim($excelSheet->getCellByColumnAndRow(1, $row)->getValue());
-				
-				// This is for update
-				$data = <?php echo $this->foraneKey?>::model()->findByPk($first);
-				if($data===null)
-					continue;
-				else
-				{
-					// This is for update
-					// $data->other_field=$second;
-					if(!$data->save())
-						$errors[$data->id]=$data->getErrors();
+            	if($row===1)
+            	{
+            		//$header1=$this->trim($excelSheet->getCellByColumnAndRow(0, $row)->getValue());
+        			//if($header1!=='FIRST_NAME')
+					//	return false;
+					//$header2=$this->trim($excelSheet->getCellByColumnAndRow(1, $row)->getValue());
+					//if($header2!=='LAST_NAME')
+					//	return false;
+					//$header3=$this->trim($excelSheet->getCellByColumnAndRow(2, $row)->getValue());
+					//if($header3!=='PHONE_NUMBER')
+						return false;
 				}
+            	else
+            	{
+            		// This is for update
+					// $data = <?php echo $this->foraneKey?>::model()->findByPk($id);
+            		// This is for create
+					$data = new <?php echo $this->foraneKey?>;
+					//$data->first_name=$this->trim($excelSheet->getCellByColumnAndRow(0, $row)->getValue());
+					//$data->last_name=$this->trim($excelSheet->getCellByColumnAndRow(1, $row)->getValue());
+					//$data->phone_number=$this->trim($excelSheet->getCellByColumnAndRow(2, $row)->getValue());
+					if(!$data->save())
+						$errors[$row]=$data->getErrors();
+            	}
 			}
-						 
-			fclose($fp);
-			
+						
 			if($errors===array())
 			{
 				$transaction->commit();
@@ -198,6 +216,14 @@ foreach($this->tableSchema->columns as $column)
 		}
 		else
 			throw new CHttpException(500,r('app','Could not open the file, please try again'));
+	}
+	
+	public function actionView($id)
+	{
+		$model=$this->loadModel($id);
+		$this->render("view",array(
+			"model"=>$model
+		));
 	}
 	
 	public function trim($value='',$int=false)
