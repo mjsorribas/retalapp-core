@@ -35,7 +35,7 @@ foreach($columns as $column)
 	elseif($column->name=='created_at')
 		echo " * \$model->created_at=date('Y-m-d H:i:s');\n";
 	elseif($column->name=='users_id' or $column->name=='users_users_id' or $column->name=='user_id')
-		echo " * \$model->".$column->name."=Yii::app()->user->id;\n";
+		echo " * \$model->".$column->name."=r()->user->id;\n";
 	elseif(stripos($column->name, "money_")!==false)
 		echo " * \$model->".$column->name."=strtr(\$model->".$column->name.",array(\",\"=>\"\"));\n";
 	else
