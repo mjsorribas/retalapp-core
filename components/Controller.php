@@ -16,6 +16,10 @@ class Controller extends CController
 	public $title;
 	public $subTitle;
 
+	public $metaTitle='';
+	public $metaDescription='';
+	public $metaKeywords='';
+
 
 	/**
 	 * @var tags in order to config the meta tags of

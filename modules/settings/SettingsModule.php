@@ -40,12 +40,6 @@ class SettingsModule extends Module
 		return $this->_model;
 	}
 
-	public function builtHeader($ctr)
-	{
-		if($this->getModel()!==null)
-			Yii::app()->controller->renderPartial('settings.views.back._settings',array('settings'=>$this));
-	}
-
 	public function configItems()
 	{
 		return array(
@@ -61,6 +55,11 @@ class SettingsModule extends Module
 			$freeAccess=array('settings','users','gii','admin','smtp');
 			Yii::app()->name=$model->title;
 			Yii::app()->params['adminEmail']=$model->admin_email;
+			
+			$ctr->metaTitle=$model->title;
+			$ctr->metaDescription=$model->description;
+			$ctr->metaKeywords=$model->keywords;
+
 			if($model->offline and is_subclass_of($ctr, 'FrontController') and !in_array($ctr->module->id, $freeAccess))
 				Yii::app()->controller->redirect(array('/'.$this->id.'/page/index'));
 		}
