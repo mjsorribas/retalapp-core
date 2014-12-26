@@ -252,7 +252,7 @@ class ModelCode extends CCodeModel
 				or $tangaColumn['type']==='float' 
 				or $tangaColumn['type']==='money')
 				$numerical[]=$column->name;
-			elseif($tangaColumn['type']==='link')
+			elseif($tangaColumn['type']==='link' or $tangaColumn['type']==='video')
 				$urls[]=$column->name;
 			elseif($tangaColumn['type']==='users')
 				$users[]=$column->name;
