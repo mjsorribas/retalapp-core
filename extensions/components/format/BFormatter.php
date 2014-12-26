@@ -283,5 +283,4 @@ class BFormatter extends CFormatter
 		}
 		return $html;
 	}
-
 }

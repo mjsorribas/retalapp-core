@@ -420,6 +420,9 @@ class GiiModule extends Module
 		
 		if(stripos($column->name,'url_')!==false or stripos($column->name,'link_')!==false)
 			$type='link';
+		
+		if(stripos($column->name,'youtube_')!==false or stripos($column->name,'video_')!==false or stripos($column->name,'vimeo_')!==false)
+			$type='video';
 			
 		if(stripos($column->dbType,'text')!==false or stripos($column->name,'text_')!==false)
 			$type='text';
@@ -723,6 +726,8 @@ class GiiModule extends Module
                 )
 			),true)";
 		}
+		if($inputField=='video')
+			return "\$form->textField(\$model,'{$column->name}',array('class'=>'form-control'))";
 		if($inputField=='redactor')
 		{
 			return "\$this->widget('yiiwheels.widgets.redactor.WhRedactor', array(
