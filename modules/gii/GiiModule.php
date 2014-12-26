@@ -611,8 +611,8 @@ class GiiModule extends Module
 		if($inputField=='slug')
 		{
 			$field="// 'field' => 'name', // field for keyup callback";
-			if($tangaColumn['field']!==null)
-				$field="'field' => '".$tangaColumn['field']."',";
+			if($params['field']!==null)
+				$field="'field' => '".$params['field']."',";
 			return "\$this->widget('ext.inputs.slug.GSlug', array(
 			    'model' => \$model,
 			    'attribute' => '{$column->name}',
