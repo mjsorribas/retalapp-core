@@ -193,7 +193,7 @@ MEGAVIDEO;
 	protected function vimeoCode()
 	{
 		return <<<VIMEO
-		<iframe src="http://player.vimeo.com/video/21339058?byline=0&amp;portrait=0" width="{$this->_width[self::VIMEO][$this->size]}" height="{$this->_height[self::VIMEO][$this->size]}" frameborder="0"></iframe>
+		<iframe src="http://player.vimeo.com/video/{$this->v}?byline=0&amp;portrait=0" width="{$this->_width[self::VIMEO][$this->size]}" height="{$this->_height[self::VIMEO][$this->size]}" frameborder="0"></iframe>
 VIMEO;
 	}
 	
