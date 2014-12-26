@@ -170,3 +170,19 @@ $tangaColumn=$module->getParamsField($column);
 </section>
 
 </div>
+
+<?php foreach($this->tableSchema->columns as $column):
+    $tangaColumn=$module->getParamsField($column);?>
+<?php if($tangaColumn['type']==='slug'): ?>
+<script>
+$(function(){
+    $(document).on('keyup','#<?php echo $this->getModelClass(); ?>_nombre',function(e){
+        var slug = $(this).val().toLowerCase()
+        .replace(/[^\w ]+/g,'')
+        .replace(/ +/g,'-');
+        $('#<?php echo $this->getModelClass(); ?>_<?=$column->name?>').val(slug);
+    });
+})  
+</script>
+<?php endif;?>
+<?php endforeach;?>

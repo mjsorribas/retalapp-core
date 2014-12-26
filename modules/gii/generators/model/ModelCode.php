@@ -233,6 +233,7 @@ class ModelCode extends CCodeModel
 		$dateTime=array();
 		$users=array();
 		$password=array();
+		$slug=array();
 
 		foreach($table->columns as $column)
 		{
@@ -254,6 +255,8 @@ class ModelCode extends CCodeModel
 				$numerical[]=$column->name;
 			elseif($tangaColumn['type']==='link' or $tangaColumn['type']==='video')
 				$urls[]=$column->name;
+			elseif($tangaColumn['type']==='slug')
+				$slug[]=$column->name;
 			elseif($tangaColumn['type']==='users')
 				$users[]=$column->name;
 			elseif($tangaColumn['type']==='integer')
@@ -308,6 +311,8 @@ class ModelCode extends CCodeModel
 			$rules[]="array('".implode(', ',$date)."', 'type', 'type'=>'date', 'dateFormat'=>'yyyy-MM-dd', 'message'=>'{attribute} have wrong format should be yyyy-MM-dd')";
 		if($users!==array())
         	$rules[]="array('".implode(', ',$users)."', 'exist', 'attributeName'=>'id', 'className'=>'Users')";
+		if($slug!==array())
+        	$rules[]="array('".implode(', ',$slug)."', 'ext.validators.alpha','extra'=>array('-')),";
 		if($length!==array())
 		{
 			foreach($length as $len=>$cols)
