@@ -169,7 +169,7 @@ class Yiitube extends CWidget {
 	protected function youtubeCode()
 	{
 		return <<<YOUTUBE
-		<iframe title="YouTube video player" class="embed-responsive-item" src="{$this->youtubeVideoURL()}&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allowfullscreen></iframe>
+		<iframe title="YouTube video player" style="width:100%;height: 100%;" class="embed-responsive-item" src="{$this->youtubeVideoURL()}&amp;showinfo=0&amp;wmode=transparent" frameborder="0" allowfullscreen></iframe>
 YOUTUBE;
 	}
 	
