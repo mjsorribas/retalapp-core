@@ -96,9 +96,9 @@ if($column->autoIncrement)
 <div class="form-group">
     <?php echo "<?php echo ".$this->generateActiveLabel($this->modelClass,$column)."; ?>\n"; ?>
     <?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n"; ?>
-    <?php echo "<?php if(\$model->".$column->name."):?>"?>
-    <?php echo "<?php \$this->widget('ext.widgets.youtube.Yiitube', array('size'=>'small','v' => \$model->".$column->name."));?>"?>
-    <?php echo "<?php endif;?>"?>
+    <?php echo "<?php if(!\$model->isNewRecord and !empty(\$model->".$column->name.")):?>\n"?>
+    <?php echo "<?php \$this->widget('ext.widgets.youtube.Yiitube', array('size'=>'small','v' => \$model->".$column->name."));?>\n"?>
+    <?php echo "<?php endif;?>\n"?>
     <?php echo "<?php echo \$form->error(\$model,'{$column->name}',array('class'=>'help-block')); ?>\n"; ?>
 </div>
 <?php else:?>
@@ -143,9 +143,9 @@ if($column->autoIncrement)
 <div class="form-group">
     <?php echo "<?php echo ".$this->generateActiveLabel($this->modelClass,$column)."; ?>\n"; ?>
     <?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n"; ?>
-    <?php echo "<?php if(\$model->".$column->name."):?>"?>
-    <?php echo "<?php \$this->widget('ext.widgets.youtube.Yiitube', array('size'=>'small','v' => \$model->".$column->name."));?>"?>
-    <?php echo "<?php endif;?>"?>
+    <?php echo "<?php if(!\$model->isNewRecord and !empty(\$model->".$column->name.")):?>\n"?>
+    <?php echo "<?php \$this->widget('ext.widgets.youtube.Yiitube', array('size'=>'small','v' => \$model->".$column->name."));?>\n"?>
+    <?php echo "<?php endif;?>\n"?>
     <?php echo "<?php echo \$form->error(\$model,'{$column->name}',array('class'=>'help-block')); ?>\n"; ?>
 </div>
 <?php else:?>

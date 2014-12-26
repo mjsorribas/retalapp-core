@@ -147,7 +147,9 @@ $columnLat=explode('_', $column->name);
 <?php elseif($tangaColumn['type']==='video'): ?>
           <div class="panel-heading"><?php echo "<b><?php echo CHtml::encode(\$model->getAttributeLabel('{$column->name}')); ?>:</b>"; ?></div>
           <div class="panel-body ptn pln prn pbn">
-            <?php echo "<?php \$this->widget('ext.widgets.youtube.Yiitube', array('size'=>'small','v' => \$model->".$column->name."));?>"?>
+            <?php echo "<?php if(!\$model->isNewRecord and !empty(\$model->".$column->name.")):?>\n"?>
+            <?php echo "<?php \$this->widget('ext.widgets.youtube.Yiitube', array('size'=>'small','v' => \$model->".$column->name."));?>\n"?>
+            <?php echo "<?php endif;?>\n"?>
           </div>
 <?php elseif($tangaColumn['type']==='file'):?>
           <div class="panel-heading"><?php echo "<b><?php echo CHtml::encode(\$model->getAttributeLabel('{$column->name}')); ?>:</b>"; ?></div>
