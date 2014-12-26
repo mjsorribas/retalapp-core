@@ -93,6 +93,8 @@ class GiiModule extends Module
 		'wisi_'=>'',
 		'code_'=>'',
 		'cms_'=>'',
+		'video_'=>'',
+		'slug_'=>'',
 	);
 	
 	public $arrayReplaceInputs=array(
@@ -340,7 +342,7 @@ class GiiModule extends Module
 
 	public function getParamsField($column)
 	{
-		$valuesConfig=array('width','height','ext','table','label','type','size','w','h','help','comment');
+		$valuesConfig=array('width','height','ext','field','table','label','type','size','w','h','help','comment');
 
 		$width=null;
 		$height=null;
@@ -350,6 +352,7 @@ class GiiModule extends Module
 		$type='field';
 		$table=null;
 		$ext=null;
+		$field=null;
 		
 
 		if($column->type==='integer')
@@ -405,6 +408,9 @@ class GiiModule extends Module
 
 		if(stripos($column->name,'file_')!==false)
 			$type='file';
+
+		if(stripos($column->name,'slug_')!==false)
+			$type='slug';
 
 		if(stripos($column->name,'editor_')!==false)
 			$type='editor';
@@ -463,12 +469,14 @@ class GiiModule extends Module
 							$table=$value;
 						if($param==='ext')
 							$ext=$value;
+						if($param==='field')
+							$field=$value;
 					}
 				}
 			}
 		}
 		
-		return compact('width','height','size','comment','type','table','ext','label');
+		return compact('width','height','size','comment','type','table','ext','label','field');
 	}
 
 	public function generateActiveField($modelClass,$column)
@@ -598,6 +606,17 @@ class GiiModule extends Module
 			    // 'allowedExtensions' => array('png','jpg','jpeg','pdf','zip'),
 			    // 'iconButtom' => 'fa-cloud-upload',
 			 	'actionUrl' => \$this->createUrl('upload'),
+			),true)";
+		}
+		if($inputField=='slug')
+		{
+			$field="// 'field' => 'name', // field for keyup callback";
+			if($tangaColumn['field']!==null)
+				$field="'field' => '".$tangaColumn['field']."',";
+			return "\$this->widget('ext.inputs.slug.GSlug', array(
+			    'model' => \$model,
+			    'attribute' => '{$column->name}',
+			    {$field}
 			),true)";
 		}
 		if($inputField=='hour')

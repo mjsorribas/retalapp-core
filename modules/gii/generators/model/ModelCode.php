@@ -312,7 +312,7 @@ class ModelCode extends CCodeModel
 		if($users!==array())
         	$rules[]="array('".implode(', ',$users)."', 'exist', 'attributeName'=>'id', 'className'=>'Users')";
 		if($slug!==array())
-        	$rules[]="array('".implode(', ',$slug)."', 'ext.validators.alpha','extra'=>array('-')),";
+        	$rules[]="array('".implode(', ',$slug)."', 'ext.validators.alpha','extra'=>array('-'))";
 		if($length!==array())
 		{
 			foreach($length as $len=>$cols)
