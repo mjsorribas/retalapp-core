@@ -3,6 +3,7 @@
  * The following variables are available in this template:
  * - $this: the CrudCode object
  */
+$module=Yii::app()->getModule('gii');
 $arratClean=Yii::app()->getModule('gii')->arrayClean;
 $optionsLayouts=array(
         //array('4','8'),
@@ -68,6 +69,7 @@ if($column->autoIncrement)
 <?php $rest=$shoyables-$first?>
 <?php $i=1;?>
 <?php foreach($this->tableSchema->columns as $column) {
+	$tangaColumn=$module->getParamsField($column);
 
 	if($column->autoIncrement)
 		continue;
@@ -90,11 +92,22 @@ if($column->autoIncrement)
 	if($i<=$first)
 	{
 ?>
+<?php if($tangaColumn['type']==='video'): ?>
 <div class="form-group">
-	<?php echo "<?php echo ".$this->generateActiveLabel($this->modelClass,$column)."; ?>\n"; ?>
-	<?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n"; ?>
-	<?php echo "<?php echo \$form->error(\$model,'{$column->name}',array('class'=>'help-block')); ?>\n"; ?>
+    <?php echo "<?php echo ".$this->generateActiveLabel($this->modelClass,$column)."; ?>\n"; ?>
+    <?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n"; ?>
+    <?php echo "<?php if(\$model->".$column->name."):?>"?>
+    <?php echo "<?php \$this->widget('ext.widgets.youtube.Yiitube', array('size'=>'small','v' => \$model->".$column->name."));?>"?>
+    <?php echo "<?php endif;?>"?>
+    <?php echo "<?php echo \$form->error(\$model,'{$column->name}',array('class'=>'help-block')); ?>\n"; ?>
 </div>
+<?php else:?>
+<div class="form-group">
+    <?php echo "<?php echo ".$this->generateActiveLabel($this->modelClass,$column)."; ?>\n"; ?>
+    <?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n"; ?>
+    <?php echo "<?php echo \$form->error(\$model,'{$column->name}',array('class'=>'help-block')); ?>\n"; ?>
+</div>
+<?php endif;?>
 <?php 
 	}
 	$i++;
@@ -103,6 +116,8 @@ if($column->autoIncrement)
 	<div class="col-lg-<?php echo $optionsLayouts[0][1]?>">
 <?php $i=1;?>
 <?php foreach($this->tableSchema->columns as $column) {
+	$tangaColumn=$module->getParamsField($column);
+
 	if($column->autoIncrement)
 		continue;
 	if($column->name=='orden_id')
@@ -124,11 +139,22 @@ if($column->autoIncrement)
 	if($i>$first)
 	{
 ?>
+<?php if($tangaColumn['type']==='video'): ?>
 <div class="form-group">
-	<?php echo "<?php echo ".$this->generateActiveLabel($this->modelClass,$column)."; ?>\n"; ?>
-	<?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n"; ?>
-	<?php echo "<?php echo \$form->error(\$model,'{$column->name}',array('class'=>'help-block')); ?>\n"; ?>
+    <?php echo "<?php echo ".$this->generateActiveLabel($this->modelClass,$column)."; ?>\n"; ?>
+    <?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n"; ?>
+    <?php echo "<?php if(\$model->".$column->name."):?>"?>
+    <?php echo "<?php \$this->widget('ext.widgets.youtube.Yiitube', array('size'=>'small','v' => \$model->".$column->name."));?>"?>
+    <?php echo "<?php endif;?>"?>
+    <?php echo "<?php echo \$form->error(\$model,'{$column->name}',array('class'=>'help-block')); ?>\n"; ?>
 </div>
+<?php else:?>
+<div class="form-group">
+    <?php echo "<?php echo ".$this->generateActiveLabel($this->modelClass,$column)."; ?>\n"; ?>
+    <?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n"; ?>
+    <?php echo "<?php echo \$form->error(\$model,'{$column->name}',array('class'=>'help-block')); ?>\n"; ?>
+</div>
+<?php endif;?>
 <?php 
 	}
 	$i++;
