@@ -353,6 +353,7 @@ class GiiModule extends Module
 		$table=null;
 		$ext=null;
 		$field=null;
+		$unique=null;
 		
 
 		if($column->type==='integer')
