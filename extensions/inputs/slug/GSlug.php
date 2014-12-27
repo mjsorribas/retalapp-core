@@ -65,7 +65,7 @@ class GSlug extends CInputWidget
 	public function registerClientScript($id)
 	{
 		$js="
-			$(document).on('keyup','#".get_class($this->model)."_".$this->field."',function(e){
+			$(document).on('keyup, change','#".get_class($this->model)."_".$this->field."',function(e){
 		        var slug = $(this).val().toLowerCase()
 		        .replace(/[^\w ]+/g,'')
 		        .replace(/ +/g,'-');
