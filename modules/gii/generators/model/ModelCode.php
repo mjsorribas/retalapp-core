@@ -234,6 +234,7 @@ class ModelCode extends CCodeModel
 		$users=array();
 		$password=array();
 		$slug=array();
+		$unique=array();
 
 		foreach($table->columns as $column)
 		{
@@ -244,6 +245,8 @@ class ModelCode extends CCodeModel
 			$r=!$column->allowNull && $column->defaultValue===null;
 			if($r)
 				$required[]=$column->name;
+			if($tangaColumn['unique']!==null)
+				$unique[]=$column->name;
 			if($tangaColumn['type']==='boolean')
 			{
 				$boolean[]=$column->name;
@@ -312,7 +315,16 @@ class ModelCode extends CCodeModel
 		if($users!==array())
         	$rules[]="array('".implode(', ',$users)."', 'exist', 'attributeName'=>'id', 'className'=>'Users')";
 		if($slug!==array())
+		{
         	$rules[]="array('".implode(', ',$slug)."', 'ext.validators.alpha','extra'=>array('-'),'allowNumbers'=>true)";
+			foreach($slug as $field)
+				$rules[]="array('".$field."', 'unique', 'attributeName'=>'".$field."', 'className'=>'".$this->modelClass."')";
+		}
+		if($unique!==array())
+		{
+        	foreach($unique as $field)
+				$rules[]="array('".$field."', 'unique', 'attributeName'=>'".$field."', 'className'=>'".$this->modelClass."')";
+		}
 		if($length!==array())
 		{
 			foreach($length as $len=>$cols)

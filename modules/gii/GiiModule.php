@@ -342,7 +342,7 @@ class GiiModule extends Module
 
 	public function getParamsField($column)
 	{
-		$valuesConfig=array('width','height','ext','field','table','label','type','size','w','h','help','comment');
+		$valuesConfig=array('width','height','ext','field','table','label','type','size','w','h','help','comment','unique');
 
 		$width=null;
 		$height=null;
@@ -476,7 +476,7 @@ class GiiModule extends Module
 			}
 		}
 		
-		return compact('width','height','size','comment','type','table','ext','label','field');
+		return compact('width','height','size','comment','type','table','ext','label','field','unique');
 	}
 
 	public function generateActiveField($modelClass,$column)

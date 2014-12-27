@@ -51,20 +51,20 @@ foreach($columns as $column)
  * <?php echo "<?php foreach(\$".strtolower($tableName)." as \$data): ?>\n"?>
 <?php foreach($columns as $column): ?><?php $tangaColumn=$module->getParamsField($column);?>
 <?php if($tangaColumn['type']==='file'): ?>
-* <?php echo "<?=\$data->".$column->name."_path;?>\n"; ?>
-* <?php echo "<?=CHtml::link('<i class=\"fa fa-download\"></i>',\$data->".$column->name."_path,array('font-size:100%'));?>\n"; ?>
+ * <?php echo "<?=\$data->".$column->name."_path;?>\n"; ?>
+ * <?php echo "<?=CHtml::link('<i class=\"fa fa-download\"></i>',\$data->".$column->name."_path,array('font-size:100%'));?>\n"; ?>
 <?php elseif($tangaColumn['type']==='img'): ?>
-* <?php echo "<?=\$data->".$column->name."_path;?>\n"; ?>
-* <?php echo "<?=CHtml::image(\$data->".$column->name."_path,'',array('class'=>'img-responsive img-thumbnail'));?>\n"; ?>
+ * <?php echo "<?=\$data->".$column->name."_path;?>\n"; ?>
+ * <?php echo "<?=CHtml::image(\$data->".$column->name."_path,'',array('class'=>'img-responsive img-thumbnail'));?>\n"; ?>
 <?php elseif($tangaColumn['type']==='money'): ?>
-* <?php echo "<?=r()->format->money(\$data->".$column->name.");?>\n"; ?>
+ * <?php echo "<?=r()->format->money(\$data->".$column->name.");?>\n"; ?>
 <?php elseif($tangaColumn['type']==='text'): ?>
-* <?php echo "<?=r()->format->toBr(\$data->".$column->name.");?>\n"; ?>
+ * <?php echo "<?=r()->format->toBr(\$data->".$column->name.");?>\n"; ?>
 <?php elseif($tangaColumn['type']==='date' or $tangaColumn['type']==='datetime'): ?>
-* <?php echo "<?=r()->format->formatShort(\$data->".$column->name.");?>\n"; ?>
-* <?php echo "<?=r()->format->formatAgoComment(\$data->".$column->name.");?>\n"; ?>
+ * <?php echo "<?=r()->format->formatShort(\$data->".$column->name.");?>\n"; ?>
+ * <?php echo "<?=r()->format->formatAgoComment(\$data->".$column->name.");?>\n"; ?>
 <?php else: ?>
-* <?php echo "<?=\$data->".$column->name.";?>\n"; ?>
+ * <?php echo "<?=\$data->".$column->name.";?>\n"; ?>
 <?php endif; ?>
 <?php endforeach; ?>
  * <?php echo "<?php endforeach; ?>\n"?>
@@ -74,20 +74,20 @@ foreach($columns as $column)
  * $<?php echo strtolower($tableName); ?>=<?php echo $modelClass; ?>::model()->find();
 <?php foreach($columns as $column): ?><?php $tangaColumn=$module->getParamsField($column);?>
 <?php if($tangaColumn['type']==='file'): ?>
-* <?php echo "<?=\$".strtolower($tableName)."->".$column->name."_path;?>\n"; ?>
-* <?php echo "<?=CHtml::link('<i class=\"fa fa-download\"></i>',\$".strtolower($tableName)."->".$column->name."_path,array('font-size:100%'));?>\n"; ?>
+ * <?php echo "<?=\$".strtolower($tableName)."->".$column->name."_path;?>\n"; ?>
+ * <?php echo "<?=CHtml::link('<i class=\"fa fa-download\"></i>',\$".strtolower($tableName)."->".$column->name."_path,array('font-size:100%'));?>\n"; ?>
 <?php elseif($tangaColumn['type']==='img'): ?>
-* <?php echo "<?=\$".strtolower($tableName)."->".$column->name."_path;?>\n"; ?>
-* <?php echo "<?=CHtml::image(\$".strtolower($tableName)."->".$column->name."_path,'',array('class'=>'img-responsive img-thumbnail'));?>\n"; ?>
+ * <?php echo "<?=\$".strtolower($tableName)."->".$column->name."_path;?>\n"; ?>
+ * <?php echo "<?=CHtml::image(\$".strtolower($tableName)."->".$column->name."_path,'',array('class'=>'img-responsive img-thumbnail'));?>\n"; ?>
 <?php elseif($tangaColumn['type']==='money'): ?>
-* <?php echo "<?=r()->format->money(\$".strtolower($tableName)."->".$column->name.");?>\n"; ?>
+ * <?php echo "<?=r()->format->money(\$".strtolower($tableName)."->".$column->name.");?>\n"; ?>
 <?php elseif($tangaColumn['type']==='text'): ?>
-* <?php echo "<?=r()->format->toBr(\$".strtolower($tableName)."->".$column->name.");?>\n"; ?>
+ * <?php echo "<?=r()->format->toBr(\$".strtolower($tableName)."->".$column->name.");?>\n"; ?>
 <?php elseif($tangaColumn['type']==='date' or $tangaColumn['type']==='datetime'): ?>
-* <?php echo "<?=r()->format->formatShort(\$".strtolower($tableName)."->".$column->name.");?>\n"; ?>
-* <?php echo "<?=r()->format->formatAgoComment(\$".strtolower($tableName)."->".$column->name.");?>\n"; ?>
+ * <?php echo "<?=r()->format->formatShort(\$".strtolower($tableName)."->".$column->name.");?>\n"; ?>
+ * <?php echo "<?=r()->format->formatAgoComment(\$".strtolower($tableName)."->".$column->name.");?>\n"; ?>
 <?php else: ?>
-* <?php echo "<?=\$".strtolower($tableName)."->".$column->name.";?>\n"; ?>
+ * <?php echo "<?=\$".strtolower($tableName)."->".$column->name.";?>\n"; ?>
 <?php endif; ?>
 <?php endforeach; ?>
  * 
