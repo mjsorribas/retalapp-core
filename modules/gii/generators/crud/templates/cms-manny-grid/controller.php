@@ -86,8 +86,18 @@ foreach($this->tableSchema->columns as $column)
 {
 	if($column->name=='orden_id')
 	{
-		echo "\t\t\t\$last=".$this->modelClass."::model()->findAll();\n";
-		echo "\t\t\t\$model->orden_id=count(\$last)+1;\n";
+		echo "\t\t\t// In oreder to create chronologically asc \n";
+		echo "\t\t\t//\$last=".$this->modelClass."::model()->findAll();\n";
+		echo "\t\t\t//\$model->orden_id=count(\$last)+1;\n";
+		echo "\t\t\t// In oreder to create chronologically desc \n";
+		echo "\t\t\t\$last=".$this->modelClass."::model()->findAll(array('order'=>'orden_id'));\n";
+		echo "\t\t\t\$i=2;\n";
+		echo "\t\t\tforeach(\$last as \$data)\n";
+		echo "\t\t\t{\n";
+		echo "\t\t\t\t\$data->orden_id=\$i++;\n";
+		echo "\t\t\t\t\$data->save(true,array('orden_id'));\n";
+		echo "\t\t\t}\n";
+		echo "\t\t\t\$model->orden_id=1;\n";
 	}
 	if($column->name=='updated_at')
 		echo "\t\t\t\$model->updated_at=date('Y-m-d H:i:s');\n";
