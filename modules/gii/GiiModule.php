@@ -472,6 +472,8 @@ class GiiModule extends Module
 							$ext=$value;
 						if($param==='field')
 							$field=$value;
+						if($param==='unique')
+							$unique=$value;
 					}
 				}
 			}
