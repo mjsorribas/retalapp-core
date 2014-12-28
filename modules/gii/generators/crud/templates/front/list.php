@@ -47,7 +47,7 @@ $label=$this->pluralize($this->class2name($this->modelClass));
 	'itemSelector'=>'.items-row',
     'loadingText'=>r('app','Loading...'),
     'donetext'=>r('app','There are not more items to display'),
-    'pages'=>$model,
+    'pages'=>$pages,
     'successCallback'=>'function(arrayOfNewElems){ console.log(arrayOfNewElems); });',
 )); ?>
 	</div>
