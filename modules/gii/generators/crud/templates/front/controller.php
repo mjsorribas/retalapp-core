@@ -36,11 +36,11 @@ class <?php echo $this->controllerClass; ?> extends FrontController
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('delete','update','view','create','createAjax','order','upload'),
+				'actions'=>array('delete','update','view','create','createAjax','order','upload','list'),
 				'roles'=>$this->module->getAllowPermissoms(false),
 			),
 			array('deny', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('delete','update','view','create','createAjax','order','upload'),
+				'actions'=>array('delete','update','view','create','createAjax','order','upload','list'),
 				'users'=>array('*'),
 			),
 			array('allow',  // deny all users
