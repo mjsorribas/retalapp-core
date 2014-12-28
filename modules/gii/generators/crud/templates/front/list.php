@@ -33,42 +33,22 @@ $label=$this->pluralize($this->class2name($this->modelClass));
 	<div class="col-lg-12">
 
 <div id="<?php echo $this->class2id($this->modelClass); ?>-list-scroll" class="row">
-    <?php foreach ($model as $i => $data): ?>
-	<div class="col-lg-3 items-row" style="<?php echo $i%4==0?"margin-left:0px":"";?>">
-		<a class="item_list" href="<?php echo $this->createUrl('view', array('id' => $data->id)) ?>">
-            <h2><?php echo $data->id ?></h2>
+    <?php echo "<?php foreach (\$model as \$i => \$data): ?>\n"?>
+	<div class="col-lg-3 items-row">
+		<a class="item_list" href="<?php echo "<?php echo \$this->createUrl('view', array('id' => \$data->id)) ?>"?>">
+            <h2><?php echo "<?=\$data->id ?>"?></h2>
         </a>
     </div>
-    <?php endforeach; ?>
+    <?php echo "<?php endforeach; ?>\n"?>
 </div>
 
-<?php $this->widget('ext.yiinfinite-scroll.YiinfiniteScroller', array(
-    'contentSelector' => '#<?php echo $this->class2id($this->modelClass); ?>-list-scroll',
-    'itemSelector' => '.items-row',
-    'loadingText' => 'Cargando...',
-    'donetext' => 'No hay mas items para mostrar',
-    'pages' => $pages,
-    'successCallback' => 'function(arrayOfNewElems){ console.log(arrayOfNewElems); });',
-));?>
-
-
-<?php echo "<?php"; ?> $this->widget('ext.yiinfinite-scroll.YiinfiniteScroller', array(
-    'id'=>'<?php echo $this->class2id($this->modelClass); ?>-list-scroll',
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
-    'itemsTagName'=>'div',
-    'cssFile'=>false,
-    'itemsCssClass'=>'row text-center',
-    'summaryCssClass'=>'summary text-center mbl',
-    'emptyText'=>r('app','There is nothing here yet, start now').' <br> <a href="'.$this->createUrl("create").'" class="btn btn-primary">'.r('app','Create').'</a>',
-    'pager'=>array(
-    	'class'=>'CLinkPager',
-    	'htmlOptions'=>array(
-    		'class'=>'pagination'
-		),
-		'header'=>false,
-	),
-    'pagerCssClass'=>'paginator-container',
+<?php echo "<?php"; ?> $this->widget('ext.widgets.yiinfinite-scroll.YiinfiniteScroller', array(
+    'contentSelector'=>'#<?php echo $this->class2id($this->modelClass); ?>-list-scroll',
+	'itemSelector'=>'.items-row',
+    'loadingText'=>r('app','Loading...'),
+    'donetext'=>r('app','There are not more items to display'),
+    'pages'=>$model,
+    'successCallback'=>'function(arrayOfNewElems){ console.log(arrayOfNewElems); });',
 )); ?>
 	</div>
 </div>
@@ -83,8 +63,14 @@ $(function () {
 	$(document).on('keyup','[data-action=search]',function (e) {
         var search = $(e.currentTarget).val();
     	console.log(search);
-		// 	$.fn.yiiListView.update('<?php echo $this->class2id($this->modelClass); ?>-list-scroll',{
-		// 		data:{search: search}
+		// 	TODO TEST
+		// 	$.ajax({
+		// 		type:'get',
+		// 		url:'',
+		// 		data:{search: search},
+		// 		success: function(data){
+		//           console.log(data);
+		//		},
 		// 	});
     });
 });
