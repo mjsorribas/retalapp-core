@@ -89,15 +89,45 @@ class <?php echo $this->controllerClass; ?> extends FrontController
 		}
 
 		$dataProvider=new CActiveDataProvider('<?php echo $this->modelClass; ?>',array('criteria'=>$criteria));
-		
-		if(Yii::app()->request->isAjaxRequest)
-		{
-			$this->renderPartial('index',array('dataProvider'=>$dataProvider));
-			Yii::app()->end();
-		}
-		
-		$this->render('index',array(
+
+		$typeRender='render';
+		if(r()->request->isAjaxRequest)
+			$typeRender='renderPartial';
+
+		$this->{$typeRender}('index',array(
 			'dataProvider'=>$dataProvider,
+		));
+	}
+
+	/**
+	 * Lists all items through Infinite scroll.
+	 */
+	public function actionList()
+	{
+		$criteria=new CDbCriteria; 
+		if(isset($_GET['search']) and $_GET['search']!=="")
+		{
+			$criteria->compare('id',$_GET['search'],true,'OR');
+			//$criteria->compare('description',$_GET['search'],true,'OR');
+			//$criteria->compare('year',$_GET['search'],false,'OR');
+		}
+        // $criteria->order='orden_id';
+        
+        $total = <?php echo $this->modelClass; ?>::model()->count();
+
+        $pages = new CPagination($total);
+        $pages->pageSize = 6;
+        $pages->applyLimit($criteria);
+
+        $model = <?php echo $this->modelClass; ?>::model()->findAll($criteria);
+
+		$typeRender='render';
+		if(r()->request->isAjaxRequest)
+			$typeRender='renderPartial';
+		
+		$this->{$typeRender}('list',array(
+			'model' => $model,
+            'pages' => $pages,
 		));
 	}
 
@@ -120,8 +150,18 @@ foreach($this->tableSchema->columns as $column)
 {
 	if($column->name=='orden_id')
 	{
-		echo "\$last=".$this->modelClass."::model()->findAll();\n";
-		echo "\t\t\t\$model->orden_id=count(\$last)+1;\n";
+		echo "\t\t\t// In oreder to create chronologically asc \n";
+		echo "\t\t\t//\$last=".$this->modelClass."::model()->findAll();\n";
+		echo "\t\t\t//\$model->orden_id=count(\$last)+1;\n";
+		echo "\t\t\t// In oreder to create chronologically desc \n";
+		echo "\t\t\t\$last=".$this->modelClass."::model()->findAll(array('order'=>'orden_id'));\n";
+		echo "\t\t\t\$i=2;\n";
+		echo "\t\t\tforeach(\$last as \$data)\n";
+		echo "\t\t\t{\n";
+		echo "\t\t\t\t\$data->orden_id=\$i++;\n";
+		echo "\t\t\t\t\$data->save(true,array('orden_id'));\n";
+		echo "\t\t\t}\n";
+		echo "\t\t\t\$model->orden_id=1;\n";
 	}
 	if($column->name=='updated_at')
 		echo "\t\t\t\$model->updated_at=date('Y-m-d H:i:s');\n";
@@ -189,8 +229,18 @@ foreach($this->tableSchema->columns as $column)
 {
 	if($column->name=='orden_id')
 	{
-		echo "\$last=".$this->modelClass."::model()->findAll();\n";
-		echo "\t\t\t\$model->orden_id=count(\$last)+1;\n";
+		echo "\t\t\t// In oreder to create chronologically asc \n";
+		echo "\t\t\t//\$last=".$this->modelClass."::model()->findAll();\n";
+		echo "\t\t\t//\$model->orden_id=count(\$last)+1;\n";
+		echo "\t\t\t// In oreder to create chronologically desc \n";
+		echo "\t\t\t\$last=".$this->modelClass."::model()->findAll(array('order'=>'orden_id'));\n";
+		echo "\t\t\t\$i=2;\n";
+		echo "\t\t\tforeach(\$last as \$data)\n";
+		echo "\t\t\t{\n";
+		echo "\t\t\t\t\$data->orden_id=\$i++;\n";
+		echo "\t\t\t\t\$data->save(true,array('orden_id'));\n";
+		echo "\t\t\t}\n";
+		echo "\t\t\t\$model->orden_id=1;\n";
 	}
 	if($column->name=='updated_at')
 		echo "\t\t\t\$model->updated_at=date('Y-m-d H:i:s');\n";
