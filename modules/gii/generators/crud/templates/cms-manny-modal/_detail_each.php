@@ -38,11 +38,11 @@ $columnLat=explode('_', $column->name);
         continue;
 ?>
 <?php if($tangaColumn['type']==='img'):?>
-      <?php echo "<?php echo CHtml::image(Yii::app()->request->baseUrl.'/uploads/'.\$data->".$column->name.",'',array('class'=>'img-responsive img-thumbnail','style'=>'width:100%'));?>"; ?>
+      <?php echo "<?php echo CHtml::image(\$data->".$column->name."_path,'',array('class'=>'img-responsive img-thumbnail','style'=>'width:100%'));?>"; ?>
 <?php break;?>
 <?php endif;?>
 <?php if($tangaColumn['type']==='file'):?>
-            <?php echo "<?php echo CHtml::link('<i style=\"font-size:10em\" class=\"fa fa-download\"></i>',Yii::app()->request->baseUrl.'/uploads/'.\$data->".$column->name.",array('class'=>'mhl mvl'));?>"; ?>
+            <?php echo "<?php echo CHtml::link('<i style=\"font-size:10em\" class=\"fa fa-download\"></i>',\$data->".$column->name."_path,array('class'=>'mhl mvl'));?>"; ?>
 <?php break;?>
 <?php endif;?>
 <?php endforeach;?>
@@ -88,8 +88,8 @@ if($count>=2)
         <?php echo "<?php echo CHtml::link('<i class=\"fa fa-pencil\"></i>', array('{$this->getControllerID()}/update', 'id'=>\$data->id, '".$this->foraneKey."'=>\$data->".$this->foraneKey."),
                     array('class'=>'btn btn-primary mls pull-right','data-action'=>'crud-{$this->getControllerID()}','data-type'=>'update','data-name'=>\$data->id)); ?>";?>
   
-        <?php echo "<?php echo CHtml::link('<i class=\"fa fa-eye\"></i>', array('{$this->getControllerID()}/view', 'id'=>\$data->id, '".$this->foraneKey."'=>\$data->".$this->foraneKey."),
-                    array('class'=>'btn btn-default mls pull-right','data-action'=>'crud-{$this->getControllerID()}','data-type'=>'view','data-name'=>\$data->id)); ?>"?>
+        <?php echo "<?php #echo CHtml::link('<i class=\"fa fa-eye\"></i>', array('{$this->getControllerID()}/view', 'id'=>\$data->id, '".$this->foraneKey."'=>\$data->".$this->foraneKey."),
+                    #array('class'=>'btn btn-default mls pull-right','data-action'=>'crud-{$this->getControllerID()}','data-type'=>'view','data-name'=>\$data->id)); ?>"?>
 
         <?php echo "<?php echo CHtml::link('<i class=\"fa fa-trash-o\"></i>', array('{$this->getControllerID()}/delete', 'id'=>\$data->id),
             		array('class'=>'btn btn-default pull-right','data-action'=>'crud-{$this->getControllerID()}', 'data-type'=>'delete','data-name'=>\$data->id)); ?>"?>
