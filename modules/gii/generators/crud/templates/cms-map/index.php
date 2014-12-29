@@ -156,7 +156,7 @@ function createMarkers(markersCollection, parentMap) {
                 draggable: false,
              //    icon: pinImage,
 	            // shadow: pinShadow,
-                icon: '<?php echo Yii::app()->request->baseUrl?>/img/etiqueta.png',
+                icon: '<?php echo "<?=r()->request->baseUrl?>"?>/img/etiqueta.png',
                 map: map
             });
 
@@ -180,7 +180,7 @@ function addMarker(location) {
         position: location,
         draggable: true,
         title: 'Arrastrame',
-        icon: '<?php echo "<?php echo r()->request->baseUrl?>"?>/img/etiqueta.png',
+        icon: '<?php echo "<?=r()->request->baseUrl?>"?>/img/etiqueta.png',
         map: map
     });
 
