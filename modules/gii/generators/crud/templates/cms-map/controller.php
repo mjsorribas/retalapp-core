@@ -69,21 +69,30 @@ class <?php echo $this->controllerClass; ?> extends CmsController
 		foreach($list as $data)
 		{
 			$attr=$data->attributes;
-		    // $attr['color']=$data->getColorPin();
+		    $attr['color']='cccccc';
+<?php 
+foreach($this->tableSchema->columns as $column)
+{
+		if(strpos($column->name, "_lat")!==false)
+			echo "\t\t\t\$attr['lat']=\$data->".$column->name.";\n";
+		if(strpos($column->name, "_lng")!==false)
+			echo "\t\t\t\$attr['lng']=\$data->".$column->name.";\n";
+}
+?>
 		    // $attr['description_service']=$data->getDescriptionPin();
-		    // $attr['content_event']="
-			// <div class=\"row row-map\">
-			// 	<div class=\"col-xs-5\">
-			// 		<img src=\"img/map-img.jpg\">
-			// 	</div>
-			// 	<div class=\"col-xs-7\">
-			// 		<p><strong>Nombre: </strong> Lorem ipsum dolor</p>
-			// 		<p><strong>Dirección: </strong> Lorem ipsum dolor</p>
-			// 		<p><strong>Teléfono: </strong> (+571) 123 4567</p>
-			// 		<p><strong>Correo: </strong><a href=\"mailto:#\">info@email.com</a></p>
-			// 	</div>
-			// </div>
-		    // ";
+		    $attr['content_event']="
+			<div class=\"row row-map\">
+				<div class=\"col-xs-5\">
+					<img src=\"img/map-img.jpg\">
+				</div>
+				<div class=\"col-xs-7\">
+					<p><strong>Nombre: </strong> Lorem ipsum dolor</p>
+					<p><strong>Dirección: </strong> Lorem ipsum dolor</p>
+					<p><strong>Teléfono: </strong> (+571) 123 4567</p>
+					<p><strong>Correo: </strong><a href=\"mailto:#\">info@email.com</a></p>
+				</div>
+			</div>
+		    ";
 		    
 		    $models[] = $attr;
 		}

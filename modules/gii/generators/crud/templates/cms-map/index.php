@@ -154,9 +154,9 @@ function createMarkers(markersCollection, parentMap) {
             var myMarker = new google.maps.Marker({
                 position: markerCoords,
                 draggable: false,
-                icon: pinImage,
-	            shadow: pinShadow,
-                // icon: '<?php echo Yii::app()->request->baseUrl?>/img/etiqueta.png',
+             //    icon: pinImage,
+	            // shadow: pinShadow,
+                icon: '<?php echo Yii::app()->request->baseUrl?>/img/etiqueta.png',
                 map: map
             });
 
