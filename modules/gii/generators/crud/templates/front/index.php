@@ -47,7 +47,10 @@ $label=$this->pluralize($this->class2name($this->modelClass));
 		),
 		'header'=>false,
 	),
-    'pagerCssClass'=>'paginator-container',
+    'pagerCssClass'=>'paginator-container text-center',
+    'afterAjaxUpdate'=>'js:function(){
+    	console.log('Other page...');
+	}',
 )); ?>
 	</div>
 </div>
