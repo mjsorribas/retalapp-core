@@ -303,7 +303,7 @@ $(function(){
 				<?php if($tangaColumn['type']=='select'):
 					$modelName='NameModelRelated';
 					if($tangaColumn['table']!==null) {
-						$modelName=$this->generateClassName($params['table']);
+						$modelName=$module->generateClassName($params['table']);
 						$listData="{$modelName}::listData()";
 					}
 					else
