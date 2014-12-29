@@ -290,14 +290,30 @@ $(function(){
 		<div class="row">
 		<?php foreach($this->tableSchema->columns as $column):
 			$tangaColumn=$module->getParamsField($column);
-			if($tangaColumn['type']=='img' or $tangaColumn['type']=='file')
+			
+			if($tangaColumn['type']=='map')
 				continue;
-
+			
 			$columnLat=explode('_', $column->name);
 			if(isset($columnLat[0]) and isset($columnLat[2]) and $columnLat[0]=='map' and ($columnLat[2]=='lat' or $columnLat[2]=='lng'))
-				continue; ?>
+				continue; 
+			
+			?>
 			<div class="col-lg-2">
-				<?php echo "<?php echo ".$this->generateActiveField($this->modelClass,$column)."; ?>\n"; ?>
+				<?php if($tangaColumn['type']=='select'):
+					$modelName='NameModelRelated';
+					if($params['table']!==null) {
+						$modelName=$this->generateClassName($params['table']);
+						$listData="{$modelName}::listData()";
+					}
+					else
+						$listData="array('1'=>'Value 1','2'=>'Value 2')";
+		
+				?>
+					<?php echo "<?php echo \$form->dropDownList(\$model,'{$column->name}',{$listData},array('empty'=>r('app','".ucfirst($column->name)." ...'),'class'=>'form-control')); ?>\n"?>
+				<?php else:?>
+					<?php echo "<?php echo \$form->textField(\$model,'{$column->name}',array('placeholder'=>'".ucfirst($column->name)."...','class'=>'form-control')); ?>\n"?>
+				<?php endif;?>
 			</div>
 		<?php endforeach;?>
 			<div class="col-lg-2">
