@@ -21,7 +21,7 @@ function initialize() {
 
 
     var mapOptions = {
-        zoom: 6,
+        zoom: 5,
         center: new google.maps.LatLng(4.659634, -74.062035),
         mapTypeControlOptions: {
             mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'usroadatlas']
@@ -231,7 +231,7 @@ function deleteMarkers() {
     markers = [];
 }
 $(function(){
-	
+
 	$(document).on('submit','#search-form',function(){
 		$.fn.updateMap($('#search-form').serialize());
 		return false;
@@ -312,4 +312,4 @@ $(function(){
 		</div>
     </div>
 </section>
-<div style="width:100%;height: 550px" id="map"></div>
+<div style="width:100%;height: 410px" id="map"></div>
