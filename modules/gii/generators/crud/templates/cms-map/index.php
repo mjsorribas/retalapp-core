@@ -21,7 +21,7 @@ function initialize() {
 
 
     var mapOptions = {
-        zoom: 8,
+        zoom: 6,
         center: new google.maps.LatLng(4.659634, -74.062035),
         mapTypeControlOptions: {
             mapTypeIds: [google.maps.MapTypeId.ROADMAP, 'usroadatlas']
@@ -299,10 +299,10 @@ $(function(){
 				continue; 
 			
 			?>
-			<div class="col-lg-2">
+			<div class="col-lg-2 mbm">
 				<?php if($tangaColumn['type']=='select'):
 					$modelName='NameModelRelated';
-					if($params['table']!==null) {
+					if($tangaColumn['table']!==null) {
 						$modelName=$this->generateClassName($params['table']);
 						$listData="{$modelName}::listData()";
 					}
@@ -316,7 +316,7 @@ $(function(){
 				<?php endif;?>
 			</div>
 		<?php endforeach;?>
-			<div class="col-lg-2">
+			<div class="col-lg-2 mbm pull-right">
 				<?php echo "<?php echo CHtml::link('<i class=\"fa fa-search\"></i>','#',array('class'=>'btn btn-default','id'=>'search-form-button'))?>\n"?>
 				<?php echo "<?php echo CHtml::link('<i class=\"fa fa-refresh\"></i> '.r('app','Ver todos'),'#',array('class'=>'btn btn-default','id'=>'all'))?>\n"?>
 			</div>
