@@ -74,9 +74,9 @@ class <?php echo $this->controllerClass; ?> extends CmsController
 foreach($this->tableSchema->columns as $column)
 {
 		if(strpos($column->name, "_lat")!==false)
-			echo "\t\t\t\$attr['lat']=\$data->".$column->name.";\n";
+			echo "\t\t\t\$attr['lat']=(float)\$data->".$column->name.";\n";
 		if(strpos($column->name, "_lng")!==false)
-			echo "\t\t\t\$attr['lng']=\$data->".$column->name.";\n";
+			echo "\t\t\t\$attr['lng']=(float)\$data->".$column->name.";\n";
 }
 ?>
 		    // $attr['description_service']=$data->getDescriptionPin();
