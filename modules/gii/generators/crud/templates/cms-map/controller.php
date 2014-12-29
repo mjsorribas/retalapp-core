@@ -14,7 +14,7 @@ class <?php echo $this->controllerClass; ?> extends CmsController
 	// Back actions            //
 	/////////////////////////////
 	
-	public $defaultAction='admin';
+	public $defaultAction='index';
 <?php if($this->fontIcon!==null):?>
 	public $title='<i class="fa <?php echo $this->fontIcon?>"></i> <?php echo $this->labelName; ?>';
 <?php else:?>
