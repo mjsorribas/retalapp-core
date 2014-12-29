@@ -310,9 +310,9 @@ $(function(){
 						$listData="array('1'=>'Value 1','2'=>'Value 2')";
 		
 				?>
-					<?php echo "<?php echo \$form->dropDownList(\$model,'{$column->name}',{$listData},array('empty'=>r('app','".ucfirst($column->name)." ...'),'class'=>'form-control')); ?>\n"?>
+					<?php echo "<?php echo \$form->dropDownList(\$model,'{$column->name}',{$listData},array('empty'=>\$model->getAttributeLabel('{$column->name}').' ...','class'=>'form-control')); ?>\n"?>
 				<?php else:?>
-					<?php echo "<?php echo \$form->textField(\$model,'{$column->name}',array('placeholder'=>'".ucfirst($column->name)."...','class'=>'form-control')); ?>\n"?>
+					<?php echo "<?php echo \$form->textField(\$model,'{$column->name}',array('placeholder'=>\$model->getAttributeLabel('{$column->name}').' ...','class'=>'form-control')); ?>\n"?>
 				<?php endif;?>
 			</div>
 		<?php endforeach;?>
