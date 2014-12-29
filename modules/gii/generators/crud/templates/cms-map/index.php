@@ -231,24 +231,22 @@ function deleteMarkers() {
     markers = [];
 }
 $(function(){
+	
 	$(document).on('submit','#search-form',function(){
-		$.ajax({
-			dataType: 'json',
-			data: $(this).serialize(),
-			success: function(data) {
-				deleteMarkers();
-				// deletePolygons();
-				createMarkers(data.models, map);
-				// createPolygons(data.pol, map);
-			},
-		});
+		$.fn.updateMap($('#search-form').serialize());
 		return false;
 	});
 	$(document).on('click','#search-form-button',function(e){
 		e.preventDefault();
+		$.fn.updateMap($('#search-form').serialize());
+	});
+
+	$.fn.updateMap = function (data) {
 		$.ajax({
+			type:'GET',
+			url:'<?php echo "<?=r()->createUrl(\$this->route)?>"?>',
 			dataType: 'json',
-			data: $('#search-form').serialize(),
+			data: data,
 			success: function(data) {
 				deleteMarkers();
 				// deletePolygons();
@@ -256,25 +254,14 @@ $(function(){
 				// createPolygons(data.pol, map);
 			},
 		});
-	});
+	};
 
 	$(document).on('click','#all',function(e) {
 		e.preventDefault();
 		$('#search-form').each(function(){
 			this.reset();
 		});
-		$.ajax({
-			 type:'GET',
-			 dataType: 'json',
-			 url:'<?php echo "<?=r()->createUrl(\$this->route)?>"?>',
-			 data:{},
-			 success: function(data) {
-				deleteMarkers();
-				// deletePolygons();
-				createMarkers(data.models, map);
-				// createPolygons(data.pol, map);
-			},
-		});
+		$.fn.updateMap({});
 	});
 })
 </script>

@@ -56,11 +56,7 @@ class <?php echo $this->controllerClass; ?> extends CmsController
 		$model=new <?php echo $this->modelClass; ?>('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['<?php echo $this->modelClass; ?>']))
-		{
 			$model->attributes=$_GET['<?php echo $this->modelClass; ?>'];
-			// Nombres de filtros que llegan desde
-			// el formulario de búsqueda
-		}
 		
 		$list=<?php echo $this->modelClass; ?>::model()->findAll($model->search()->getCriteria());
 		// $list=<?php echo $this->modelClass; ?>::model()->findAll($model->searchMap()->getCriteria());
@@ -96,11 +92,14 @@ foreach($this->tableSchema->columns as $column)
 		    
 		    $models[] = $attr;
 		}
-		$typeRender='render';
 		if(Yii::app()->request->isAjaxRequest)
-			$typeRender='renderPartial';
-		
-		$this->{$typeRender}('index',array(
+		{
+			echo CJSON::encode(array(
+				'models'=>$models,
+			));
+			r()->end();
+		}
+		$this->render('index',array(
 			'models'=>$models,
 			'model'=>$model,
 		));
