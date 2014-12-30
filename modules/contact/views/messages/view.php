@@ -44,9 +44,9 @@ $this->breadcrumbs=array(
           <div class="panel-heading"><b><?php echo CHtml::encode($model->getAttributeLabel('read')); ?>:</b></div>
           <div class="panel-body">
             <?php if($model->read):?>
-            <?php echo '<span class="label label-success">Read '.Yii::t('app','Enabled').'</span>';?>
+            <?php echo '<span class="label label-success">'.Yii::t('app','Read').'</span>';?>
             <?php else:?>
-            <?php echo '<span class="label label-danger">Read '.Yii::t('app','Disabled').'</span>';?>
+            <?php echo '<span class="label label-danger">'.Yii::t('app','Unread').'</span>';?>
             <?php endif;?>
           </div>
 

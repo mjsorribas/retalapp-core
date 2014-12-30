@@ -51,8 +51,12 @@ class MessagesController extends CmsController
 	 */
 	public function actionView($id)
 	{
+		$model=$this->loadModel($id);
+		$model->read=1;
+		$model->save(true,array('read'));
+		
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$model,
 		));
 	}
 

@@ -39,22 +39,22 @@ $this->breadcrumbs=array(
 			'value'=>'$data->email',
 		),
 		array(
-			'name'=>'created_at',
-			'type'=>'raw',
-			'value'=>'r()->format->ago($data->created_at)',
-		),
-		array(
 			'name'=>'message',
 			'type'=>'raw',
 			'value'=>'"<span class=\"text-muted\">".substr(strip_tags($data->message),0,50)."...</span>"',
 		),
-		/*
 		array(
 			'name'=>'read',
-			'filter'=>array('1'=>Yii::t("app","Enabled"),'0'=>Yii::t("app","Disabled")),
+			'filter'=>array('1'=>Yii::t("app","Read"),'0'=>Yii::t("app","Unread")),
 			'type'=>'raw',
-			'value'=>'($data->read)?"<span class=\"label label-success\">".Yii::t("app","Read")." ".Yii::t("app","Enabled")."</span>":"<span class=\"label label-danger\">".Yii::t("app","Read")." ".Yii::t("app","Disabled")."</span>"',
+			'value'=>'($data->read)?"<span class=\"label label-success\">".r("app","Unread")."</span>":"<span class=\"label label-danger\">".r("app","Read")."</span>"',
 		),
+		array(
+			'name'=>'created_at',
+			'type'=>'raw',
+			'value'=>'r()->format->ago($data->created_at)',
+		),
+		/*
 		*/
 		/*array(
 			'class'=>'CButtonColumn',
