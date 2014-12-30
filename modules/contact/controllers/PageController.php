@@ -23,12 +23,14 @@ class PageController extends FrontController
 		$model->created_at = date('Y-m-d H:i:s');
         if ($model->save())
         {
-			$subject=r('contact','New contact message').' ' . strip_tags(Yii::app()->name);
+			$subject=r('contact','New contact message').' '.strip_tags(Yii::app()->name);
 			#$targetEmail=YII_DEBUG?Yii::app()->params['adminEmail']:$config->email;
  			#if(empty($config->email))
 				$targetEmail=Yii::app()->params['adminEmail'];
 			
 			$body="<strong>Name</strong>: <em>{$model->name}</em> <br>";
+			if(!empty($model->phone))
+				$body.="<strong>Phone</strong>: <em>{$model->phone}</em> <br>";
 			$body.="<strong>Email</strong>: <em>{$model->email}</em> <br>";
 			$body.="<strong>Comment</strong>: <em>{$model->message}</em> <br>";
             
