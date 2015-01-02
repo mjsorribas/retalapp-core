@@ -453,7 +453,10 @@ class PageController extends FrontController
 		$model->conditions=isset($_REQUEST['conditions'])?$_REQUEST['conditions']:0;
 		$model->username=r()->format->trimAndLower($model->name).'.'.r()->format->trimAndLower($model->lastname);
 		if($this->module->sendPassword)
+		{
 			$model->password=sha1($model->username);
+			$model->confirmPassword=sha1($model->username);
+		}
 		
 		if ($model->validate()) 
 		{
