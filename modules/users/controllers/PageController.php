@@ -454,6 +454,7 @@ class PageController extends FrontController
 		$model->username=r()->format->trimAndLower($model->name).'.'.r()->format->trimAndLower($model->lastname);
 		if($this->module->sendPassword)
 		{
+			$model->state_email=1;
 			$model->password=sha1($model->username);
 			$model->confirmPassword=sha1($model->username);
 		}
