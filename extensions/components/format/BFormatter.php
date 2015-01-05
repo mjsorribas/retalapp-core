@@ -243,6 +243,11 @@ class BFormatter extends CFormatter
 		return strtr(strtr(json_encode($value,true),array("{"=>"{\n","\"}"=>"\"\n}","\","=>"\",\n")),array("\n\""=>"\n&nbsp;&nbsp;&nbsp;&nbsp;\"","}]}"=>"&nbsp;&nbsp;&nbsp;&nbsp;}]\n}","},{"=>"&nbsp;&nbsp;&nbsp;&nbsp;},{","]]}"=>"]]\n}","[["=>"[\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[","[\""=>"[\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"","}}"=>"&nbsp;&nbsp;&nbsp;&nbsp;}\n}",",\""=>",\n&nbsp;&nbsp;&nbsp;&nbsp;\""));
 	}
 
+	public function dateDot($value)
+	{
+		return .date('d',strtotime($data->created_at))."/".date('m',strtotime($data->created_at))."/".strtr(number_format(date('Y',strtotime($data->created_at))),array(","=>"."));
+	}
+
 	public function sirToHtml($field_sir)
 	{
 		include_once(dirname(__FILE__)."/parsedown/Parsedown.php");
