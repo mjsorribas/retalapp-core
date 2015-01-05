@@ -245,7 +245,7 @@ class BFormatter extends CFormatter
 
 	public function dateDot($value)
 	{
-		return date('d',strtotime($data->created_at))."/".date('m',strtotime($data->created_at))."/".strtr(number_format(date('Y',strtotime($data->created_at))),array(","=>"."));
+		return date('d',strtotime($value))."/".date('m',strtotime($value))."/".strtr(number_format(date('Y',strtotime($value))),array(","=>"."));
 	}
 
 	public function sirToHtml($field_sir)
