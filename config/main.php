@@ -33,7 +33,7 @@ $db=require($appAlias.'/config/database.php');
  * Databases config according to a host to use
 */
 $dbConfig=$db['localhost'];
-if(isset($db[$_SERVER['HTTP_HOST']]))
+if(isset($_SERVER['HTTP_HOST']) and isset($db[$_SERVER['HTTP_HOST']]))
     $dbConfig=$db[$_SERVER['HTTP_HOST']];
 
 
