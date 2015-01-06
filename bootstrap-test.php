@@ -5,7 +5,7 @@
 
 // change the following paths if necessary
 $yii=dirname(__FILE__).'/yii/framework/yii.php';
-$config=dirname(__FILE__).'/config/main.php';
+$config=dirname(__FILE__).'/config/test.php';
 
 // specify how many levels of call stack should be shown in each log message
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
