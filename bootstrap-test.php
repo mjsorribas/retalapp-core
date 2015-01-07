@@ -4,7 +4,7 @@
 // date_default_timezone_set("America/Bogota"); 
 
 // change the following paths if necessary
-$yii=dirname(__FILE__).'/yii/framework/yii.php';
+$yii=dirname(__FILE__).'/yii/framework/yiit.php';
 $config=dirname(__FILE__).'/config/test.php';
 
 // specify how many levels of call stack should be shown in each log message
