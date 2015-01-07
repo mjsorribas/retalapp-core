@@ -324,6 +324,10 @@ class UsersModule extends Module
 	        		array('label'=>Yii::t('app','Applications'), 'icon'=>'fa fa-mobile', 'url'=>array('/'.$this->id.'/apps'),'visible'=>r()->user->check('root')),
     		        array('label'=>Yii::t('app','API'), 'icon'=>'fa fa-code', 'url'=>array('/'.$this->id.'/api'),'visible'=>r()->user->check('root')),
       
+      				array('label'=>Yii::t('app','Countries'), 'icon'=>'fa fa-globe', 'url'=>array('/'.$this->id.'/countries/admin')),
+                	array('label'=>Yii::t('app','States'), 'icon'=>'fa fa-map-marker', 'url'=>array('/'.$this->id.'/states/admin')),
+                	array('label'=>Yii::t('app','Cities'), 'icon'=>'fa fa-university', 'url'=>array('/'.$this->id.'/cities/admin')),
+               
 	        	)),
 	        );
 		}

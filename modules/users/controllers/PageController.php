@@ -1015,6 +1015,18 @@ class PageController extends FrontController
 			$this->redirect($redirect_uri.'?'.http_build_query($param));
 	}
 
+	public function actionCities()
+	{
+		$users_location_cities=UsersLocationCities::model()->findAll(array(
+			'order'=>'orden_id',
+			'condition'=>'users_location_states_id=?',
+			'params'=>array($_REQUEST['state_id']),
+		));
+		echo "<option value=\"\">Ciudad</option>";
+		foreach($users_location_cities as $data)
+			echo "<option value=\"{$data->id}\">{$data->name}</option>";
+	}
+
 	public function actionIsGuest()
 	{
 		if(r()->user->isGuest) {
@@ -1031,6 +1043,7 @@ class PageController extends FrontController
 	}
 
 	/**
+	 * http://localhost/project_name/public/users/page/Send
 	 * This action is for implement
 	 * cron job por see what is user notifications
 	 * pendding and send
@@ -1061,5 +1074,6 @@ class PageController extends FrontController
 			$data->send=1;
 			$data->save(true,array('send'));
 		}
+		echo "Finish...";
 	}
 }
