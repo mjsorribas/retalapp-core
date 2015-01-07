@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.7.1
+-- version 4.1.8
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 07-01-2015 a las 14:50:15
--- Versión del servidor: 5.6.20
--- Versión de PHP: 5.5.15
+-- Tiempo de generación: 07-01-2015 a las 09:36:06
+-- Versión del servidor: 5.1.73-cll
+-- Versión de PHP: 5.4.23
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -30,8 +30,10 @@ CREATE TABLE IF NOT EXISTS `translation_message` (
   `id` int(11) NOT NULL,
   `language` varchar(6) NOT NULL,
   `translation` text NOT NULL,
-`id_key` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=868 ;
+  `id_key` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id_key`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=892 ;
 
 --
 -- Volcado de datos para la tabla `translation_message`
@@ -900,7 +902,31 @@ INSERT INTO `translation_message` (`id`, `language`, `translation`, `id_key`) VA
 (431, 'en_us', 'You do not have enough points to order this product', 864),
 (431, 'es', 'No tienes puntos suficientes para solicitar este producto', 865),
 (432, 'en_us', 'You do not have enough points for amount selected', 866),
-(432, 'es', 'No tienes puntos suficientes para la cantidad seleccionada', 867);
+(432, 'es', 'No tienes puntos suficientes para la cantidad seleccionada', 867),
+(433, 'en_us', 'Cart', 868),
+(433, 'es', 'Redenciones', 869),
+(435, 'en_us', 'Purchases List', 870),
+(435, 'es', 'Lista de redencioes', 871),
+(436, 'en_us', 'Secrets Codes', 872),
+(436, 'es', 'Códigos', 873),
+(437, 'en_us', 'Upload Codes', 874),
+(437, 'es', 'Carga de códigos', 875),
+(438, 'en_us', 'System Users', 876),
+(438, 'es', 'Usuarios del sistema', 877),
+(439, 'en_us', 'Contries', 878),
+(439, 'es', 'Paises', 879),
+(440, 'en_us', 'Cities', 880),
+(440, 'es', 'Ciudades', 881),
+(441, 'en_us', 'States', 882),
+(441, 'es', 'Departamentos', 883),
+(442, 'en_us', 'Countries', 884),
+(442, 'es', 'Paises', 885),
+(443, 'en_us', 'Contact', 886),
+(443, 'es', 'Contáctenos', 887),
+(444, 'en_us', 'Messages', 888),
+(444, 'es', 'Mensajes', 889),
+(445, 'en_us', 'Contact config', 890),
+(445, 'es', 'Configuraciones', 891);
 
 -- --------------------------------------------------------
 
@@ -909,10 +935,11 @@ INSERT INTO `translation_message` (`id`, `language`, `translation`, `id_key`) VA
 --
 
 CREATE TABLE IF NOT EXISTS `translation_source_message` (
-`id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `category` varchar(32) DEFAULT NULL,
-  `message` text
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=433 ;
+  `message` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=446 ;
 
 --
 -- Volcado de datos para la tabla `translation_source_message`
@@ -1349,38 +1376,20 @@ INSERT INTO `translation_source_message` (`id`, `category`, `message`) VALUES
 (429, 'app', 'City'),
 (430, 'app', 'Location State'),
 (431, 'app', 'You do not have enough points to order this product'),
-(432, 'app', 'You do not have enough points for amount selected');
+(432, 'app', 'You do not have enough points for amount selected'),
+(433, 'app', 'Cart'),
+(435, 'app', 'Purchases List'),
+(436, 'app', 'Secrets Codes'),
+(437, 'app', 'Upload Codes'),
+(438, 'app', 'System Users'),
+(439, 'app', 'Contries'),
+(440, 'app', 'Cities'),
+(441, 'app', 'States'),
+(442, 'app', 'Countries'),
+(443, 'app', 'Contact'),
+(444, 'app', 'Messages'),
+(445, 'app', 'Contact config');
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `translation_message`
---
-ALTER TABLE `translation_message`
- ADD PRIMARY KEY (`id_key`), ADD KEY `id` (`id`);
-
---
--- Indices de la tabla `translation_source_message`
---
-ALTER TABLE `translation_source_message`
- ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `translation_message`
---
-ALTER TABLE `translation_message`
-MODIFY `id_key` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=868;
---
--- AUTO_INCREMENT de la tabla `translation_source_message`
---
-ALTER TABLE `translation_source_message`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=433;
 --
 -- Restricciones para tablas volcadas
 --
@@ -1389,7 +1398,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=433;
 -- Filtros para la tabla `translation_message`
 --
 ALTER TABLE `translation_message`
-ADD CONSTRAINT `translation_message_ibfk_1` FOREIGN KEY (`id`) REFERENCES `translation_source_message` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `translation_message_ibfk_1` FOREIGN KEY (`id`) REFERENCES `translation_source_message` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
