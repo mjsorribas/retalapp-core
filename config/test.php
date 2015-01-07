@@ -1,5 +1,5 @@
 <?php
-$db=require($appAlias.'/config/database.php');
+$db=require(Yii::getPathOfAlias('app').'/config/database.php');
 if(isset($db['testing']))
 {
 	$componentsForTest=array(
