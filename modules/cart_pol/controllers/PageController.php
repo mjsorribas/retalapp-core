@@ -133,8 +133,8 @@ class PageController extends FrontController
 
 		r('cart')->setShippingData($datas->id);
 		r('cart')->setShippingUser(r('#user')->id);
-
-		if(($data=r('cart')->saveShopping(null,1,$_REQUEST['comment']))!==null)
+		$comment=isset($_REQUEST['comment'])?$_REQUEST['comment']:'...';
+		if(($data=r('cart')->saveShopping(null,1,$comment))!==null)
 		{
 			//echo CJSON::encode(array($data));
 			//exit;
@@ -147,6 +147,25 @@ class PageController extends FrontController
 			// 		$catalogo->save(true,array('inventario'));
 			// 	}
 			// }
+
+			 if($this->module->justRequest) 
+			 {
+			 	$cart=$this->module->getCart();
+				$model=new CartCredits;
+				$model->date_transaction=date('Y-m-d');
+				$model->quantity=$cart['total'];
+				$model->value=$cart['total'];
+				$model->users_users_id=r()->user->id;
+				$model->created_at=date('Y-m-d H:i:s');
+				$model->description=r('app','You requested products');
+				$model->state=1;
+				#$model->secret_code='value';
+				#$model->users_location_cities_id='value';
+				#$model->users_location_states_id='value';
+				$model->sub=1;
+				#$model->expired_at='value';
+				$model->save();
+			}
 
 			r('cart')->drop();
 			$states=CartStates::model()->findByPk(1);
