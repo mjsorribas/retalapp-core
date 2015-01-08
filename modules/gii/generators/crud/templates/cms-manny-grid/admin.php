@@ -22,7 +22,9 @@ echo "\$this->breadcrumbs=array(
 <section class="panel">
     <div class="panel-body minimal">
         <div class="table-inbox-wrap">
+        <?php echo "<?php #if(count(\$model->search()->getData())<12):?>\n"?>
        <?php echo "<?php echo CHtml::link('<i class=\"fa fa-plus\"></i> '.Yii::t('app','Create'),array('create'),array('class'=>'mrs btn btn-primary'))?>\n"?>
+        <?php echo "<?php #endif;?>\n"?>
        <?php echo "<?php #echo CHtml::link('<i class=\"fa fa-list\"></i> '.Yii::t('app','Excel'),array('excel'),array('class'=>'mrs btn btn-success'))?>\n"?>
 <?php echo "<?php"; ?> $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'<?php echo $this->class2id($this->modelClass); ?>-grid',
@@ -42,7 +44,8 @@ echo "\$this->breadcrumbs=array(
     'pagerCssClass'=>'paginator-container',
 	'dataProvider'=>$model->search(),
 	'summaryCssClass'=>'text-center',
-	'filter'=>$model,<?php foreach($this->tableSchema->columns as $column):?>
+	'filter'=>$model,
+	<?php foreach($this->tableSchema->columns as $column):?>
 <?php if($column->name=='orden_id'):?>
     'afterAjaxUpdate'=>"js:function(){
         $('#<?php echo $this->class2id($this->modelClass); ?>-grid tbody').sortable({ opacity: 0.00001 });
@@ -222,6 +225,7 @@ $(function() {
 	                url: href,
 	                success:function (data) {
 	                    $.fn.yiiGridView.update('<?php echo $this->class2id($this->modelClass); ?>-grid');
+	                	// window.location.reload();
 	                },
 	                error: function (xhr, ajaxOptions, thrownError) {
 						bootbox.alert("Ocurrió un error <strong>BORRANDO</strong> el Registro, Verifique nuevamente");

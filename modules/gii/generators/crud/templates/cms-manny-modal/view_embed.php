@@ -49,9 +49,11 @@ $this->{$typeRender}('view',array(
  */
 <?php echo "?>\n"; ?>
 
+<?php echo "<?php #if(count(\$".$this->getControllerID()."DataProvider->getData())<12):?>\n"?>
 <div class="col-lg-12 text-right">
 <?php echo "<?php echo CHtml::link('<i class=\"fa fa-plus-circle\"></i>', array('{$this->getControllerID()}/create','".$this->foraneKey."'=>\$model->id), \narray('class'=>'btn btn-primary','data-action'=>'crud-{$this->getControllerID()}','data-type'=>'create')); ?>\n";?>
 </div>
+<?php echo "<?php #endif;?>\n"?>
 
 <h4><i class="fa <?php echo $this->fontIcon?>"></i> <?php echo "<?php echo Yii::t('app','{$this->labelName}')?>"?> <span class="loading"></span></h4>
 <?php echo "<?php"; ?> $this->widget('zii.widgets.CListView',array(
