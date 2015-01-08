@@ -22,9 +22,9 @@ echo "\$this->breadcrumbs=array(
 <section class="panel">
     <div class="panel-body minimal">
         <div class="table-inbox-wrap">
-        <?php echo "<?php #if(count(\$model->search()->getData())<12):?>\n"?>
+	   <?php echo "<?php #if(count(\$model->search()->getData())<12):?>\n"?>
        <?php echo "<?php echo CHtml::link('<i class=\"fa fa-plus\"></i> '.Yii::t('app','Create'),array('create'),array('class'=>'mrs btn btn-primary'))?>\n"?>
-        <?php echo "<?php #endif;?>\n"?>
+	   <?php echo "<?php #endif;?>\n"?>
        <?php echo "<?php #echo CHtml::link('<i class=\"fa fa-list\"></i> '.Yii::t('app','Excel'),array('excel'),array('class'=>'mrs btn btn-success'))?>\n"?>
 <?php echo "<?php"; ?> $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'<?php echo $this->class2id($this->modelClass); ?>-grid',
