@@ -222,9 +222,20 @@ class UsersModule extends Module
 				'{{email}}'=>$model->email,
 				'{{password}}'=>$pass,
 			));
-			$contex=array(
-				"body"=>$body,
-			);
+			if(is_array($this->redirectLogout))
+			{
+				$contex=array(
+					"body"=>$body,
+					"label"=>Yii::t('app','Login now'),
+					"url"=>r()->createAbsoluteUrl($this->redirectLogout[0],array('showLoginform'=>1))
+				);
+			} 
+			else
+			{
+				$contex=array(
+					"body"=>$body,
+				);	
+			}
 			r('email')->add($model->email,$model->name);
 			return r('email')->sendBody(Yii::t('app','Your credentials').' '.strip_tags(r()->name),$contex);
 		}
