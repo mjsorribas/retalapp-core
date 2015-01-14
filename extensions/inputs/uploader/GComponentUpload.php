@@ -47,6 +47,19 @@ class GComponentUpload extends CApplicationComponent {
         if (isset($result['success']) and $result['success']) {
             $result['fileName'] = $uploader->fileName;
             if (isset($_GET['width']) and isset($_GET['height'])) {
+
+                $image_info = getimagesize(Yii::getPathOfAlias('webroot') . "/uploads/" . $uploader->fileName);
+                $errorFile=false;
+                if(isset($image_info['mime'])) {
+                    if(!in_array($image_info['mime'], array('image/jpeg','image/jpeg','image/jpeg'))) {
+                        $errorFile=true;
+                    }
+                }
+                if($errorFile) {
+                    echo CJSON::encode(array('error'=>'Error en el tipo de archivo de imagen','info'=>array($image_info['mime'])));
+                    exit;
+                }
+
                 $image = new SimpleImage();
                 $with = $_GET['width'];
                 $height = $_GET['height'];
