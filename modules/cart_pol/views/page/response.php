@@ -1,7 +1,9 @@
 <section>
 	<div class="container">
     <div class="mg-grl cfx">
-      <h1 class="main-tt fl">Resumen Transacción<span><i></i></span></h1>
+      <h1 class="text-primary">Gracias por preferirnos!!</h1>
+      <h1 class="text-primary"><small>Te aseguramos que te quedarás con nosotros</small></h1>
+      <h3><small>Te aseguramos que te quedarás con nosotros</small></h3>
       <div class="cfx"></div>
       <p align="justify">
 
