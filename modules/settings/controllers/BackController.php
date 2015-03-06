@@ -52,6 +52,7 @@ class BackController extends CmsController
 		if(isset($_POST['Settings']))
 		{
 			$model->attributes=$_POST['Settings'];
+			$model->update_time=time();
 			if($model->save())
 	        {
             	Yii::app()->user->setFlash('success',Yii::t('app','The record was saved successfully'));
