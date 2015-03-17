@@ -51,7 +51,7 @@ class GComponentUpload extends CApplicationComponent {
                 $image_info = getimagesize(Yii::getPathOfAlias('webroot') . "/uploads/" . $uploader->fileName);
                 $errorFile=false;
                 if(isset($image_info['mime'])) {
-                    if(!in_array($image_info['mime'], array('image/jpeg','image/jpeg','image/jpeg'))) {
+                    if(!in_array($image_info['mime'], array('image/jpeg','image/png','image/jpg','image/gif'))) {
                         $errorFile=true;
                     }
                 }
