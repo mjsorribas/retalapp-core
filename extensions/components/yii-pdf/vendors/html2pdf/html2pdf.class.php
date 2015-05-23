@@ -1548,6 +1548,10 @@ if (!defined('__CLASS_HTML2PDF__')) {
             // prepare the background image
             if ($background['image']) {
                 $iName      = $background['image'];
+
+                $documentRoot  = $_SERVER['DOCUMENT_ROOT']; // get server document root             
+                $iName           = $documentRoot. '/' . $iName; //aapend server document root to the image soure
+    
                 $iPosition  = $background['position']!==null ? $background['position'] : array(0, 0);
                 $iRepeat    = $background['repeat']!==null   ? $background['repeat']   : array(true, true);
 
