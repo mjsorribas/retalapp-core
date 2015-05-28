@@ -31,11 +31,12 @@ class UsersUsers extends BaseUsersUsers
 		// will receive user inputs.
 		return array_merge(parent::rules(),array(
 			array('email', 'email'),
-			array('trash', 'safe'),
+			array('trash, gender, fb_id, fb_img', 'safe'),
 			array('email', 'unique', 'attributeName'=>'email', 'className'=>'Users', 'criteria'=>array('condition'=>'trash=0')),
 			array('conditions', 'boolean'),
 
 			array('newPassword', 'safe'),
+			array('name', 'required', 'on'=>'signup'),
 			array('confirmPassword', 'required', 'on'=>'signup'),
 			array('confirmPassword', 'validateConfirm', 'on'=>'signup'),
 			array('conditions', 'in','range'=>array('1'),'allowEmpty'=>false,'message'=>'Para registrarse debe aceptar los terminos y condiciones','on'=>'signup'),

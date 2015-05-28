@@ -23,23 +23,23 @@ class PageController extends FrontController
 		$model->created_at = date('Y-m-d H:i:s');
         if ($model->save())
         {
-			$subject=r('contact','New contact message').' '.strip_tags(Yii::app()->name);
+			$subject=r('app','Nuevo mensaje ').' '.strip_tags(Yii::app()->name);
 			#$targetEmail=YII_DEBUG?Yii::app()->params['adminEmail']:$config->email;
  			#if(empty($config->email))
 				$targetEmail=Yii::app()->params['adminEmail'];
 			
-			$body="<strong>Name</strong>: <em>{$model->name}</em> <br>";
+			$body="<strong>Nombre</strong>: <em>{$model->name}</em> <br>";
 			if(!empty($model->phone))
-				$body.="<strong>Phone</strong>: <em>{$model->phone}</em> <br>";
-			$body.="<strong>Email</strong>: <em>{$model->email}</em> <br>";
-			$body.="<strong>Comment</strong>: <em>{$model->message}</em> <br>";
+				$body.="<strong>Teléfono</strong>: <em>{$model->phone}</em> <br>";
+			$body.="<strong>Correo</strong>: <em>{$model->email}</em> <br>";
+			$body.="<strong>Comentario</strong>: <em>{$model->message}</em> <br>";
             
             r('email')->fromEmail=$model->email;
             r('email')->fromName=$model->name;
             r('email')->add($targetEmail, strip_tags(Yii::app()->name));
             r('email')->sendBody($subject, $body);
             
-            echo CJSON::encode(array('success'=>1,'data'=>$model,'message'=>r('contact','Thanks for contacting us, message sent')));
+            echo CJSON::encode(array('success'=>1,'data'=>$model,'message'=>r('app','Gracias por escribirnos, pronto nos comunicaremos con usted')));
         } else {
 			echo CJSON::encode(array('success'=>0,'data'=>$model->getErrors()));
         }
@@ -53,7 +53,7 @@ class PageController extends FrontController
 		$model->created_at = date('Y-m-d H:i:s');
         if ($model->save())
         {
-		    echo CJSON::encode(array('success'=>1,'data'=>$model,'message'=>r('contact','Thanks for contacting us, message sent')));
+		    echo CJSON::encode(array('success'=>1,'data'=>$model,'message'=>r('app','Thanks for contacting us, message sent')));
         } else {
 			echo CJSON::encode(array('success'=>0,'data'=>$model->getErrors()));
         }

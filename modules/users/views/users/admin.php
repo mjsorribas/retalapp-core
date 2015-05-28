@@ -10,7 +10,10 @@ $this->breadcrumbs=array(
 <section class="panel">
     <div class="panel-body minimal">
         <div class="table-inbox-wrap">
-    	<?php echo CHtml::link('<i class="fa fa-plus"></i> '.Yii::t('app','Create'),array('create'),array('class'=>'btn btn-primary'))?>
+
+<?php echo CHtml::link('<i class="fa fa-plus"></i> '.Yii::t('app','Create'),array('create'),array('class'=>'btn btn-primary'))?>
+<?php echo CHtml::link('<i class="fa fa-list"></i> '.Yii::t('app','Excel'),array('excel'),array('class'=>'mls btn btn-success'))?>
+
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'users-users-grid',
 	'itemsCssClass'=>'table table-inbox table-hover',

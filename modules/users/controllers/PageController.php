@@ -85,8 +85,8 @@ class PageController extends FrontController
 			throw new CHttpException(403,Yii::t('app',"Invalid request"));
 		
 		$email=$this->module->decryptEmail($_GET['key']);
-		$model=Users::model()->find("email=?",array($email));
-		
+		$model=Users::model()->find("email=? and trash=0",array($email));
+
 		if($model===null)
 			throw new CHttpException(404,Yii::t('app',"Invalid request"));
 		$model->state_email=1;
@@ -237,46 +237,9 @@ class PageController extends FrontController
 	 */
 	public function actionLogin()
 	{
-		// if(r()->user->isGuest)
-		// $this->layout='//layouts/login';
-		$model=new LoginForm;
-
-		// if it is ajax validation request
-		if((isset($_POST['ajax']) && $_POST['ajax']==='login-form') or
-			(isset($_POST['ajax']) && $_POST['ajax']==='login-form-shopping'))
-		{
-			echo CActiveForm::validate($model);
-			r()->end();
-		}
-
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
-			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
-			{
-				/**
-				 * Si la atenticacion es de tipo enviar contraseña
-				 * entonces cuando se loguea es la unica forma en que
-				 * asumismos que su correo existe, porque siempre
-				 * se envian las contraseñas al correo
-				*/
-				if($this->module->sendPassword)
-				{
-					$user=Users::model()->findByPk(r()->user->id);
-					$user->state_email=1;
-					$user->save(true,array('state_email'));
-				}
-					
-				if(!r()->user->isGuest and r()->user->checkAccessArray($this->module->adminRoles))
-					$this->redirect($this->module->redirectLoginAdmin);
-				else
-					$this->redirect($this->module->redirectLogin);
-			}
-		}
 		// display the login form
-		$this->render('login',array('model'=>$model));
+		$this->render('login',array(
+		));
 	}
 
 	// @todo this actions can be in user module
@@ -286,11 +249,21 @@ class PageController extends FrontController
 	public function actionRegister()
 	{
 		// $this->layout='//layouts/login';
-		$model=new Users("signup");
-
+		// $model=new Users("signup");
+		$modelName=$this->module->loadActive();
+		$model=new $modelName;
+	
+		$model->setScenario("signup");
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='registration-form')
 		{
+			$model->confirmPassword=$_REQUEST['password'];
+			$model->registered=date('Y-m-d H:i:s');
+			$model->state_email=0;
+			$model->state=1;
+			$model->trash=0;
+			$model->username=r()->format->trimAndLower($model->name).'.'.r()->format->trimAndLower($model->lastname);
+		
 			echo CActiveForm::validate($model);
 			r()->end();
 		}
@@ -462,43 +435,59 @@ class PageController extends FrontController
 		if ($model->validate()) 
 		{
 			$model->password=sha1($model->password);
-			if($model->save(false) and $this->module->sendRegisterMail($model))
+			$model->confirmPassword=sha1($model->confirmPassword);
+			if($this->module->sendRegisterMail($model))
 			{
+
 				if($this->module->loginInRegister)
 				{
-					$model->login();
-					
-					echo CJSON::encode(array(
-		                'success'=>1,
-		                'data'=>$model,
-		                'error_code'=>null,
-		                'message'=>Yii::t('app','Hi {name}!! Welcome a to {appName}',array('{name}'=>$model->name,'{appName}'=>strip_tags(r()->name))),
-		                'params'=>$_REQUEST,
-		            ));
-
+					if($model->save() and $model->login()) {
+						echo CJSON::encode(array(
+			                'success'=>1,
+			                'data'=>$model,
+			                'error_code'=>null,
+			                'message'=>Yii::t('app','Hi {name}!! Welcome a to {appName}',array('{name}'=>$model->name,'{appName}'=>strip_tags(r()->name))),
+			                'params'=>$_REQUEST,
+			            ));
+					} else {
+						echo CJSON::encode(array(
+			                'success'=>0,
+			                'data'=>$model->errors,
+			                'error_code'=>null,
+			                'message'=>Yii::t('app','We did someting wrong {name}!! Please try later',array('{name}'=>$model->name)),
+			                'params'=>$_REQUEST,
+			            ));
+					}
 				}
 				else
 				{
-					$message="";
-					if($this->module->sendPassword)
-						$message=Yii::t('app','We have sent a new password to your email');
-					else
-						$message=Yii::t('app','We have sent the instructions to your email');
-					
-					echo CJSON::encode(array(
-		                'success'=>1,
-		                'data'=>$model,
-		                'error_code'=>null,
-		                'message'=>$message,
-		                'params'=>$_REQUEST,
-		            ));
+					if($model->save()) {
+						$message="";
+						if($this->module->sendPassword)
+							$message=Yii::t('app','We have sent a new password to your email');
+						else
+							$message=Yii::t('app','We have sent the instructions to your email');
+						
+						echo CJSON::encode(array(
+			                'success'=>1,
+			                'data'=>$model,
+			                'error_code'=>null,
+			                'message'=>$message,
+			                'params'=>$_REQUEST,
+			            ));
+					} else {
+						echo CJSON::encode(array(
+			                'success'=>0,
+			                'data'=>$model->errors,
+			                'error_code'=>null,
+			                'message'=>Yii::t('app','We did someting wrong {name}!! Please try later',array('{name}'=>$model->name)),
+			                'params'=>$_REQUEST,
+			            ));	
+					}
 
 				}
 			} else {
 				
-				$model->trash=1;
-				$model->save(true,array('trash'));
-			
 				echo CJSON::encode(array(
 	                'success'=>0,
 	                'data'=>null,
@@ -516,6 +505,105 @@ class PageController extends FrontController
                 'message'=>Yii::t('app','Form validation errors'),
                 'params'=>$_REQUEST,
             ));
+		}
+	}
+
+	public function actionFacebookRegisterAjax()
+	{
+	    header('Content-type: application/json');
+	    //$model=new Users("signup");
+        $modelName=$this->module->loadActive();
+		$model=CActiveRecord::model($modelName)->find('email=? and trash=0',array($_REQUEST['email']));
+		// Just login
+		if($model!==null) {
+
+			$model->login();
+			if(!r()->user->isGuest and r()->user->checkAccessArray($this->module->adminRoles))
+				$url=CHtml::normalizeUrl($this->module->redirectLoginAdmin);
+			else
+				$url=CHtml::normalizeUrl($this->module->redirectLogin);
+			
+
+			echo CJSON::encode(array(
+                'success'=>1,
+                // 'data'=>$modelArray,
+                'error_code'=>null,
+                'redirect'=>$url,
+                'message'=>r('users','Welcome to ').r()->name,
+                'params'=>$_REQUEST,
+            ));
+		} else { // Is new user
+
+			$model=new $modelName;
+			$model->setScenario("signup");
+
+			// $model->attributes=$_REQUEST;
+			$model->name=$_REQUEST['name'];
+			$model->email=$_REQUEST['email'];
+			$model->gender=$_REQUEST['gender'];
+			$model->fb_id=$_REQUEST['id'];
+			$model->fb_img="https://graph.facebook.com/".$_REQUEST['id']."/picture?type=large";
+			$model->img="https://graph.facebook.com/".$_REQUEST['id']."/picture?type=large";
+
+			if(!$this->module->confirmPasswordRequired and isset($_REQUEST['password'])) {
+				$model->confirmPassword=$_REQUEST['email'];
+			}
+
+			$model->registered=date('Y-m-d H:i:s');
+			$model->state_email=0;
+			$model->state=1;
+			$model->trash=0;
+			$model->conditions=1;
+			$model->username=r()->format->trimAndLower($model->name).'.'.r()->format->trimAndLower($model->lastname);
+			$model->state_email=1;
+			$model->password=sha1($model->username);
+			$model->confirmPassword=sha1($model->username);
+			
+			if ($model->validate()) 
+			{
+				$model->password=sha1($model->password);
+				if($this->module->sendRegisterMail($model,false,true))
+				{
+					if($model->save()) {
+						$model->login();
+
+						if(!r()->user->isGuest and r()->user->checkAccessArray($this->module->adminRoles))
+							$url=CHtml::normalizeUrl($this->module->redirectLoginAdmin);
+						else
+							$url=CHtml::normalizeUrl($this->module->redirectLogin);
+				
+						$message=Yii::t('app','Welcome!!, We have sent a new password to your email');
+						echo CJSON::encode(array(
+			                'success'=>1,
+			                'data'=>$model,
+			                'error_code'=>null,
+			                'message'=>$message,
+	            			'redirect'=>$url,
+			                //'message'=>Yii::t('app','Hi {name}!! Welcome a to {appName}',array('{name}'=>$model->name,'{appName}'=>strip_tags(r()->name))),
+			                'params'=>$_REQUEST,
+			            ));
+					}
+
+				} else {
+					
+					echo CJSON::encode(array(
+		                'success'=>0,
+		                'data'=>null,
+		                'error_code'=>'dont_sending_email',
+		                'message'=>Yii::t('app','Error sending email!!'),
+		                'params'=>$_REQUEST,
+		            ));
+				}
+				
+			} else {
+			    echo CJSON::encode(array(
+	                'success'=>0,
+	                'data'=>$model->getErrors(),
+	                'error_code'=>'unprocessable_entity',
+	                'message'=>Yii::t('app','Form validation errors'),
+	                'params'=>$_REQUEST,
+	            ));
+			}
 		}
 	}
 
@@ -737,7 +825,7 @@ class PageController extends FrontController
 	                'success'=>1,
 	                'data'=>null,
 	                'error_code'=>null,
-	                'message'=>Yii::t('app','We have sent a new password to your email'),
+	                'message'=>Yii::t('app','Please review your email and follow the instructions'),
 	                'params'=>$_REQUEST,
 	            ));
 			} else {

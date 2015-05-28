@@ -12,6 +12,9 @@ class UsersModule extends Module
 	public $allowBasicOAuth=false;
 	public $allowRegister=true;
 	
+	public $fb_appId=null;
+	public $fb_secret=null;
+	
 	/**
 	 * Para loguear al usuario un a vez este
      * se registra y no tener que esperar si
@@ -204,11 +207,11 @@ class UsersModule extends Module
 	}
 
 
-	public function sendRegisterMail($model,$resend=false)
+	public function sendRegisterMail($model,$resend=false,$forceSendPassword=false)
 	{
 		if($model===null)
 			return false;
-		if($this->sendPassword)
+		if($this->sendPassword or $forceSendPassword)
 		{
 			$model->password=sha1($pass=strtolower(r()->security->randomWord(5)));
 			$model->save(true,array('password'));

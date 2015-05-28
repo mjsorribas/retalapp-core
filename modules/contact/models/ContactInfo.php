@@ -50,6 +50,22 @@ class ContactInfo extends BaseContactInfo
 	public function attributeLabels()
 	{
 		return array_merge(parent::attributeLabels(),array(
+			'id' => Yii::t('app','ID'),
+			'email' => Yii::t('app','Email'),
+			'title' => Yii::t('app','Título'),
+			'subtitle' => Yii::t('app','Subtitle'),
+			'contact_text' => Yii::t('app','Texto informativo'),
+			'address' => Yii::t('app','Dirección'),
+			'phone' => Yii::t('app','Teléfono'),
+			'facebook' => Yii::t('app','Facebook'),
+			'twitter' => Yii::t('app','Twitter'),
+			'google_plus' => Yii::t('app','Google Plus'),
+			'linked_in' => Yii::t('app','Linked In'),
+			'youtube' => Yii::t('app','Youtube'),
+			'skype' => Yii::t('app','Skype'),
+			'map_address' => Yii::t('app','Dirección'),
+			'map_address_lat' => Yii::t('app','Address Lat'),
+			'map_address_lng' => Yii::t('app','Address Lng'),
 		));
 	}
 	

@@ -34,7 +34,7 @@ $this->breadcrumbs=array(
     </div>
 
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-6">
 
 <div class="form-group">
     <?php echo $form->labelEx($model,'email',array('class'=>'control-label')); ?>
@@ -46,26 +46,8 @@ $this->breadcrumbs=array(
 				),true); ?>
     <?php echo $form->error($model,'email',array('class'=>'help-block')); ?>
 </div>
-<div class="form-group">
-    <?php echo $form->labelEx($model,'title',array('class'=>'control-label')); ?>
-    <?php echo $this->widget('ext.inputs.counter.GTextfield',array(
-					'model'=>$model,
-					'attribute'=>'title',
-					'allowed' => 100,
-					'htmlOptions' => array('class'=>'form-control'),
-				),true); ?>
-    <?php echo $form->error($model,'title',array('class'=>'help-block')); ?>
-</div>
-<div class="form-group">
-    <?php echo $form->labelEx($model,'subtitle',array('class'=>'control-label')); ?>
-    <?php echo $this->widget('ext.inputs.counter.GTextfield',array(
-					'model'=>$model,
-					'attribute'=>'subtitle',
-					'allowed' => 100,
-					'htmlOptions' => array('class'=>'form-control'),
-				),true); ?>
-    <?php echo $form->error($model,'subtitle',array('class'=>'help-block')); ?>
-</div>
+
+
 <div class="form-group">
     <?php echo $form->labelEx($model,'contact_text',array('class'=>'control-label')); ?>
     <?php echo $form->textArea($model,'contact_text',array('rows'=>5, 'cols'=>50,'class'=>'form-control')); ?>
@@ -91,6 +73,9 @@ $this->breadcrumbs=array(
 				),true); ?>
     <?php echo $form->error($model,'phone',array('class'=>'help-block')); ?>
 </div>
+
+    </div>
+    <div class="col-lg-6">
 <div class="form-group">
     <?php echo $form->labelEx($model,'facebook',array('class'=>'control-label')); ?>
     <?php echo $this->widget('ext.inputs.counter.GTextfield',array(
@@ -101,8 +86,6 @@ $this->breadcrumbs=array(
 				),true); ?>
     <?php echo $form->error($model,'facebook',array('class'=>'help-block')); ?>
 </div>
-    </div>
-    <div class="col-lg-8">
 <div class="form-group">
     <?php echo $form->labelEx($model,'twitter',array('class'=>'control-label')); ?>
     <?php echo $this->widget('ext.inputs.counter.GTextfield',array(
@@ -153,14 +136,7 @@ $this->breadcrumbs=array(
 				),true); ?>
     <?php echo $form->error($model,'skype',array('class'=>'help-block')); ?>
 </div>
-<div class="form-group">
-    <?php echo $form->labelEx($model,'map_address',array('class'=>'control-label')); ?>
-    <?php echo $this->widget('ext.inputs.map.GMap', array(
-			    'model' => $model,
-			    'attribute' => 'map_address',
-			),true); ?>
-    <?php echo $form->error($model,'map_address',array('class'=>'help-block')); ?>
-</div>
+
     </div>
 </div>
     <div class="form-group">

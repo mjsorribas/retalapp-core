@@ -5,8 +5,9 @@
 
 $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Change password');
 ?>
-<section>
-  
+
+<section style="padding-top:130px;padding-bottom: 0;" id="products" class="gray-bg padding-top-bottom">
+
 <div class="container">
 <div class="row">
     
@@ -26,16 +27,18 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Change password');
     <div class="form-group">
         <?php echo $form->labelEx($model,'password',array('class'=>'control-label')); ?>
         <?php echo $form->passwordField($model,'password',array('class'=>'form-control',"placeholder"=>$model->getAttributeLabel('password'))); ?>
+        <i class="fa fa-key"></i>
         <?php echo $form->error($model,'password',array('class'=>'help-block')); ?>
     </div>
     
     <div class="form-group">
         <?php echo $form->labelEx($model,'passwordConfirm',array('class'=>'control-label')); ?>
         <?php echo $form->passwordField($model,'passwordConfirm',array('class'=>'form-control',"placeholder"=>$model->getAttributeLabel('passwordConfirm'))); ?>
+        <i class="fa fa-key"></i>
         <?php echo $form->error($model,'passwordConfirm',array('class'=>'help-block')); ?>
     </div>
     
-    <?php echo CHtml::submitButton(Yii::t('app','Change'),array("class"=>"btn pull-right btn-lg btn-primary")); ?>
+    <?php echo CHtml::submitButton(Yii::t('app','Change'),array("class"=>"btn pull-right btn-lg btn-qubico")); ?>
     <?php $this->endWidget(); ?>
 
   </div>

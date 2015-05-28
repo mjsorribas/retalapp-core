@@ -3,7 +3,7 @@
 class InfoController extends CmsController
 {
 	public $defaultAction='index';
-	public $title='<i class="fa fa-envelope"></i> Contact Info';
+	public $title='<i class="fa fa-envelope"></i> Información de contacto';
 	public $subTitle='Admin Contact Info';
 
 	/**

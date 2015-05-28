@@ -30,7 +30,7 @@ class UsersController extends CmsController
 	{
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','roles','assign','delete','update','view','create','order','upload','enabled','reset'),
+				'actions'=>array('admin','roles','assign','delete','update','view','create','order','upload','enabled','reset','excel'),
 				'roles'=>$this->module->getAllowPermissoms(),
 			),
 			array('deny',  // deny all users
@@ -259,6 +259,23 @@ class UsersController extends CmsController
 		));
 	}
 
+
+	/**
+	 * Manages all models.
+	 */
+	public function actionExcel()
+	{
+		$model=new Users('search');
+		$model->unsetAttributes();  // clear any default values
+
+		if(isset($_GET['Users']))
+			$model->attributes=$_GET['Users'];
+
+		$content=$this->renderPartial('excel',array(
+			'model'=>$model,
+		),true);
+		r()->request->sendFile('Users.xls',$content);
+	}
 
 	//////////////////////////
 	// Reutilizable methods //
