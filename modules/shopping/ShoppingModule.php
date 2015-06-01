@@ -241,11 +241,11 @@ class ShoppingModule extends Module
              
             
             )),
-            array('label'=>Yii::t('app','Videocursos'), 'icon'=>'fa fa-graduation-cap', 'url'=>array('#'), 'items'=>array(
+            array('label'=>Yii::t('app','Productos'), 'icon'=>'fa fa-barcode', 'url'=>array('#'), 'items'=>array(
                 
                 array('label'=>Yii::t('app','Categorías'), 'icon'=>'fa fa-list-ol', 'url'=>array('/'.$this->id.'/categories/admin')),
                 array('label'=>Yii::t('app','Productos'), 'icon'=>'fa fa-barcode', 'url'=>array('/'.$this->id.'/items/admin')),
-            	array('label'=>Yii::t('app','Facilitadores'), 'icon'=>'fa fa-graduation-cap', 'url'=>array('/'.$this->id.'/facilitador/admin')),
+            	// array('label'=>Yii::t('app','Facilitadores'), 'icon'=>'fa fa-graduation-cap', 'url'=>array('/'.$this->id.'/facilitador/admin')),
                
             )),
        );
