@@ -1,6 +1,6 @@
 <?php
 
-class BackController extends CmsController
+class PageController extends FrontController
 {
 	public $title='Landing';
 	public $subTitle='Administrar landing';
