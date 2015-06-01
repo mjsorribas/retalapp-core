@@ -81,6 +81,50 @@ class PageController extends FrontController
         ));
 	}
 
+	public function actionMyshop()
+	{
+		if(r()->user->isGuest)
+			throw new CHttpException(403,"Para ver sus compras debe estar autenticado");
+		
+		$model=new ShoppingHeader('search');
+		$model->unsetAttributes();  // clear any default values
+		$model->buyer_id=r()->user->id;  // clear any default values
+		if(isset($_GET['ShoppingHeader']))
+			$model->attributes=$_GET['ShoppingHeader'];
+
+        $typeRender='render';
+        if(r()->request->isAjaxRequest)
+            $typeRender='renderPartial';
+
+        $this->{$typeRender}('myshop',array(
+            'model'=>$model,
+        ));
+	}
+
+	public function actionViewmyshop($id)
+	{
+		if(r()->user->isGuest)
+			throw new CHttpException(403,"Para ver sus compras debe estar autenticado");
+		
+		$model=ShoppingHeader::model()->find('id=? AND buyer_id=?',array($id,r()->user->id));
+		
+		$detail=new ShoppingDetail;
+		$criteria=new CDbCriteria;
+		$criteria->compare('shopping_header_id',$id);
+		$criteria->order='orden_id';
+		$detailDataProvider=new CActiveDataProvider('ShoppingDetail',array(
+		    "criteria"=>$criteria,
+		));
+
+
+		$typeRender=Yii::app()->request->isAjaxRequest?"renderPartial":"render";
+		$this->{$typeRender}('viewmyshop',array(
+		    'model'=>$model,
+		    'detail'=>$detail,
+		    'detailDataProvider'=>$detailDataProvider,
+		));
+	}
+
 	public function actionView($id)
 	{
 		$model=ShoppingItems::model()->findByPk($id);

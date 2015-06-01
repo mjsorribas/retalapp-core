@@ -83,6 +83,7 @@ class ShoppingHeader extends BaseShoppingHeader
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
+		$criteria->compare('buyer_id',$this->buyer_id);
 		$criteria->compare('ref_venta',$this->ref_venta,true);
 		$criteria->compare('buyer_name',$this->buyer_name,true);
 		$criteria->compare('buyer_email',$this->buyer_email,true);
