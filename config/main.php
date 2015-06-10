@@ -117,9 +117,9 @@ return array(
     // path aliases
     'aliases' => array(
         // yiistrap configuration
-        'bootstrap' => realpath(__DIR__ . '/../extensions/yiistrap'), // change if necessary
+        'bootstrap' => (dirname(__FILE__) . '/../extensions/yiistrap'), // change if necessary
         // yiiwheels configuration
-        'yiiwheels' => realpath(__DIR__ . '/../extensions/yiiwheels'), // change if necessary
+        'yiiwheels' => (dirname(__FILE__) . '/../extensions/yiiwheels'), // change if necessary
     ),
     // preloading 'log' component
     'preload' => array('log'),
