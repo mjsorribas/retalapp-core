@@ -25,6 +25,7 @@ class EmailModule extends Module
 
 	public $ErrorInfo='';
 	private $_dest=array();
+	private $_destBCC=array();
 	private $_a=array();
 
 
@@ -114,6 +115,10 @@ class EmailModule extends Module
 	public function add($mail,$name="")
 	{
 		$this->_dest[$mail]=$name;
+	}
+	public function addBCC($mail,$name="")
+	{
+		$this->_destBCC[$mail]=$name;
 	}
 	
 	public function addAttachment($file)
@@ -208,6 +213,9 @@ class EmailModule extends Module
 		
 		foreach($this->_dest as $email=>$name)
 			$mail->AddAddress($email,$name);
+		foreach($this->_destBCC as $email=>$name)
+			$mail->AddBcc($email,$name);
+
 		if(!$mail->send()) {
 			$this->ErrorInfo=$mail->ErrorInfo;
 			Yii::log('Message could not be sent. Mailer Error: ' . $mail->ErrorInfo,'error','email');
