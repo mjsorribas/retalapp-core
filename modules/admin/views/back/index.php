@@ -9,13 +9,13 @@ $this->breadcrumbs=array(
 <?php foreach($this->builtDashboardCounters() as $data):?>
 <div class="col-lg-3 col-xs-6">
     <!-- small box -->
-    <div class="small-box <?php echo isset($data['type'])?$this->module->getTypeClass($data['type']):'bg-aqua';?>">
+    <div class="small-box <?php echo isset($data['type'])?$this->module->getTypeClass($data['type']):'bg-aqua';?>" style="<?php echo isset($data['color'])?'background-color:#'.$data['color'].'!important':'';?>">
         <div class="inner">
             <h3>
-                <?php echo isset($data['count'])?$data['count']:Yii::t('app','Empty');?>
+                <?php echo isset($data['count'])?$data['count']:'&nbsp;';?>
             </h3>
             <p>
-                <?php echo isset($data['label'])?$data['label']:Yii::t('app','Empty');?>
+                <?php echo isset($data['label'])?$data['label']:'&nbsp;';?>
             </p>
         </div>
         <div class="icon">
