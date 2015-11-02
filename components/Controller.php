@@ -184,7 +184,9 @@ class Controller extends CController
 				);
 
 		}
-		$items[]=$this->addConfigsMenu();
+		if(!r('admin')->hideConfigMenu) {
+			$items[]=$this->addConfigsMenu();
+		}
 		return $items;
 	}
 

@@ -3,6 +3,7 @@
 class AdminModule extends Module
 {
 	public $defaultController='back';
+	public $hideConfigMenu=false;
 	private $_reports=array();
 	private $_counters=array();
 
