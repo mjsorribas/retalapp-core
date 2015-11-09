@@ -12,7 +12,7 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Sign In');
   the FB.login() function when clicked.
 -->
 
-<section style="padding-top:130px;padding-bottom: 0;" id="products" class="gray-bg padding-top-bottom">
+
 
     <div class="container container-page">
         <div class="row">
@@ -20,11 +20,12 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Sign In');
     <div class="col-lg-6">
       <div class="col-sm-10 col-sm-offset-2">
     <h1><?=Yii::t('app','Ingresar')?></h1>
-
-<a href="#" class="facebook-login btn btn-qubico btn-facebook btn-block">
+<?php if(r('users')->fb_appId!==null):?>
+<a href="#" class="facebook-login btn btn-facebook btn-block">
     <i class="fa fa-facebook"></i>
     Ingresar con Facebook
 </a>
+<?php endif;?>
 
 <form class="form-signin" id="login-form-3" action="#" method="post">    
     <div class="form-group success">
@@ -39,7 +40,7 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Sign In');
         <i class="fa fa-key"></i>
     </div>
     
-    <input class="btn btn-qubico pull-right btn-lg button" type="submit" name="yt0" value="Ingresar">    
+    <input class="btn pull-right btn-lg btn-primary" type="submit" name="yt0" value="Ingresar">    
 </form>      
 
     
@@ -83,7 +84,7 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Sign In');
            <input name="conditions" id="Users_conditions" value="1" type="checkbox">     
            <label for="Users_conditions">Acepto Términos y condiciones.</label> <br> <em>Acepto términos y condiciones</em>
         </div>
-        <input class="pull-right btn btn-lg btn-qubico" type="submit" name="yt1" value="Registrarme"> 
+        <input class="pull-right btn btn-lg btn-primary" type="submit" name="yt1" value="Registrarme"> 
       </form>
 
     <?php endif;?>
@@ -94,5 +95,6 @@ $this->pageTitle=Yii::app()->name . ' - '.Yii::t('app','Sign In');
   
 </div>
     </div>
-</section>
+
+
 

@@ -1,3 +1,4 @@
+<?php if(r('users')->fb_appId!==null):?>
 <script>
     // Load the SDK asynchronously
     (function(d, s, id) {
@@ -7,7 +8,6 @@
       js.src = "//connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-  <?php if(r('users')->fb_appId!==null):?>
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '<?php echo r('users')->fb_appId?>',
@@ -17,5 +17,5 @@
       version    : 'v2.2' // use version 2.2
     });
   };
-  <?php endif;?>
 </script>
+<?php endif;?>
