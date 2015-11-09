@@ -433,7 +433,6 @@ class UsersModule extends Module
     	);
 	}
 
-
 	public function builtApp($ctr)
 	{
 		if($this->_config===null)
@@ -453,5 +452,19 @@ class UsersModule extends Module
 		return array(
             array('label'=>'User Registrations', 'type'=>'success', 'icon'=>'fa fa-user', 'count'=>(Users::model()->count('trash=0')-1), 'url'=>array('/'.$this->id.'/users')),
         );
+	}
+	
+	public function builtHeader($ctr)
+	{
+		if($this->isEnabled()) {
+			$ctr->renderPartial($this->id.'.views.page.__header',array('module'=>$this));
+		}
+	}
+
+	public function builtEndBody($ctr)
+	{
+		if($this->isEnabled()) {
+			$ctr->renderPartial($this->id.'.views.page.__modals',array('module'=>$this));
+		}
 	}
 }

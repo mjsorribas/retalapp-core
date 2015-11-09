@@ -2,6 +2,7 @@
 
 class AdminModule extends Module
 {
+	public $analyticsID='UA-xxxxxx-1';
 	public $defaultController='back';
 	public $hideConfigMenu=false;
 	private $_reports=array();
@@ -65,4 +66,11 @@ class AdminModule extends Module
 			return $type;
 		return '';
 	}
+
+	public function builtHeader($ctr)
+	{
+		if($this->isEnabled()) {
+			$ctr->renderPartial($this->id.'.views.page.__modals',array('module'=>$this));
+		}
+	}	
 }

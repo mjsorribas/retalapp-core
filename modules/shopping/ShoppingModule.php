@@ -271,7 +271,14 @@ class ShoppingModule extends Module
 			return r()->controller->renderPartial('//'.SHOPPING_ID.'/page/'.$view,$params,true);
 		return r()->controller->renderPartial(SHOPPING_ID.'.views.page.'.$view,$params,true);
 	}
-	
+
+	public function builtEndBody($ctr)
+	{
+		if($this->isEnabled()) {
+			$ctr->renderPartial($this->id.'.views.page.__modals',array('module'=>$this));
+		}
+	}
+
 	/*
 	 * HOeee!! Do you want publish elements on the landing module
 	 * Here is

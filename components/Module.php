@@ -5,6 +5,7 @@
  */
 class Module extends CWebModule
 {
+	public $enabled=true;
 	public $menuConfig=array();
 	public $defaultController='page';
     public $showMenuFromAdmin=true;
@@ -101,5 +102,10 @@ class Module extends CWebModule
 		    closedir($handle);
 		}
 		return $result;
+	}
+
+	public function isEnabled()
+	{
+		return $this->enabled;
 	}
 }
