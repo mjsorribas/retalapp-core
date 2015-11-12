@@ -4,13 +4,13 @@
 // date_default_timezone_set("America/Bogota"); 
 
 // change the following paths if necessary
-$yii=dirname(__FILE__).'/yii/framework/yii.php';
+$framework=dirname(__FILE__).'/framework/yii.php';
 $config=dirname(__FILE__).'/config/main.php';
 
 // specify how many levels of call stack should be shown in each log message
 defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 
-require_once($yii);
+require_once($framework);
 
 Yii::setPathOfAlias('app',dirname(__FILE__).'/../../../app');
 Yii::setPathOfAlias('vendor',dirname(__FILE__).'/../../../vendor');
