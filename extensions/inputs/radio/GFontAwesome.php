@@ -350,6 +350,10 @@ class GFontAwesome extends CInputWidget
 		'fa-wheelchair'=>'<i class="fa fa-wheelchair"></i><br><small style="font-size:8px">fa-wheelchair</small>',
 		'fa-wifi'=>'<i class="fa fa-wifi"></i><br><small style="font-size:8px">fa-wifi</small>',
 		'fa-wrench'=>'<i class="fa fa-wrench"></i><br><small style="font-size:8px">fa-wrench</small>',
+		'fa-facebook'=>'<i class="fa fa-facebook"></i><br><small style="font-size:8px">fa-facebook</small>',
+		'fa-twitter'=>'<i class="fa fa-twitter"></i><br><small style="font-size:8px">fa-twitter</small>',
+		'fa-instagram'=>'<i class="fa fa-instagram"></i><br><small style="font-size:8px">fa-instagram</small>',
+		'fa-skype'=>'<i class="fa fa-skype"></i><br><small style="font-size:8px">fa-skype</small>',
 	);
 
 	private $_assets;
