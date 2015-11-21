@@ -35,6 +35,8 @@ class GMap extends CInputWidget
 	public $iconButton='fa fa-map-marker';
 	public $readonly=false;
 	public $searchWithDepartament=false;
+	public $departament_id='Notifications_department_id';
+	public $town_id='Notifications_town_id';
 	
 
 	/*
@@ -156,7 +158,7 @@ echo "<input value=\"{$valPath}\" type=\"hidden\" id=\"{$id}_path\" name=\"".get
 			if($({$id}).attr('readonly')=='readonly') {
 				bootbox.alert('En este tipo de notificacion no es posible cambiar la dirección seleccionada.');
 			} else {
-				if($('#Notifications_department_id').val()!='' && $('#Notifications_town_id')!='') {
+				if($('#{$this->departament_id}').val()!='' && $('#{$this->town_id}')!='') {
 					$('#{$id}_modal').modal('show');
 		    	} else {
 		    		bootbox.alert('Por favor seleccione ciudad y departamento');
