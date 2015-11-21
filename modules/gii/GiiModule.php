@@ -589,6 +589,9 @@ class GiiModule extends Module
 			return "\$this->widget('ext.inputs.map.GMap', array(
 			    'model' => \$model,
 			    'attribute' => '{$column->name}',
+			    //'searchWithDepartament' => true,
+				//'town_id' => 'ModelOfThisCrud_ciudad_id',
+				//'departament_id' => 'ModelOfThisCrud_departamento_id',
 			),true)";
 		}
 		if($inputField=='img')
