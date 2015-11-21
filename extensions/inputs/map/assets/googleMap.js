@@ -220,7 +220,7 @@ function deleteMarkers() {
 
 
 // CREAR EVENTO EN EL MAPA ---------------------------------------------
-function crearevento(id_field) {
+function crearevento(id_field, searchWithDepartament, departament_id, town_id) {
 //Variables
     var lat = null;
     var lng = null;
@@ -262,26 +262,26 @@ function crearevento(id_field) {
         //Asignamos al evento click del boton la funcion codeAddress
         jQuery(document).on('click','#'+id_field+'_search',function(e) {
             e.preventDefault();
-            codeAddress(id_field);
+            codeAddress(id_field, searchWithDepartament, departament_id, town_id);
         });
         jQuery(document).on('keyup','#'+id_field+'_address',function(e) {
             e.preventDefault();
             if(e.keyCode!==13 && $(e.currentTarget).val()!='')
                 $('#'+id_field).val($('#'+id_field+'_address').val());
             if(e.keyCode===13 && $(e.currentTarget).val()!='') {
-                codeAddress(id_field);
+                codeAddress(id_field, searchWithDepartament, departament_id, town_id);
                 $('#'+id_field+'_search').modal('hide');
             }
         });
         //Inicializamos la función de google maps una vez el DOM este cargado
-        initialize(id_field);
+        initialize(id_field, searchWithDepartament, departament_id, town_id);
     });
 
-    function initialize(id_field) {
+    function initialize(id_field, searchWithDepartament, departament_id, town_id) {
         var url_img = $('#'+id_field+'_map').attr('data-img') || undefined;
 
         geocoder = new google.maps.Geocoder();
-        codeAddress(id_field);
+        codeAddress(id_field, searchWithDepartament, departament_id, town_id);
 
         //Si hay valores creamos un objeto Latlng
         if (lat != '' && lng != '') {
@@ -480,15 +480,25 @@ function crearevento(id_field) {
     }
 
     //funcion que traduce la direccion en coordenadas
-    function codeAddress(id_field) {
+    function codeAddress(id_field, searchWithDepartament, departament_id, town_id) {
 
         //obtengo la direccion del formulario
-        $('#'+id_field+'_dtext').html($('#Notifications_department_id option:selected').text());
-        $('#'+id_field+'_ttext').html($('#Notifications_town_id option:selected').text());
+        if($('#'+departament_id).val() !='') {
+            $('#'+id_field+'_dtext').html($('#'+departament_id+' option:selected').text());
+        } else {
+            $('#'+id_field+'_dtext').html('');
+        }
+        if($('#'+town_id).val() !='') {
+            $('#'+id_field+'_ttext').html($('#'+town_id+' option:selected').text());
+        } else {
+            $('#'+id_field+'_ttext').html('');
+        }
+
         var address = document.getElementById(id_field+'_address').value;
+
         //hago la llamada al geodecoder
-        if($('#Notifications_department_id').val()!='' && $('#Notifications_town_id').val()!='') {
-            address=address+' '+$('#Notifications_town_id option:selected').text()+', '+$('#Notifications_department_id option:selected').text()+', Colombia';
+        if(searchWithDepartament==='1' && $('#'+departament_id+'').val() !='' && $('#'+town_id+'').val() !='') {
+            address=address+' '+$('#'+town_id+' option:selected').text()+', '+$('#'+departament_id+' option:selected').text()+', Colombia';
         }
         console.log(Date(),address);
         geocoder.geocode({'address': address}, function(results, status) {

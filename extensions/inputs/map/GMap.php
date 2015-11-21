@@ -158,11 +158,12 @@ echo "<input value=\"{$valPath}\" type=\"hidden\" id=\"{$id}_path\" name=\"".get
 			if($({$id}).attr('readonly')=='readonly') {
 				bootbox.alert('En este tipo de notificacion no es posible cambiar la dirección seleccionada.');
 			} else {
-				if($('#{$this->departament_id}').val()!='' && $('#{$this->town_id}')!='') {
-					$('#{$id}_modal').modal('show');
-		    	} else {
+				if($('#{$this->departament_id}').val()=='' || $('#{$this->town_id}').val()=='') {
 		    		bootbox.alert('Por favor seleccione ciudad y departamento');
+		    	} else {
+					$('#{$id}_modal').modal('show');
 				}
+				//debugger;
 	    	}";
 		}
 
@@ -172,7 +173,7 @@ echo "<input value=\"{$valPath}\" type=\"hidden\" id=\"{$id}_path\" name=\"".get
 			$(function() {
 
 		    	$('#{$id}_modal').on('shown.bs.modal', function (e) {
-				  	crearevento('{$id}');
+				  	crearevento('{$id}','{$this->searchWithDepartament}','{$this->departament_id}','{$this->town_id}');
 			    	setTimeout(function(){
 			            $('#{$id}_address').focus();
 			        }, 1);
