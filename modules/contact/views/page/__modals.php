@@ -247,7 +247,44 @@ $(document).on('submit','#contact-form',function(e) {
           }
         }
     });
-});
+  });
+
+
+  $(document).on('submit','#suscribe-form-3',function(e) {
+    e.preventDefault();
+    var $form = $(this);
+    $.ajax({
+        url: '<?php echo $this->createUrl("/contact/page/contactJson");?>',
+        dataType: 'json', 
+        type: 'post',
+        data: $form.serialize(),
+        success: function (data){
+
+          console.log(data);
+
+          $.each($form.serializeArray(), function(index, name) {
+            $('[name='+name.name+']')
+              .parent()
+              .find('#validate-'+name.name)
+              .remove();
+          });
+
+          if(data.success) {
+            // here submit 
+            // $.fn.modal(data.message,'');
+            window.location.reload(true);
+            //$(".mb_go1").fancybox().trigger("click");
+          } else {
+
+            $.each(data.data, function(name, errors) {
+              $('[name='+name+']')
+              .parent()
+              .append($('<p id="validate-'+name+'" class="help-block text-danger">'+errors.join(',<br>')+'</p>'));
+            });
+          }
+        }
+    });
+  });
 
 });
   <?php  // <script src="//maps.googleapis.com/maps/api/js?v=3.exp"></script> ?>
