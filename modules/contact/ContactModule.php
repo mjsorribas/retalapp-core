@@ -42,7 +42,7 @@ class ContactModule extends Module
             array('label'=>Yii::t('app','Contáctenos'), 'icon'=>'fa fa-envelope', 'url'=>array('#'), 'items'=>array(
 				array('label'=>Yii::t('app','Información'), 'icon'=>'fa fa-envelope', 'url'=>array('/'.$this->id.'/info/'),'visible'=>$this->contactInfo),
 				array('label'=>Yii::t('app','Mensajes'), 'icon'=>'fa fa-envelope', 'url'=>array('/'.$this->id.'/messages/admin')),
-				// array('label'=>Yii::t('app','Newsletter'), 'icon'=>'fa fa-envelope', 'url'=>array('/'.$this->id.'/news/admin'),'visible'=>$this->contactNewsletter),
+				array('label'=>Yii::t('app','Newsletter'), 'icon'=>'fa fa-envelope', 'url'=>array('/'.$this->id.'/news/admin'),'visible'=>$this->contactNewsletter),
 				// ... Put here more sub-menues like this 
             )),
        );

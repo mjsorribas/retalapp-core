@@ -235,7 +235,8 @@ $(document).on('submit','#contact-form',function(e) {
           if(data.success) {
             // here submit 
             // $.fn.modal(data.message,'');
-            window.location.reload(true);
+            alert('Gracias por escribirnos.');
+            // window.location.reload(true);
             //$(".mb_go1").fancybox().trigger("click");
           } else {
 
@@ -272,7 +273,9 @@ $(document).on('submit','#contact-form',function(e) {
           if(data.success) {
             // here submit 
             // $.fn.modal(data.message,'');
-            window.location.reload(true);
+            // window.location.reload(true);
+            $form[0].reset();
+            alert('Gracias por suscribirse.');
             //$(".mb_go1").fancybox().trigger("click");
           } else {
 
