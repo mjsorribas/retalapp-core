@@ -10,14 +10,16 @@
           <div class="modal-body">
             
               <div class="form-group">
-                <label for="recipient-name" class="control-label">Username:</label>
+                <label for="recipient-name" class="control-label">Correo:</label>
                 <input name="username" type="text" class="form-control">
               </div>
               <div class="form-group">
-                <label for="recipient-name" class="control-label">Password:</label>
+                <label for="recipient-name" class="control-label">Contraseña:</label>
                 <input name="password" type="password" class="form-control">
               </div>
-              <a href="#" class="register-modal"><?=r('app','Register')?></a>
+              <?php if(r('users')->allowRegister):?>
+                <a href="#" class="register-modal"><?=r('app','Register')?></a>
+              <?php endif;?>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
