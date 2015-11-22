@@ -254,7 +254,7 @@ $(document).on('submit','#contact-form',function(e) {
     e.preventDefault();
     var $form = $(this);
     $.ajax({
-        url: '<?php echo $this->createUrl("/contact/page/contactJson");?>',
+        url: '<?php echo $this->createUrl("/contact/page/newsJson");?>',
         dataType: 'json', 
         type: 'post',
         data: $form.serialize(),
