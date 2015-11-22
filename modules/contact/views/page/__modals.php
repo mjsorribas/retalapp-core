@@ -1,6 +1,4 @@
-<?php
-$contact_contact=ContactInfo::model()->find();
-?>
+<?php $contact=ContactInfo::model()->find(); ?>
 <!-- contact-modal Modal -->
 <div class="modal fade" id="contact-modal" tabindex="-1" role="dialog" aria-labelledby="contact-modalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -209,4 +207,103 @@ jQuery(document).ready(function($) {
     });
   });
 });
+</script>
+
+<script type="text/javascript">
+$(function(){
+
+$(document).on('submit','#contact-form',function(e) {
+    
+    e.preventDefault();
+    var $form = $(this);
+    $.ajax({
+        url: '<?php echo $this->createUrl("/contact/page/contactJson");?>',
+        dataType: 'json', 
+        type: 'post',
+        data: $form.serialize(),
+        success: function (data){
+
+          console.log(data);
+
+          $.each($form.serializeArray(), function(index, name) {
+            $('[name='+name.name+']')
+              .parent()
+              .find('#validate-'+name.name)
+              .remove();
+          });
+
+          if(data.success) {
+            // here submit 
+            // $.fn.modal(data.message,'');
+            window.location.reload(true);
+            //$(".mb_go1").fancybox().trigger("click");
+          } else {
+
+            $.each(data.data, function(name, errors) {
+              $('[name='+name+']')
+              .parent()
+              .append($('<p id="validate-'+name+'" class="help-block text-danger">'+errors.join(',<br>')+'</p>'));
+            });
+          }
+        }
+    });
+});
+
+});
+  <?php  // <script src="//maps.googleapis.com/maps/api/js?v=3.exp"></script> ?>
+    var locations = [
+      /*Marker*/
+      ['<div class="row tool-map">'+
+        // '<div class="col-xs-6"><img src="<?=r()->theme->baseUrl?>/img/map-img.jpg"></div>'+
+        '<div class="col-xs-12 col-info-contact">'+
+          // '<h4><?=$contact->address?></h4>'+
+          '<p><?=$contact->address?></p>'+
+          '<p><a href="emailto:<?=$contact->email?>"><?=$contact->email?></a></p>'+
+          '<p><a href="callto://<?=$contact->phone?>"><?=$contact->phone?></a></p>'+
+        '</div>'+
+      '</div>', <?=$contact->map_address_lat?>, <?=$contact->map_address_lng?>],
+    ],
+    map = new google.maps.Map(document.getElementById("map-canvas"), {
+      scrollwheel: false,
+      zoom: 18,
+      // center: new google.maps.LatLng(4.598056, -74.075833)
+    }),
+    image = {
+      url: "<?=r()->theme->baseUrl?>/img/marker.png",
+      size: new google.maps.Size(48, 42),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(16, 42)
+    },
+    infowindow = new google.maps.InfoWindow(), marker, i;
+    function infoMarker(marker, i, location) {
+      return function() {
+        infowindow.setContent(location[0]);
+        infowindow.open(map, marker);
+      };
+    }
+
+    function setMarkers(data) {
+
+      var bounds = new google.maps.LatLngBounds();
+      for (i = 0; i < data.length; i = i + 1) {
+        marker = new google.maps.Marker({
+          icon: image,
+          position: new google.maps.LatLng(data[i][1], data[i][2]),
+          map: map,
+          zIndex: data[3]
+        });
+      bounds.extend(marker.position);
+        google.maps.event.addListener(marker, "click", (infoMarker(marker, i, data[i])));
+      }
+
+      map.fitBounds(bounds);
+
+      document.addEventListener("DOMContentLoaded", function() {
+        var center = map.getCenter();
+        google.maps.event.trigger(map, "resize");
+        map.setCenter(center);
+      });
+    }
+
+    setMarkers(locations);
 </script>
