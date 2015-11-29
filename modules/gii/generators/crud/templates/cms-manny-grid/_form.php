@@ -11,8 +11,8 @@ $optionsLayouts=array(
         //array('3','9'),
         //array('9','3'),
         array('6','6'),
-        array('7','5'),
-        array('5','7'),
+        // array('7','5'),
+        // array('5','7'),
     );
 shuffle($optionsLayouts);
 ?>

@@ -38,7 +38,7 @@ class GThumbnail extends CInputWidget
 		'danger'=>'<span class="label label-danger">Danger</span>'
 	);
 
-	public $columnClass='col-lg-4';
+	public $columnClass='pln col-lg-4';
 
 	private $_assets;
 	
@@ -63,13 +63,13 @@ class GThumbnail extends CInputWidget
 		$this->htmlOptions=array_merge($this->htmlOptions,array(
 			// 'htmlOptions'=>array('container'=>null),
 			'labelOptions'=>array('style'=>'width: 100%;height: 100%;cursor:pointer','class'=>'ptm pbm mbn'),
-			'template'=>'<div class="'.$this->columnClass.'"><a href="#" class="thumbnail text-center" style="margin-left: -10px;margin-right: -10px;">{beginLabel}{labelTitle}<div class="text-center">{input}</div>{endLabel}</a></div>',
+			'template'=>'<div class="'.$this->columnClass.'"><a href="#" class="thumbnail text-center">{beginLabel}{labelTitle}<div class="text-center">{input}</div>{endLabel}</a></div>',
 			'separator'=>'',
 		));
 		
 		#echo "<small class=\"text-muted\"><em>Here a message for user</em></small>";
 		#echo CHtml::activeTextField($this->model,$this->attribute,$this->htmlOptions);
-		echo '<div class="row">'.Chtml::activeRadioButtonList($this->model,$this->attribute,
+		echo '<div class="clearfix">'.Chtml::activeRadioButtonList($this->model,$this->attribute,
 		  $this->listData,$this->htmlOptions).'</div>';
 		
 	}

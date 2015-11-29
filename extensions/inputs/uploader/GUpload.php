@@ -84,7 +84,8 @@ class GUpload extends CInputWidget
 		
 		$img='';
 		
-		if(!$this->model->isNewRecord and !empty($this->model->{$this->attribute}))
+		// if(!$this->model->isNewRecord and !empty($this->model->{$this->attribute}))
+		if(@$this->model->{$this->attribute}!='')
 			$img="<img id=\"jcrop_target{$id}\" class=\"img-responsive img-rounded\" src=\"{$uploadDir}/{$this->model->{$this->attribute}}\" alt=\"\">";
 		
 		$arrayFile=explode('.', $this->model->{$this->attribute});
@@ -104,7 +105,8 @@ class GUpload extends CInputWidget
 		$icon="";
 		if($this->iconButtom!==false)
 			$icon="<i class=\"fa {$this->iconButtom} mtl\" style=\"font-size: 10em;color: #f0f0f0\"></i>";
-		if(!$this->model->isNewRecord and !empty($this->model->{$this->attribute}))
+		// if(!$this->model->isNewRecord and !empty($this->model->{$this->attribute}))
+		if(@$this->model->{$this->attribute}!='')
 			$icon="";
 		
 		echo "<div class=\"tile qq-upload-extra-drop-area\">

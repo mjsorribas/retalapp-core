@@ -31,6 +31,7 @@ class GSlug extends CInputWidget
 {
 	
 	public $field='name';
+	public $disclamer;
 
 	private $_assets;
 	
@@ -52,8 +53,11 @@ class GSlug extends CInputWidget
 
 		$this->registerClientScript($id);
 		$this->htmlOptions["class"]="form-control";
-		
-		echo "<small class=\"text-muted\"><em>".r('app','Type the url that will be used for retrive this element')."</em></small>";
+		if($this->disclamer===null) {
+			echo "<small class=\"text-muted\"><em>".r('app','Type the url that will be used for retrive this element')."</em></small>";
+		} else {
+			echo $this->disclamer;
+		}
 		echo CHtml::activeTextField($this->model,$this->attribute,$this->htmlOptions);
 		
 	}

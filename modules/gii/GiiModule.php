@@ -303,7 +303,7 @@ class GiiModule extends Module
 	{
 		if(empty($moduleName))
 			return array(''=>'Please select a module.');
-			
+
 		$data=array();
 		$modelClass=Yii::import($codeModel,true);
 		$pathDir=Yii::getPathOfAlias($moduleName.'.models');

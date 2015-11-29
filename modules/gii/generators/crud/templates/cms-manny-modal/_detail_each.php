@@ -6,11 +6,11 @@
 $module=Yii::app()->getModule('gii');
 $arratClean=Yii::app()->getModule('gii')->arrayClean;
 $optionsLayouts=array(
-        array('4','8'),
-        array('8','4'),
+        // array('4','8'),
+        // array('8','4'),
         array('6','6'),
-        array('7','5'),
-        array('5','7'),
+        // array('7','5'),
+        // array('5','7'),
     );
 shuffle($optionsLayouts);
 ?>

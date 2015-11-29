@@ -12,8 +12,8 @@ $optionsLayouts=array(
         // array('9','3'),
         array('6','6'),
         // array('12','12'),
-        array('7','5'),
-        array('5','7'),
+        // array('7','5'),
+        // array('5','7'),
     );
 shuffle($optionsLayouts);
 $showImage=false;
@@ -38,7 +38,7 @@ echo "\$this->breadcrumbs=array(
         <div class="table-inbox-wrap">
     <div class="form-group">
         <div class="text-right">
-		<?php echo "<?php echo CHtml::link(Yii::t('app','Back'),array('admin'),array('class'=>'btn btn-large btn-default'))?>";?>
+		<?php echo "<?php echo CHtml::link(Yii::t('app','Back'),array('admin'),array('class'=>'btn btn-large btn-default'))?>\n";?>
         </div>
     </div>
 <div class="row">
@@ -195,7 +195,7 @@ $columnLat=explode('_', $column->name);
 <?php if(count($this->tableSchema->columns)>2):?>
     <div class="form-group">
         <div class="text-right">
-        <?php echo "<?php echo CHtml::link(Yii::t('app','Back'),array('admin'),array('class'=>'btn btn-large btn-default'))?>";?>
+        <?php echo "<?php echo CHtml::link(Yii::t('app','Back'),array('admin'),array('class'=>'btn btn-large btn-default'))?>\n";?>
         </div>
     </div>
 <?php endif;?>
