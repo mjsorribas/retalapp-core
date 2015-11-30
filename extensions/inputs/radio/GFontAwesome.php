@@ -356,8 +356,10 @@ class GFontAwesome extends CInputWidget
 		'fa-skype'=>'<i class="fa fa-skype"></i><br><small style="font-size:8px">fa-skype</small>',
 	);
 
+	public $colClass = 'col-lg-1';
+
 	private $_assets;
-	
+
 	/**
 	 * Executes the widget.
 	 * This method registers all needed client scripts and renders
@@ -378,13 +380,13 @@ class GFontAwesome extends CInputWidget
 		$this->htmlOptions=array_merge($this->htmlOptions,array(
 			// 'htmlOptions'=>array('container'=>null),
 			'labelOptions'=>array('style'=>'width: 100%;height: 100%;cursor:pointer','class'=>'ptm pbm mbn'),
-			'template'=>'<div class="col-lg-1"><a href="#" class="thumbnail text-center" style="margin-left: -10px;margin-right: -10px;">{beginLabel}{labelTitle}<div class="text-center">{input}</div>{endLabel}</a></div>',
+			'template'=>'<div class="'.$this->colClass.' pln"><a href="#" class="thumbnail text-center">{beginLabel}{labelTitle}<div class="text-center">{input}</div>{endLabel}</a></div>',
 			'separator'=>'',
 		));
-		
+
 		#echo "<small class=\"text-muted\"><em>Here a message for user</em></small>";
 		#echo CHtml::activeTextField($this->model,$this->attribute,$this->htmlOptions);
-		echo '<div class="row">'.Chtml::activeRadioButtonList($this->model,$this->attribute,
+		echo '<div class="clearfix">'.Chtml::activeRadioButtonList($this->model,$this->attribute,
 		  $this->listData,$this->htmlOptions).'</div>';
 	}
 
