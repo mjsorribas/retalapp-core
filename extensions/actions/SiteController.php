@@ -74,7 +74,6 @@ class SiteController extends Controller
 							echo $lastModel->getCompiledHtml(true);
 						} else {
 							$this->render('default',array(
-								// 'content'=>$lastModel->content_raw,
 								'content'=>$lastModel->getCompiledHtml(),
 							));
 						}
