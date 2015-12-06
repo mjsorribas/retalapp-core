@@ -17,7 +17,7 @@ session_start();
 if(file_exists($dbPath)) {
 
   $db=require($dbPath);
-  $dbConfig=$db['localhost'];
+  $dbConfig=isset($db['localhost'])?$db['localhost']:array();
   if(isset($_SERVER['HTTP_HOST']) and isset($db[$_SERVER['HTTP_HOST']]))
       $dbConfig=$db[$_SERVER['HTTP_HOST']];
     
